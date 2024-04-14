@@ -43,4 +43,4 @@ Companion code:
 * TBD as course progresses.
 
 Repository plugins:
-* TBD as course progresses.
+* [Gitmoji | An emoji guide for Git commit messages](https://gitmoji.dev).
