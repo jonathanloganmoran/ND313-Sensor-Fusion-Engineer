@@ -3,7 +3,7 @@
 #### By Jonathan L. Moran (jonathan.moran107@gmail.com)
 From the Sensor Fusion Engineer Nanodegree programme offered at Udacity.
 
-This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaron Brown and Michael Maile of Mercedes-Benz Research & Development of North America (MBRDNA).
+This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaron Brown and Michael Maile of Mercedes-Benz Research & Development North America (MBRDNA).
 
 
 ### Course Objectives
