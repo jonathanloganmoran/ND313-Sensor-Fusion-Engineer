@@ -42,11 +42,9 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     // ----------------------------------------------------
     /** E1.1.0: Create 3D highway scene. **/
     // RENDER OPTIONS
-    /** E1.1.8: Examining the Point Cloud Data. **/
-    // For a clearer view of just the PCD, turn "off" the following:
-    // (1) Scene rendering: removing the highway lanes and vehicle objects.
-    //bool renderScene = true;
-    bool renderScene = false;
+    // (1) Set `renderScene` to `false`: removes the highway lanes and vehicle objects.
+    bool renderScene = true;
+    // Displaying the "simple highway" scene objects
     std::vector<Car> cars = initHighway(
         renderScene, 
         viewer
@@ -54,25 +52,24 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     /** E1.1.1: Create LiDAR sensor object. **/
     // SENSOR SPECIFICATIONS
     float groundSlope = 0.0;                        // Radians; angle of departure between $x$-$y$ plane.
+    // Instantiating a simulated LiDAR sensor object
     Lidar *lidar = new Lidar(
         cars,
         groundSlope
     );
     /** E1.1.2: Project the LiDAR rays onto the scene. **/
-    // Generate a new Lidar sensor scan
+    // Generating a new Lidar sensor scan
     pcl::PointCloud<pcl::PointXYZ>::Ptr pointCloud = lidar->scan();
-    /** E1.1.8: Examining the Point Cloud Data. **/
-    // For a clearer view of just the PCD, turn "off" the following:
-    // (2) Ray rendering: the simulated LiDAR laser beams.
-    // Project the LiDAR sensor rays onto the scene
-    // renderRays(
-    //     viewer,
-    //     lidar->position,
-    //     pointCloud
-    // );
+    // RENDER OPTIONS
+    // (2) Comment out `renderRays`: removes the simulated LiDAR laser beams.
+    // Projecting the LiDAR sensor rays onto the scene
+    renderRays(
+        viewer,
+        lidar->position,
+        pointCloud
+    );
     /** E1.1.3: Display the detected points. **/
-    /** E1.1.8: Examining the Point Cloud Data. **/
-    // Now, we call the following function to display the PCD:
+    // Displaying the PCD measurements
     renderPointCloud(
         viewer,
         pointCloud,
