@@ -95,18 +95,18 @@ struct Lidar
 		cars = setCars;
 		groundSlope = setGroundSlope;
         /** E1.1.4: Increase the vertical scanning resolution. **/
-		// TODO:: increase number of layers to 8 to get higher resoultion pcd
 		// Modifying the number of vertical beams to increase resolution
         // int numLayers = 3;  
         int numLayers = 8;                      	// Number of vertically-stacked diodes
 		// the steepest vertical angle
 		double steepestAngle =  30.0*(-pi/180);
 		double angleRange = 26.0*(pi/180);
+		/** E1.1.5: Increase the horizontal scanning resolution. */
 		// TODO:: set to pi/64 to get higher resoultion pcd
-		double horizontalAngleInc = pi/6;
-
+        // Modifying the angular "spacing" to improve resolution
+        // double horizontalAngleInc = pi / 6;
+        double horiontalAngleInc = pi / 64;     	// Radians
 		double angleIncrement = angleRange/numLayers;
-
 		for(double angleVertical = steepestAngle; angleVertical < steepestAngle+angleRange; angleVertical+=angleIncrement)
 		{
 			for(double angle = 0; angle <= 2*pi; angle+=horizontalAngleInc)
