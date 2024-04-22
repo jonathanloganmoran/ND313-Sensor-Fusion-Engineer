@@ -103,13 +103,12 @@ struct Lidar
 		/** E1.1.6: "Remove" the points reflected off the ego-vehicle. */
         // All points at distances below `minDistance` will be discarded
         // minDistance = 0;
-        minDistance = 5;                        // Distance given in metres (m)
+        minDistance = 5;                        	// Distance given in metres (m)
 		maxDistance = 50;
 		/** E1.1.7: Add "noise" to the sensor measurements. **/
-		// TODO:: set sderr to 0.2 to get more interesting pcd files
-        // Set to non-zero value to model uncertainty
+        // Setting to non-zero value to model measurement uncertainty
         // sderr = 0.0;
-        sderr = 0.6;                            // Standard deviation of error
+        sderr = 0.6;                            	// Standard deviation of error
 		double angleIncrement = angleRange/numLayers;
 		for(double angleVertical = steepestAngle; angleVertical < steepestAngle+angleRange; angleVertical+=angleIncrement)
 		{
