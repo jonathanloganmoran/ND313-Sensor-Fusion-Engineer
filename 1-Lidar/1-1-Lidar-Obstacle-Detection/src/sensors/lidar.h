@@ -85,6 +85,7 @@ struct Lidar
 	Lidar(std::vector<Car> setCars, double setGroundSlope)
 		: cloud(new pcl::PointCloud<pcl::PointXYZ>()), position(0,0,2.6)
 	{
+		/*** E1.1.4-8: Modify the LiDAR sensor parameters. ***/
 		// TODO:: set minDistance to 5 to remove points from roof of ego car
 		minDistance = 0;
 		maxDistance = 50;
@@ -93,9 +94,11 @@ struct Lidar
 		sderr = 0.0;
 		cars = setCars;
 		groundSlope = setGroundSlope;
-
+        /** E1.1.4: Increase the vertical scanning resolution. **/
 		// TODO:: increase number of layers to 8 to get higher resoultion pcd
-		int numLayers = 3;
+		// Modifying the number of vertical beams to increase resolution
+        // int numLayers = 3;  
+        int numLayers = 8;                      	// Number of vertically-stacked diodes
 		// the steepest vertical angle
 		double steepestAngle =  30.0*(-pi/180);
 		double angleRange = 26.0*(pi/180);

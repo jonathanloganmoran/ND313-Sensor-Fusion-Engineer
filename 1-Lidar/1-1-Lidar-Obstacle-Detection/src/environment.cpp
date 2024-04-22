@@ -63,7 +63,7 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
         lidar->position,
         pointCloud
     );
-    /** E.1.1.3: Display the detected points. **/
+    /** E1.1.3: Display the detected points. **/
     renderPointCloud(
         viewer,
         pointCloud,
