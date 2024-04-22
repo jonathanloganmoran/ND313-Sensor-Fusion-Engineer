@@ -97,7 +97,7 @@ struct Lidar
 		double angleRange = 26.0*(pi/180);
 		/** E1.1.5: Increase the horizontal scanning resolution. **/
         // Modifying the angular "spacing" to improve resolution
-        double horiontalAngleInc = pi / 64;     	// Radians
+        double horizontalAngleInc = pi / 64;     	// Radians
 		/** E1.1.6: "Remove" the points reflected off the ego-vehicle. **/
         // Discarding all points at distances below `minDistance`
         minDistance = 0;
