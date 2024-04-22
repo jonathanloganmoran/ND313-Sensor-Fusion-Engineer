@@ -102,7 +102,6 @@ struct Lidar
 		double steepestAngle =  30.0*(-pi/180);
 		double angleRange = 26.0*(pi/180);
 		/** E1.1.5: Increase the horizontal scanning resolution. */
-		// TODO:: set to pi/64 to get higher resoultion pcd
         // Modifying the angular "spacing" to improve resolution
         // double horizontalAngleInc = pi / 6;
         double horiontalAngleInc = pi / 64;     	// Radians
