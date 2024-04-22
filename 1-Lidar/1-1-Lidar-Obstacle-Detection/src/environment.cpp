@@ -40,15 +40,22 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     // ----------------------------------------------------
     // -----Open 3D viewer and display simple highway -----
     // ----------------------------------------------------
-    
+    /** E1.1.0: Create 3D highway scene **/
     // RENDER OPTIONS
     bool renderScene = true;
-    std::vector<Car> cars = initHighway(renderScene, viewer);
-    
-    // TODO:: Create lidar sensor 
-
+    std::vector<Car> cars = initHighway(
+        renderScene, 
+        viewer
+    );
+    /** E1.1.1: Create LiDAR sensor object **/
+    // SENSOR SPECIFICATIONS
+    float groundSlope = 0.0;                        // Radians; angle of departure between $x$-$y$ plane.
+    // TODO:: Create lidar sensor
+    Lidar *lidar = new Lidar(
+        cars,
+        groundSlope
+    );
     // TODO:: Create point processor
-  
 }
 
 
