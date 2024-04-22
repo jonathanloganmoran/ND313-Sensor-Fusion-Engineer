@@ -42,7 +42,11 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     // ----------------------------------------------------
     /** E1.1.0: Create 3D highway scene. **/
     // RENDER OPTIONS
-    bool renderScene = true;
+    /** E1.1.8: Examining the Point Cloud Data. **/
+    // For a clearer view of just the PCD, turn "off" the following:
+    // (1) Scene rendering: removing the highway lanes and vehicle objects.
+    //bool renderScene = true;
+    bool renderScene = false;
     std::vector<Car> cars = initHighway(
         renderScene, 
         viewer
@@ -57,13 +61,18 @@ void simpleHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
     /** E1.1.2: Project the LiDAR rays onto the scene. **/
     // Generate a new Lidar sensor scan
     pcl::PointCloud<pcl::PointXYZ>::Ptr pointCloud = lidar->scan();
+    /** E1.1.8: Examining the Point Cloud Data. **/
+    // For a clearer view of just the PCD, turn "off" the following:
+    // (2) Ray rendering: the simulated LiDAR laser beams.
     // Project the LiDAR sensor rays onto the scene
-    renderRays(
-        viewer,
-        lidar->position,
-        pointCloud
-    );
+    // renderRays(
+    //     viewer,
+    //     lidar->position,
+    //     pointCloud
+    // );
     /** E1.1.3: Display the detected points. **/
+    /** E1.1.8: Examining the Point Cloud Data. **/
+    // Now, we call the following function to display the PCD:
     renderPointCloud(
         viewer,
         pointCloud,

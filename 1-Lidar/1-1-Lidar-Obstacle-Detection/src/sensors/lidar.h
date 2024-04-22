@@ -91,24 +91,21 @@ struct Lidar
 		/*** E1.1.4-7: Modify the LiDAR sensor parameters. ***/
         /** E1.1.4: Increase the vertical scanning resolution. **/
 		// Modifying the number of vertical beams to increase resolution
-        // int numLayers = 3;  
         int numLayers = 8;                      	// Number of vertically-stacked diodes
 		// the steepest vertical angle
 		double steepestAngle =  30.0*(-pi/180);
 		double angleRange = 26.0*(pi/180);
 		/** E1.1.5: Increase the horizontal scanning resolution. **/
         // Modifying the angular "spacing" to improve resolution
-        // double horizontalAngleInc = pi / 6;
         double horiontalAngleInc = pi / 64;     	// Radians
 		/** E1.1.6: "Remove" the points reflected off the ego-vehicle. **/
         // Discarding all points at distances below `minDistance`
-        // minDistance = 0;
-        minDistance = 5;                        	// Distance given in metres (m)
+        minDistance = 0;
+		minDistance = 5;                        	// Distance given in metres (m)
 		maxDistance = 50;
 		/** E1.1.7: Add "noise" to the sensor measurements. **/
         // Modelling measurement uncertainty with non-zero value
-        // sderr = 0.0;
-        sderr = 0.6;                            	// Standard deviation of error
+        sderr = 0.0;                            	// Standard deviation of error
 		double angleIncrement = angleRange/numLayers;
 		for(double angleVertical = steepestAngle; angleVertical < steepestAngle+angleRange; angleVertical+=angleIncrement)
 		{
