@@ -85,10 +85,8 @@ struct Lidar
 	Lidar(std::vector<Car> setCars, double setGroundSlope)
 		: cloud(new pcl::PointCloud<pcl::PointXYZ>()), position(0,0,2.6)
 	{
-		/*** E1.1.4-8: Modify the LiDAR sensor parameters. ***/
+		/*** E1.1.4-7: Modify the LiDAR sensor parameters. ***/
 		resoultion = 0.2;
-		// TODO:: set sderr to 0.2 to get more interesting pcd files
-		sderr = 0.0;
 		cars = setCars;
 		groundSlope = setGroundSlope;
         /** E1.1.4: Increase the vertical scanning resolution. **/
@@ -103,12 +101,15 @@ struct Lidar
         // double horizontalAngleInc = pi / 6;
         double horiontalAngleInc = pi / 64;     	// Radians
 		/** E1.1.6: "Remove" the points reflected off the ego-vehicle. */
-        // TODO:: set minDistance to 5 to remove points from roof of ego car
         // All points at distances below `minDistance` will be discarded
-		// TODO:: set minDistance to 5 to remove points from roof of ego car
         // minDistance = 0;
         minDistance = 5;                        // Distance given in metres (m)
 		maxDistance = 50;
+		/** E1.1.7: Add "noise" to the sensor measurements. **/
+		// TODO:: set sderr to 0.2 to get more interesting pcd files
+        // Set to non-zero value to model uncertainty
+        // sderr = 0.0;
+        sderr = 0.6;                            // Standard deviation of error
 		double angleIncrement = angleRange/numLayers;
 		for(double angleVertical = steepestAngle; angleVertical < steepestAngle+angleRange; angleVertical+=angleIncrement)
 		{
