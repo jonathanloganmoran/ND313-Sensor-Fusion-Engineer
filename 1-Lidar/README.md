@@ -7,7 +7,14 @@ This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaro
 
 
 ### Course Objectives
-* TBD as course progresses.
+* Process raw LiDAR data with filtering, segmentation and clustering techniques;
+* Perform object detection to detect vehicles on the road;
+* Implement RANSAC with planar model fitting to segment point clouds;
+* Implement Euclidean clustering with KD-Tree to cluster and distinguish vehicles and other obstacles.
+
+
+### Demo Notebooks
+* ⬜️ [`2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb`]().
 
 
 ### Projects
@@ -20,15 +27,24 @@ This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaro
 
 ### Course Contents
 The following topics are covered in course exercises:
-* TBD as course progresses.
+* LiDAR sensor simulation with Point Cloud Library (PCL);
+* Point Cloud Data (PCD) files;
+* Working with point clouds (e.g., filtering, clustering, segmentation, separation);
+* TBD as course progresses. 
 
 Other topics covered in course lectures and reading materials:
+* LiDAR sensor types (mechanical, solid-state, MEMS, flash LiDAR);
+* LiDAR working principles;
+* Sensor placement / configuration for autonomous vehicles; 
 * TBD as course progresses.
 
 
 ### Learning Outcomes
 #### Lesson 1: Introduction to Lidar & Point Clouds
-* TBD as course progresses.
+* LiDAR data representation with the Point Cloud Library (PCL);
+* Using simulation software to create and modify Point Cloud Data (PCD) files;
+* Visualising LiDAR "scans";
+* Adjusting LiDAR sensor parameters in simulation.
 
 #### Lesson 2: Point Cloud Segmentation
 * TBD as course progresses.
@@ -56,4 +72,5 @@ Lectures:
 
 ### Other resources
 Companion code:
+* [`SFND_Lidar_Obstacle_Detection` | Starter code by @Udacity](https://github.com/udacity/SFND_Lidar_Obstacle_Detection);
 * TBD as course progresses.
