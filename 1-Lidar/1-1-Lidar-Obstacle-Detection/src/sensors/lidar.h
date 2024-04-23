@@ -1,3 +1,13 @@
+/* ----------------------------------------------------------------------------
+  * Project "1.1: LiDAR Obstacle Detection"
+  * Authors     : Aaron Brown et al.
+  *
+  * Modified by : Jonathan Logan Moran (jonathan.moran107@gmail.com).
+  *
+  * Purpose of this file: Defines the Lidar sensor and sensor Ray structs.
+  * ---------------------------------------------------------------------------
+  */
+
 #ifndef LIDAR_H
 #define LIDAR_H
 #include "../render/render.h"
@@ -5,6 +15,7 @@
 #include <chrono>
 
 const double pi = 3.1415;
+
 
 struct Ray
 {

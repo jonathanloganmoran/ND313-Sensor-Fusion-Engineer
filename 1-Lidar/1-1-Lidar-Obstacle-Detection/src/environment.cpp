@@ -1,12 +1,24 @@
-/* \author Aaron Brown */
-// Create simple 3d highway enviroment using PCL
-// for exploring self-driving car sensors
+/* ----------------------------------------------------------------------------
+  * Project "1.1: LiDAR Obstacle Detection"
+  * Authors     : Aaron Brown et al.
+  *
+  * Modified by : Jonathan Logan Moran (jonathan.moran107@gmail.com).
+  *
+  * Purpose of this file: Entry-point to the simple 3D highway programme using
+  *         Point Cloud Library (PCL). Defined here are several functions to
+  *         render a 3D environment and its scene objects, as well as functions
+  *         to control the camera view-point and instantiate a simulated LiDAR
+  *         sensor. This corresponds to Exercises 1.1.0-8 of Course 1: Lidar in
+  *         the Sensor Fusion Nanodegree offered by Udacity.
+  * ---------------------------------------------------------------------------
+  */
 
 #include "sensors/lidar.h"
 #include "render/render.h"
 #include "processPointClouds.h"
 // using templates for processPointClouds so also include .cpp to help linker
 #include "processPointClouds.cpp"
+
 
 std::vector<Car> initHighway(bool renderScene, pcl::visualization::PCLVisualizer::Ptr& viewer)
 {

@@ -1,8 +1,16 @@
-/* \author Aaron Brown */
-// Functions and structs used to render the enviroment
-// such as cars and the highway
+/* ----------------------------------------------------------------------------
+  * Project "1.1: LiDAR Obstacle Detection"
+  * Authors     : Aaron Brown et al.
+  *
+  * Modified by : Jonathan Logan Moran (jonathan.moran107@gmail.com).
+  *
+  * Purpose of this file: Implements the functions and structs used to render
+  * 		the 3D scene objects, e.g., cars and highway lanes.
+  * ---------------------------------------------------------------------------
+  */
 
 #include "render.h"
+
 
 void renderHighway(pcl::visualization::PCLVisualizer::Ptr& viewer)
 {

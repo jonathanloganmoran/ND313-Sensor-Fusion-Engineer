@@ -1,4 +1,13 @@
-// PCL lib Functions for processing point clouds 
+/* ------------------------------------------------------------------------------
+  * Project "1.1: LiDAR Obstacle Detection"
+  * Authors     : Aaron Brown et al.
+  *
+  * Modified by : Jonathan Logan Moran (jonathan.moran107@gmail.com)
+  *
+  * Purpose of this file: Defines the Point Cloud Library (PCL) helper
+  *         functions used to process, filter, segment, and separate PCD files.
+  * ----------------------------------------------------------------------------
+  */
 
 #ifndef PROCESSPOINTCLOUDS_H_
 #define PROCESSPOINTCLOUDS_H_
@@ -18,6 +27,7 @@
 #include <ctime>
 #include <chrono>
 #include "render/box.h"
+
 
 template<typename PointT>
 class ProcessPointClouds {
