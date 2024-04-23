@@ -10,16 +10,28 @@
 
 #ifndef LIDAR_H
 #define LIDAR_H
+
 #include "../render/render.h"
 #include <ctime>
 #include <chrono>
 
+
 const double pi = 3.1415;
 
 
-struct Ray
-{
-	
+/* Lidar `Ray` struct.
+ *
+ * @struct	Ray
+ * @brief	Simulated ray generated from a LiDAR sensor.
+ * @field	origin			Starting position in 3D from where the ray is cast. 
+ * @field	resolution		Magnitude of distance moved by ray at each step.
+ * @field	direction		Direction in 3D of which the ray travels. 
+ * @field	castPosition	Current position in 3D of the ray.  
+ * @field	castDistance	Distance from ray's current point to origin.
+ * @func	void			rayCast
+ * @brief	Projects the ray instance into the 3D environment.
+ */
+struct Ray {
 	Vect3 origin;
 	double resolution;
 	Vect3 direction;
@@ -38,7 +50,8 @@ struct Ray
 		  castPosition(origin), castDistance(0)
 	{}
 
-	void rayCast(const std::vector<Car>& cars, double minDistance, double maxDistance, pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, double slopeAngle, double sderr)
+	void rayCast(
+		const std::vector<Car>& cars, double minDistance, double maxDistance, pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, double slopeAngle, double sderr)
 	{
 		// reset ray
 		castPosition = origin;
@@ -80,6 +93,23 @@ struct Ray
 
 };
 
+
+/* Lidar sensor struct. 
+ *
+ * @struct	Lidar
+ * @brief	Simulated Lidar sensor object.
+ * @field	rays			Vector containing all ray projections.
+ * @field	cloud			Vector containing all LiDAR points.
+ * @field	cars			Vector containing all `Car` instances.
+ * @field	position		Origin in 3D of the LiDAR sensor instance.
+ * @field	groundSlope		Angle (rad) of ray projected from $x$-$y$ plane.
+ * @field	minDistance		Minimum distance (m); points closer will be deleted.
+ * @field	maxDistance		Maximum distance (m); points further will be deleted.
+ * @field	resoultion		Magnitude of distance moved by ray at each step.
+ * @field	sderr			Standard deviation of error; measurement uncertainty.
+ * @func	pcl::PointCloud<pcl::PointXYZ>::Ptr		scan
+ * @brief	Generates a point cloud scan of the environment.
+ * */
 struct Lidar
 {
 
