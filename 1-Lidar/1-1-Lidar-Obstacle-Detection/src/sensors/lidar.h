@@ -29,7 +29,6 @@ const double pi = 3.1415;
  * @field	direction		Direction in 3D of which the ray travels. 
  * @field	castPosition	Current position in 3D of the ray.  
  * @field	castDistance	Distance from ray's current point to origin.
- * @func	void			rayCast
  * @brief	Projects the ray instance into the 3D environment.
  */
 struct Ray {
@@ -51,6 +50,21 @@ struct Ray {
 		),
 		castPosition(origin),
 		castDistance(0) {}
+	
+	/* Simulates LiDAR sensor ray casting.
+	 * 
+	 * Populates the given `cloud` object with ray traces projected from
+	 * the origin of the LiDAR sensor onto "reflected" objects. Some amount of
+	 * measurement uncertainty may be considered for non-zero `sderr` values.  
+	 *
+	 * @brief 	Simulates ray-casting for the given `Ray` instance.
+	 * @param	cars		Vector of `Car` objects in the environment.
+	 * @param	minDistance	Minimum distance (m); points closer will be deleted.
+	 * @param   maxDistance Maximum distance (m); points further will be deleted.
+	 * @param   cloud		Point cloud object to populate with rays.
+	 * @param	slopeAngle	Angle (rad) of departure from $x$-$y$ plane.
+	 * @param	sderr		Standard deviation of error; measurement uncertainty.
+	 */
 	void rayCast(
 		const std::vector<Car>& cars, 
 		double minDistance, 
@@ -167,6 +181,11 @@ struct Lidar {
 		// So we don't have to worry about manually freeing the memory.
 	}
 
+	/* Performs a "scan" of the environment.
+	 *
+	 * @brief 	Performs a "scan" of the environment.
+	 * @returns	The point cloud object.
+	 */
 	pcl::PointCloud<pcl::PointXYZ>::Ptr scan() {
 		cloud->points.clear();
 		auto startTime = std::chrono::steady_clock::now();

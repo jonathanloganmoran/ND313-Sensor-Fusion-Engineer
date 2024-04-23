@@ -20,6 +20,13 @@
 #include "processPointClouds.cpp"
 
 
+/* Initialises the 3D "highway" environment. 
+ * 
+ * @brief   Creates the vector of objects for the 3D highway environment.
+ * @param   renderScene     If `true`, the objects created will be displayed.
+ * @param   viewer          The PCL window to render the objects onto.
+ * @returns Vector of `Car` objects to be rendered in the 3D environment.
+ */
 std::vector<Car> initHighway(
     bool renderScene, 
     pcl::visualization::PCLVisualizer::Ptr& viewer
@@ -64,6 +71,16 @@ std::vector<Car> initHighway(
 }
 
 
+/* Performs the 3D highway environment simulation.
+ *
+ * Here, the 3D highway scene is created. A LiDAR sensor object is initialised
+ * and configured. The LiDAR sensor performs a "scan" of the environment, then
+ * the resulting point cloud measurements (and rays emitted from the sensor)
+ * are visualised onto the environment.
+ *
+ * @brief   Creates the 3D environment and controls the LiDAR sensor object.
+ * @param   viewer          The PCL window to render the objects onto.
+ */
 void simpleHighway(
     pcl::visualization::PCLVisualizer::Ptr& viewer
 ) {
@@ -109,7 +126,13 @@ void simpleHighway(
 }
 
 
-//setAngle: SWITCH CAMERA ANGLE {XY, TopDown, Side, FPS}
+/* Initialises the camera view within the 3D environment.
+ *
+ * @brief   Sets the view-point at which the scene is viewed. 
+ * @param   setAngle    Pre-defined viewing angle; can choose one `CameraAngle` 
+ *                      from the following: [`XY`, `TopDown`, `Side`, `FPS`].
+ * @param   viewer      The PCL window to control the view-point within.
+ */
 void initCamera(
     CameraAngle setAngle, 
     pcl::visualization::PCLVisualizer::Ptr& viewer
@@ -162,6 +185,10 @@ void initCamera(
 }
 
 
+/* Entry-point for the simple highway simulation programme.
+ *
+ * @brief Initialises the 3D viewer and runs the simple highway simulation. 
+ */
 int main(
     int argc, 
     char** argv
