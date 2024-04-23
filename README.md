@@ -4,14 +4,14 @@ This is the repository for the ND313 - Sensor Fusion Nanodegree programme given 
 
 
 ### Courses
-* ⬜️ [Course 1: Lidar]()
+* ⬜️ [Course 1: Lidar](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar) — in progress! 🎉
 * ⬜️ [Course 2: Camera]()
 * ⬜️ [Course 3: Radar]()
 * ⬜️ [Course 4: Kalman Filters]()
 
 
 ### Projects
-* ⬜️ [Project 1.1: Lidar Obstacle Detection]()
+* ⬜️ [Project 1.1: Lidar Obstacle Detection](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar/1-1-Lidar-Obstacle-Detection) — in progress! 🎉
 * ⬜️ [Project 2.1: Camera-based 2D Feature Tracking]()
 * ⬜️ [Project 2.2: Object Tracking in 3D]()
 * ⬜️ [Project 3.1: Radar Target Generation and Detection]()
