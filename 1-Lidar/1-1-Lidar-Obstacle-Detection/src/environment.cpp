@@ -127,6 +127,7 @@ void simpleHighway(
     // However, we can instantiate instead on the heap (see `initCamera()`).
     // TODO:: Create point processor
     // ProcessPointClouds<pcl::PointXYZ> pointProcessorXYZ;
+    // ProcessPointClouds<pcl::PointXYZI> pointProcessorXYZI;
 }
 
 
