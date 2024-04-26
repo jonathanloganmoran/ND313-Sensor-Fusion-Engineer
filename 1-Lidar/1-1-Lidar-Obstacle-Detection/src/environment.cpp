@@ -122,7 +122,11 @@ void simpleHighway(
         pointCloud,
         "pointCloud"
     );
+    /** E1.2.1: Create a point processor. **/
+    // Here, we instantiate the `ProcessPointClouds` instances on the stack.
+    // However, we can instantiate instead on the heap (see `initCamera()`).
     // TODO:: Create point processor
+    // ProcessPointClouds<pcl::PointXYZ> pointProcessorXYZ;
 }
 
 
@@ -182,6 +186,12 @@ void initCamera(
     if (setAngle!= FPS) {
         viewer->addCoordinateSystem(1.0);
     }
+    /** E1.2.1: Create a point processor. **/
+    // Here, we instantiate the `ProcessPointClouds` instances on the heap.
+    // To instead use the stack, see `initHighway()`.
+    // TODO:: Create point processor
+    ProcessPointClouds<pcl::PointXYZ> *pointProcessorXYZ = new ProcessPointClouds<pcl::PointXYZ>();
+    ProcessPointClouds<pcl::PointXYZI> *pointProcessorXYZI = new ProcessPointClouds<pcl::PointXYZI>();
 }
 
 
