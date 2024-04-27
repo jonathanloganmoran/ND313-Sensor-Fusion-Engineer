@@ -50,9 +50,25 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
 template<typename PointT>
 std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::SeparateClouds(pcl::PointIndices::Ptr inliers, typename pcl::PointCloud<PointT>::Ptr cloud) 
 {
-  // TODO: Create two new point clouds, one cloud with obstacles and other with segmented plane
-
-    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(cloud, cloud);
+    /** E1.2.3: Separating the ground plane. **/
+    // TODO: Create two new point clouds, one cloud with obstacles and other with segmented plane
+    typename pcl::PointCloud<PointT>::Ptr obstacles = new pcl::PointCloud<PointT>();
+    typename pcl::PointCloud<PointT>::Ptr ground = new pcl::PointCloud<PointT>();
+    // Creating the filtering object
+    pcl::ExtractIndices<PointT> extract;
+    // Extracting the given `inliers` from the `cloud`
+    extract.setInputCloud(cloud);
+    extract.setIndices(inliers);
+    extract.setNegative(false);
+    // Storing extracted indices in output cloud
+    extract.filter(*ground);
+    std::cerr << "PointCloud representing the planar component: " << ground->width * ground->height << " data points.\n";
+    // Fetching the remaining non-extracted indices
+    // outliers = extract.getRemovedIndices();
+    // Copying over the remaining points into `obstacles` cloud
+    extract.setNegative(true);
+    extract.filter(*obstacles);
+    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(ground, obstacles);
     return segResult;
 }
 
@@ -62,7 +78,6 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 {
     // Time segmentation process
     auto startTime = std::chrono::steady_clock::now();
-	pcl::PointIndices::Ptr inliers;
     /** E1.2.2: Perform plane segmentation with PCL. **/
     // TODO:: Fill in this function to find inliers for the cloud.
     // Creating a new PCL segmentation class instance
@@ -71,7 +86,7 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
     pcl::PointIndices::Ptr inliers{new pcl::PointIndices};
     pcl::ModelCoefficients::Ptr coefficients{new pcl::ModelCoefficients};
     // Configuring the segmentation parameters
-    pcl.setMethodType(pcl::SAC_RANSAC);
+    seg.setMethodType(pcl::SAC_RANSAC);
     seg.setModelType(pcl::SACMODEL_PLANE);
     seg.setOptimizeCoefficients(true);
     seg.setMaxIterations(maxIterations);
