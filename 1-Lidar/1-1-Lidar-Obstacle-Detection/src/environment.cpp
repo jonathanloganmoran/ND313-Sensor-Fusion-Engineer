@@ -142,7 +142,7 @@ void simpleHighway(
         100,
         0.2
     );
-    // Rendering the clouds onto the viewer
+    /** E1.2.4: Rendering the clouds onto the viewer. **/
     renderPointCloud(
         segmentCloud.first,
         "ground",
