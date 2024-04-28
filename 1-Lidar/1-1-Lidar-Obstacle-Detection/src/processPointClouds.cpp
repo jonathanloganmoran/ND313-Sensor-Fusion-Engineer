@@ -70,6 +70,7 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
     // Copying over the remaining points into `obstacles` cloud
     extract.setNegative(true);
     extract.filter(*obstacles);
+    std::cerr << "PointCloud representing the obstacles component: " << obstacles->width * obstacles->height << " data points.\n"; 
     std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult(ground, obstacles);
     return segResult;
 }
