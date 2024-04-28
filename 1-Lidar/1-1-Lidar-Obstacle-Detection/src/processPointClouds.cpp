@@ -52,8 +52,10 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 {
     /** E1.2.3: Separating the ground plane. **/
     // TODO: Create two new point clouds, one cloud with obstacles and other with segmented plane
-    typename pcl::PointCloud<PointT>::Ptr obstacles = new pcl::PointCloud<PointT>();
-    typename pcl::PointCloud<PointT>::Ptr ground = new pcl::PointCloud<PointT>();
+    //typename pcl::PointCloud<PointT>::Ptr obstacles = new pcl::PointCloud<PointT>();
+    typename pcl::PointCloud<PointT>::Ptr obstacles(new pcl::PointCloud<PointT>());
+    //typename pcl::PointCloud<PointT>::Ptr ground = new pcl::PointCloud<PointT>();
+    typename pcl::PointCloud<PointT>::Ptr ground(new pcl::PointCloud<PointT>());
     // Creating the filtering object
     pcl::ExtractIndices<PointT> extract;
     // Extracting the given `inliers` from the `cloud`

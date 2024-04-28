@@ -126,8 +126,33 @@ void simpleHighway(
     // Here, we instantiate the `ProcessPointClouds` instances on the stack.
     // However, we can instantiate instead on the heap (see `initCamera()`).
     // TODO:: Create point processor
-    // ProcessPointClouds<pcl::PointXYZ> pointProcessorXYZ;
+    ProcessPointClouds<pcl::PointXYZ> pointProcessorXYZ;
     // ProcessPointClouds<pcl::PointXYZI> pointProcessorXYZI;
+    /** E1.2.3: Separating the ground plane. **/
+    // Fetching the resulting point clouds
+    // Here, we access the `pointProcessor` class function using the
+    // "arrow" accessor, since the object was instantiated on the heap. 
+    std::pair<
+        //typename pcl::PointCloud<PointT>,
+        pcl::PointCloud<pcl::PointXYZ>::Ptr,
+        //typename pcl::PointCloud<PointT>
+        pcl::PointCloud<pcl::PointXYZ>::Ptr
+    > segmentCloud = pointProcessorXYZ.SegmentPlane(
+        pointCloud,
+        100,
+        0.2
+    );
+    // Rendering the clouds onto the viewer
+    renderPointCloud(
+        segmentCloud.first,
+        "ground",
+        Color(0, 1, 0)
+    );
+    renderPointCloud(
+        segmentCloud.second,
+        "obstacles",
+        Color(1, 0, 0)
+    );
 }
 
 
@@ -191,8 +216,8 @@ void initCamera(
     // Here, we instantiate the `ProcessPointClouds` instances on the heap.
     // To instead use the stack, see `initHighway()`.
     // TODO:: Create point processor
-    ProcessPointClouds<pcl::PointXYZ> *pointProcessorXYZ = new ProcessPointClouds<pcl::PointXYZ>();
-    ProcessPointClouds<pcl::PointXYZI> *pointProcessorXYZI = new ProcessPointClouds<pcl::PointXYZI>();
+    // ProcessPointClouds<pcl::PointXYZ> *pointProcessorXYZ = new ProcessPointClouds<pcl::PointXYZ>();
+    // ProcessPointClouds<pcl::PointXYZI> *pointProcessorXYZI = new ProcessPointClouds<pcl::PointXYZI>();
 }
 
 
