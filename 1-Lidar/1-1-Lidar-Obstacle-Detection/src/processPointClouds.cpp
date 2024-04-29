@@ -47,6 +47,18 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
 }
 
 
+/** Segments the ground plane using the Point Cloud Library (PCL).
+ * 
+ * Extracts the given set of `inliers` (target points) from the input `cloud`,
+ * then copies them into a new point cloud using Point Cloud Library (PCL).
+ * The generated "segmented" point clouds (the ground plane and the `obstacles`)
+ * are returned in a `std::pair` instance. 
+ * 
+ * @brief   Separates the point cloud into "ground plane" and "obstacles".
+ * @param   inliers     Set of indices to extract into a new point cloud.
+ * @param   cloud       Point cloud instance to "separate".
+ * @returns segResult   The pair of point cloud instances.
+ */
 template<typename PointT>
 std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::SeparateClouds(pcl::PointIndices::Ptr inliers, typename pcl::PointCloud<PointT>::Ptr cloud) 
 {
@@ -76,6 +88,26 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 }
 
 
+/** Segments the input cloud using the Point Cloud Library (PCL).
+ * 
+ * The input `cloud` is parsed using PCL and a ground plane is estimated
+ * by iteratively fitting a planar surface using the RANSAC algorithm.
+ * The parameters for this algorithm are provided in the input arguments,
+ * `maxIterations` and `distanceThreshold`. 
+ * 
+ * For more information: 
+ * https://pointclouds.org/documentation/tutorials/planar_segmentation.html.
+ * 
+ * @brief   Performs ground plane segmentation using Point Cloud Library (PCL).
+ * @param   cloud               Point cloud to extract the ground plane from.
+ * @param   maxIterations       Number of iterations to run the optimisation.
+ * @param   distanceThreshold   Max distance from model to potential inlier.
+ *                              As a rule of thumb, this should be slightly larger
+ *                              than the resolution.
+ * @returns Pair of point clouds returned from the `SeparateClouds` function,
+ *          i.e., the segmented `ground` and the `obstacles` point clouds,
+ *          contained in the `first` and `second` pair indices, respectively.
+*/
 template<typename PointT>
 std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::SegmentPlane(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceThreshold)
 {
@@ -88,7 +120,7 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
     // Creating intermediary objects consumed by the PCL algorithm
     pcl::PointIndices::Ptr inliers{new pcl::PointIndices};
     pcl::ModelCoefficients::Ptr coefficients{new pcl::ModelCoefficients};
-    // Configuring the segmentation parameters
+    // Configuring the segmentation parameters and estimator
     seg.setMethodType(pcl::SAC_RANSAC);
     seg.setModelType(pcl::SACMODEL_PLANE);
     seg.setOptimizeCoefficients(true);
@@ -106,6 +138,7 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
     std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> segResult = SeparateClouds(inliers,cloud);
     return segResult;
 }
+
 
 
 template<typename PointT>
