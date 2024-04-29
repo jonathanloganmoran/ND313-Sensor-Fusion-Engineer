@@ -47,12 +47,16 @@ typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(ty
 }
 
 
-/** Segments the ground plane using the Point Cloud Library (PCL).
+/** Extracts the plane and obstacles using the Point Cloud Library (PCL).
  * 
- * Extracts the given set of `inliers` (target points) from the input `cloud`,
- * then copies them into a new point cloud using Point Cloud Library (PCL).
- * The generated "segmented" point clouds (the ground plane and the `obstacles`)
- * are returned in a `std::pair` instance. 
+ * Extracts the ground plane from the input `cloud` given the estimated set
+ * of `inliers`, i.e., the points determined to belong to the ground plane.
+ * 
+ * The extracted ground plane points are then copied into a new point cloud
+ * instance (`ground`). The remaining points are copied into an `obstacles`
+ * cloud. The two point clouds are returned in an `std::pair` instance, with
+ * the `first` index containing the `ground` and the `second` containing the
+ * `obstacles. 
  * 
  * @brief   Separates the point cloud into "ground plane" and "obstacles".
  * @param   inliers     Set of indices to extract into a new point cloud.
@@ -67,7 +71,6 @@ template<typename PointT> std::pair<
     typename pcl::PointCloud<PointT>::Ptr cloud
 ) {
     /** E1.2.3: Separating the ground plane. **/
-    // TODO: Create two new point clouds, one cloud with obstacles and other with segmented plane
     //typename pcl::PointCloud<PointT>::Ptr obstacles = new pcl::PointCloud<PointT>();
     typename pcl::PointCloud<PointT>::Ptr obstacles(
         new pcl::PointCloud<PointT>()
@@ -103,10 +106,12 @@ template<typename PointT> std::pair<
 }
 
 
-/** Segments the input cloud using the Point Cloud Library (PCL).
+/** Segments the input cloud into two using the Point Cloud Library (PCL).
  * 
- * The input `cloud` is parsed using PCL and a ground plane is estimated
- * by iteratively fitting a planar surface using the RANSAC algorithm.
+ * The input `cloud` is filtered and segmented into two such that a
+ * ground plane (the road surface) is estimated by iteratively fitting
+ * a planar surface using the RANSAC algorithm.
+ * 
  * The parameters for this algorithm are provided in the input arguments,
  * `maxIterations` and `distanceThreshold`. 
  * 
