@@ -100,7 +100,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 				std::pow(A, 2) + std::pow(B, 2)
 			);
 			// Checking distance against threshold
-			if (distance <= distanceTol) {
+			if (d_ji <= distanceTol) {
 				// If distance is smaller than threshold,
 				// Point is considered to be an "inlier".
 				numInliers += 1;
