@@ -65,20 +65,66 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 {
 	std::unordered_set<int> inliersResult;
 	srand(time(NULL));
-	
+	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
 	// TODO: Fill in this function
-
-	// For max iterations 
-
-	// Randomly sample subset and fit line
-
-	// Measure distance between every point and fitted line
-	// If distance is smaller than threshold count it as inlier
-
-	// Return indicies of inliers from fitted line with most inliers
-	
-	return inliersResult;
-
+	// Storing greatest number of inliers found
+	int bestNumInliersFound = std::numeric_limits<int>::min();
+	/** Performing model fitting for max iterations ***/
+	for (int i = 0; i < maxIterations; i++) {
+		// Randomly sample subset and fit line
+		/** Sampling two points "at random" **/
+		// Getting number of points total in point cloud
+		int numPoints = (int)cloud->size();
+		// Selecting two point indices "at random"
+		int pointIdx1 = srand(time(NULL)) % numPoints;
+		int pointIdx2 = srand(time(NULL)) % numPoints;
+		// Fetching the two randomly-selected points
+		pcl::PointXYZ p1 = cloud->points[pointIdx1];
+		pcl::PointXYZ p2 = cloud->points[pointIdx2];
+		/** "Fitting" the equation of a line to the two points **/
+		double A = p1.y - p2.y;
+		double B = p2.x - p1.x;
+		double C = (p1.x * p2.y) - (p1.y * p2.x);
+		/** Computing point-line distance over all points ***/
+		// Counting number of points with distances less than threshold
+		int numInliers = 0;
+		for (int j = 0; j < numPoints; j++) {
+			// Measure distance between every point and fitted line
+			// Fetching point at random
+			int pointIdxj = srand(time(NULL)) % numPoints;
+			pcl::PointXYZ p_j = cloud->points[pointIdxj];
+			// Calculating distance from point $j$ to line $i$
+			double d_ji = std::abs(
+				A * p_j.x + B * p_j.y + C
+			) / std::sqrt(
+				std::pow(A, 2) + std::pow(B, 2)
+			);
+			// If distance is smaller than threshold count it as inlier
+			// Checking distance against threshold
+			if (distance <= distanceTol) {
+				// Point is considered to be an "inlier"
+				numInliers += 1;
+			}
+		}
+		// Return indicies of inliers from fitted line with most inliers
+		// Checking if this line fit "best" (most) number of points
+		if (numInliers >= bestNumInliersFound) {
+			// This line is our "best fit" found so far,
+			// Store the indices of the two points which made up the line.
+			inliersResult.first = pointIdx1;
+			inliersResult.second = pointIdx2;
+		}
+	}
+	// Checking if we obtained an "invalid" result
+	if (numInliers <= 0) {
+		// No inliers found; or, error has occurred.
+		std::cerr << "Error has occurred; no inliers found ("
+							<< "numInliers: "
+							<< numInliers
+							<< ").\n";
+	}
+// Returning indices of inliers	from fitted line with most inliers
+return inliersResult;
 }
 
 int main ()
@@ -86,7 +132,6 @@ int main ()
 
 	// Create viewer
 	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
-
 	// Create data
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
 	
