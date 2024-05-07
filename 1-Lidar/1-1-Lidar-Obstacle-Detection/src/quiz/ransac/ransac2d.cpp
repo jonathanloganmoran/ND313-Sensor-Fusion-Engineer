@@ -70,6 +70,8 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 	// Storing greatest number of inliers found
 	int bestNumInliersFound = std::numeric_limits<int>::min();
 	/** Performing model fitting for max iterations ***/
+	// Counting number of current inlier points with distances less than threshold
+	int numInliers = 0;
 	for (int i = 0; i < maxIterations; i++) {
 		// Randomly sample subset and fit line
 		/** Sampling two points "at random" **/
@@ -86,8 +88,6 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 		double B = p2.x - p1.x;
 		double C = (p1.x * p2.y) - (p1.y * p2.x);
 		/** Computing point-line distance over all points ***/
-		// Counting number of points with distances less than threshold
-		int numInliers = 0;
 		for (int j = 0; j < numPoints; j++) {
 			// Measure distance between every point and fitted line
 			// Fetching point at random
