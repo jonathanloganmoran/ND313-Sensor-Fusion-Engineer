@@ -99,20 +99,22 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			) / std::sqrt(
 				std::pow(A, 2) + std::pow(B, 2)
 			);
-			// If distance is smaller than threshold count it as inlier
 			// Checking distance against threshold
 			if (distance <= distanceTol) {
-				// Point is considered to be an "inlier"
+				// If distance is smaller than threshold,
+				// Point is considered to be an "inlier".
 				numInliers += 1;
+				// Store point index in `inliersResult` set
+				inliersResult.insert(pointIdxj);
 			}
 		}
-		// Return indicies of inliers from fitted line with most inliers
 		// Checking if this line fit "best" (most) number of points
-		if (numInliers >= bestNumInliersFound) {
-			// This line is our "best fit" found so far,
-			// Store the indices of the two points which made up the line.
-			inliersResult.first = pointIdx1;
-			inliersResult.second = pointIdx2;
+		if (numInliers <= bestNumInliersFound) {
+			// If this line "fit" less points than the "best",
+			// Clear the inlier set and repeat with a different line.
+			inliersResult.clear();
+			// Reset number of inliers found for next model iteration
+			numInliers = 0;
 		}
 	}
 	// Checking if we obtained an "invalid" result
