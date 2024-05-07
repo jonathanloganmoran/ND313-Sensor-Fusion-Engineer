@@ -113,7 +113,8 @@ void simpleHighway(
     renderRays(
         viewer,
         lidar->position,
-        pointCloud
+        pointCloud,
+        Color(1, 1, 1)
     );
     /** E1.1.3: Display the detected points. **/
     // Displaying the PCD measurements
@@ -144,11 +145,13 @@ void simpleHighway(
     );
     /** E1.2.4: Rendering the clouds onto the viewer. **/
     renderPointCloud(
+        viewer,
         segmentCloud.first,
         "ground",
         Color(0, 1, 0)
     );
     renderPointCloud(
+        viewer,
         segmentCloud.second,
         "obstacles",
         Color(1, 0, 0)
