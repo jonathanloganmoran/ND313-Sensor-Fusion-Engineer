@@ -63,23 +63,25 @@ pcl::visualization::PCLVisualizer::Ptr initScene()
 
 std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int maxIterations, float distanceTol)
 {
+	// Storing the inliers of the "best fit" model
 	std::unordered_set<int> inliersResult;
+  // Initialising the random number generator
 	srand(time(NULL));
-	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
+  /*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
 	// TODO: Fill in this function
 	// Storing greatest number of inliers found
 	int bestNumInliersFound = std::numeric_limits<int>::min();
-	/** Performing model fitting for max iterations ***/
-	// Counting number of current inlier points with distances less than threshold
-	int numInliers = 0;
+	/** Performing model fitting for max iterations **/
 	for (int i = 0; i < maxIterations; i++) {
 		// Randomly sample subset and fit line
+		// Storing the inliers of this current line
+		std::unordered_set<int> inliersTemp;
 		/** Sampling two points "at random" **/
 		// Getting number of points total in point cloud
 		int numPoints = (int)cloud->size();
-		// Selecting two point indices "at random"
-		int pointIdx1 = srand(time(NULL)) % numPoints;
-		int pointIdx2 = srand(time(NULL)) % numPoints;
+		// Selecting two point indices "at random" 
+		int pointIdx1 = rand() % numPoints;
+		int pointIdx2 = rand() % numPoints;
 		// Fetching the two randomly-selected points
 		pcl::PointXYZ p1 = cloud->points[pointIdx1];
 		pcl::PointXYZ p2 = cloud->points[pointIdx2];
@@ -87,11 +89,12 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 		double A = p1.y - p2.y;
 		double B = p2.x - p1.x;
 		double C = (p1.x * p2.y) - (p1.y * p2.x);
-		/** Computing point-line distance over all points ***/
+		/** Computing point-line distance over all points **/
+		// Counting number of current inlier points with distances less than threshold
+		int numInliersCurrent = 0;
 		for (int j = 0; j < numPoints; j++) {
-			// Measure distance between every point and fitted line
-			// Fetching point at random
-			int pointIdxj = srand(time(NULL)) % numPoints;
+			// Fetching point "at random"
+			int pointIdxj = rand() % numPoints;
 			pcl::PointXYZ p_j = cloud->points[pointIdxj];
 			// Calculating distance from point $j$ to line $i$
 			double d_ji = std::abs(
@@ -103,30 +106,34 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			if (d_ji <= distanceTol) {
 				// If distance is smaller than threshold,
 				// Point is considered to be an "inlier".
-				numInliers += 1;
-				// Store point index in `inliersResult` set
-				inliersResult.insert(pointIdxj);
+				numInliersCurrent += 1;
+				// Store point index in the current inliers set
+				inliersTemp.insert(pointIdxj);
 			}
 		}
 		// Checking if this line fit "best" (most) number of points
-		if (numInliers <= bestNumInliersFound) {
-			// If this line "fit" less points than the "best",
-			// Clear the inlier set and repeat with a different line.
-			inliersResult.clear();
-			// Reset number of inliers found for next model iteration
-			numInliers = 0;
+		if (numInliers >= bestNumInliersFound) {
+			// If this line "fit" more or same number of points than the "best",
+			// Update the "best" inlier set to be this current one.
+			inliersResult = inliersTemp;
+			bestNumInliersFound = numInliersCurrent;
 		}
-	}
-	// Checking if we obtained an "invalid" result
-	if (numInliers <= 0) {
+		// Otherwise, clear this model's inlier set and repeat with new line
+		inliersTemp.clear();
+		// Rest number of inliers found for the next model iteration
+		numInliersCurrent = 0;
+	}  // Repeat next model iteration
+	// Checking if we obtained a "valid" result
+	if (bestNumInliersFound <= 0) {
 		// No inliers found; or, error has occurred.
 		std::cerr << "Error has occurred; no inliers found ("
 							<< "numInliers: "
-							<< numInliers
+							<< bestNumInliersFound
 							<< ").\n";
 	}
-// Returning indices of inliers	from fitted line with most inliers
-return inliersResult;
+	// Return indicies of inliers from "best" fitted line,
+	// i.e., the line that "fit" the with most number of inliers.
+	return inliersResult;
 }
 
 int main ()
