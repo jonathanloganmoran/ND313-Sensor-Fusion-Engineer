@@ -112,7 +112,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			}
 		}
 		// Checking if this line fit "best" (most) number of points
-		if (numInliers >= bestNumInliersFound) {
+		if (numInliersCurrent >= bestNumInliersFound) {
 			// If this line "fit" more or same number of points than the "best",
 			// Update the "best" inlier set to be this current one.
 			inliersResult = inliersTemp;
