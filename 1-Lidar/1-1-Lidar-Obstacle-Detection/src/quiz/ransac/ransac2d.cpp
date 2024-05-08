@@ -61,8 +61,30 @@ pcl::visualization::PCLVisualizer::Ptr initScene()
   	return viewer;
 }
 
-std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int maxIterations, float distanceTol)
-{
+
+/** Performs 2D line fitting with RANSAC algorithm.
+ * 
+ * The input point cloud is expected to contain 2D points, such that the
+ * $z$-axis values are zero. This function attempts to fit a 2D "model" to
+ * a set of points contained in the point cloud. In this case, the model is
+ * a 2D line. Any points within a certain distance to the line will be
+ * considered as "inlier" points. The distance threshold (`distanceTol`)
+ * and the number of model fitting iterations (`maxIterations`) are
+ * configurable as input arguments to this function.
+ * 
+ * @brief	Performs 2D line fitting with RANSAC over a 2D point cloud.
+ * @param		cloud						Input cloud to cluster, assumes all points are 2D.
+ * @param		maxIterations 	Number of times to "fit" a line to the points.
+ * @param		distanceTol			Distance to a given point and the current line for
+ * 													the point to be considered an "inlier".
+ * @returns	The set of indices of the "inlier" points which belonged to the
+ * 				  line of "best fit" (i.e., line with most number of inliers).
+ */
+std::unordered_set<int> Ransac(
+		pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, 
+		int maxIterations, 
+		float distanceTol
+) {
 	// Storing the inliers of the "best fit" model
 	std::unordered_set<int> inliersResult;
   // Initialising the random number generator
@@ -114,7 +136,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			pcl::PointXYZ p_j = cloud->points[pointIdxj];
 			std::cerr << ", p_j = " << p_j;
 			// Calculating distance from point $j$ to line $i$
-			double d_ji = std::abs(
+			double d_ji = std::fabs(
 				A * p_j.x + B * p_j.y + C
 			) / std::sqrt(
 				std::pow(A, 2) + std::pow(B, 2)
@@ -152,6 +174,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 	// i.e., the line that "fit" the with most number of inliers
 	return inliersResult;
 }
+
 
 int main ()
 {
