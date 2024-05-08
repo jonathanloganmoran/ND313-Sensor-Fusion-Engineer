@@ -93,6 +93,10 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 		// Counting number of current inlier points with distances less than threshold
 		int numInliersCurrent = 0;
 		for (int j = 0; j < numPoints; j++) {
+			std::cerr << "Iteration " << j << ": "
+								<< "numInliersCurrent = " << numInliersCurrent
+								<< ", p1 = " << p1
+								<< ", p2 = " << p2;
 			// Fetching point "at random"
 			int pointIdxj = rand() % numPoints;
 			// Checking if one of anchor points,
@@ -102,15 +106,18 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			) {
 				// Randomly-selected point is an anchor point,
 				// Skip to avoid divide-by-zero errors in distance calculation.
+				std::cerr << "\nAnchor point encountered.\n";
 				continue;
 			}
 			pcl::PointXYZ p_j = cloud->points[pointIdxj];
+			std::cerr << ", p_j = " << p_j;
 			// Calculating distance from point $j$ to line $i$
 			double d_ji = std::abs(
 				A * p_j.x + B * p_j.y + C
 			) / std::sqrt(
 				std::pow(A, 2) + std::pow(B, 2)
 			);
+			std::cerr << ", d_ji = " << d_ji << ".\n";
 			// Checking distance against threshold
 			if (d_ji <= distanceTol) {
 				// If distance is smaller than threshold,
