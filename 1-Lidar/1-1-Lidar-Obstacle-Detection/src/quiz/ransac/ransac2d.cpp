@@ -105,8 +105,10 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 				  || (pointIdxj == pointIdx2)
 			) {
 				// Randomly-selected point is an anchor point,
-				// Skip to avoid divide-by-zero errors in distance calculation.
 				std::cerr << "\nAnchor point encountered.\n";
+				// Add anchor point to set of inliers
+				inliersTemp.insert(j);
+				// Skip distance calculation to avoid divide-by-zero errors
 				continue;
 			}
 			pcl::PointXYZ p_j = cloud->points[pointIdxj];
@@ -121,7 +123,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 			// Checking distance against threshold
 			if (d_ji <= distanceTol) {
 				// If distance is smaller than threshold,
-				// Point is considered to be an "inlier".
+				// Point is considered to be an "inlier"
 				numInliersCurrent += 1;
 				// Store point index in the current inliers set
 				inliersTemp.insert(pointIdxj);
@@ -147,7 +149,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 							<< ").\n";
 	}
 	// Return indicies of inliers from "best" fitted line,
-	// i.e., the line that "fit" the with most number of inliers.
+	// i.e., the line that "fit" the with most number of inliers
 	return inliersResult;
 }
 
