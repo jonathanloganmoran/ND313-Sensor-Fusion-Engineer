@@ -95,6 +95,15 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 		for (int j = 0; j < numPoints; j++) {
 			// Fetching point "at random"
 			int pointIdxj = rand() % numPoints;
+			// Checking if one of anchor points,
+			// i.e., point used to fit line.
+			if ((pointIdxj == pointIdx1)
+				  || (pointIdxj == pointIdx2)
+			) {
+				// Randomly-selected point is an anchor point,
+				// Skip to avoid divide-by-zero errors in distance calculation.
+				continue;
+			}
 			pcl::PointXYZ p_j = cloud->points[pointIdxj];
 			// Calculating distance from point $j$ to line $i$
 			double d_ji = std::abs(
@@ -111,16 +120,15 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
 				inliersTemp.insert(pointIdxj);
 			}
 		}
-		// Checking if this line fit "best" (most) number of points
+		// Checking if this line fit the "best" (most) number of points
 		if (numInliersCurrent >= bestNumInliersFound) {
-			// If this line "fit" more or same number of points than the "best",
-			// Update the "best" inlier set to be this current one.
+			// Update the "best" inlier set to be this current one
 			inliersResult = inliersTemp;
 			bestNumInliersFound = numInliersCurrent;
 		}
 		// Otherwise, clear this model's inlier set and repeat with new line
 		inliersTemp.clear();
-		// Rest number of inliers found for the next model iteration
+		// Reset number of inliers found for the next model iteration
 		numInliersCurrent = 0;
 	}  // Repeat next model iteration
 	// Checking if we obtained a "valid" result
@@ -146,7 +154,7 @@ int main ()
 	
 
 	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
-	std::unordered_set<int> inliers = Ransac(cloud, 0, 0);
+	std::unordered_set<int> inliers = Ransac(cloud, 10, 0.5);
 
 	pcl::PointCloud<pcl::PointXYZ>::Ptr  cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOutliers(new pcl::PointCloud<pcl::PointXYZ>());
