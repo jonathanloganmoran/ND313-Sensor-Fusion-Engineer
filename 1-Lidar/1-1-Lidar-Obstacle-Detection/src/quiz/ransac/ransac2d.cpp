@@ -61,6 +61,32 @@ pcl::visualization::PCLVisualizer::Ptr initScene()
   	return viewer;
 }
 
+/** Performs planar fitting with RANSAC algorithm.
+ * 
+ * The input point cloud is expected to contain 3D points, such that the
+ * $z$-axis values are non-zero. This function attempts to fit a 3D "model" to
+ * a set of points contained in the point cloud. In this case, the model is
+ * a 3D planar surface. Any points within a certain distance to the plane will
+ * be considered as "inlier" points. The distance threshold (`distanceTol`)
+ * and the number of model fitting iterations (`maxIterations`) are
+ * configurable as input arguments to this function.
+ * 
+ * @brief	Performs planar fitting with RANSAC over a 3D point cloud.
+ * @param		cloud						Input cloud to cluster, assumes all points are 3D.
+ * @param		maxIterations 	Number of times to "fit" a line to the points.
+ * @param		distanceTol			Distance to a given point and the current plane for
+ * 													the point to be considered an "inlier".
+ * @returns	The set of indices of the "inlier" points which belonged to the
+ * 				  line of "best fit" (i.e., line with most number of inliers).
+ */
+std::unordered_set<int> RansacPlane(
+		pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, 
+		int maxIterations, 
+		float distanceTol
+) {
+	/*** E1.2.7: Perform RANSAC for 3D plane fitting. ***/
+}
+
 
 /** Performs 2D line fitting with RANSAC algorithm.
  * 
