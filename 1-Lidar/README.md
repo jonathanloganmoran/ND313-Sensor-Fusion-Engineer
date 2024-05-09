@@ -14,7 +14,8 @@ This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaro
 
 
 ### Demo Notebooks
-* ✅ [`2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb).
+* ✅ [`2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb);
+* ✅ [`2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/1.2/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb).
 
 
 ### Projects
@@ -47,7 +48,10 @@ Other topics covered in course lectures and reading materials:
 * Adjusting LiDAR sensor parameters in simulation.
 
 #### Lesson 2: Point Cloud Segmentation
-* TBD as course progresses.
+* Using the Point Cloud Library (PCL) to perform point cloud segmentation;
+* Implementing the RANSAC algorithm for planar model fitting;
+* Writing the RANSAC algorithm for 2D line fitting and 3D plane fitting;
+* Reviewing the literature and library of algorithms for ground plane segmentation.
 
 #### Lesson 3: Clustering Obstacles
 * TBD as course progresses.
