@@ -6,6 +6,7 @@
 #include "../../processPointClouds.h"
 // using templates for processPointClouds so also include .cpp to help linker
 #include "../../processPointClouds.cpp"
+#include <set>			// For ordered `set` (in `bits/stdc++.h`).
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr CreateData()
 {
@@ -84,7 +85,141 @@ std::unordered_set<int> RansacPlane(
 		int maxIterations, 
 		float distanceTol
 ) {
+	// Storing the inliers of the "best fit" model
+	std::unordered_set<int> inliersResult;
+	// Initialising the random number generator
+	std::srand(time(NULL));
 	/*** E1.2.7: Perform RANSAC for 3D plane fitting. ***/
+	int bestNumInliersFound = std::numeric_limits<int>::min();
+	/** Performing model fitting for max iterations **/
+	for (int i = 0; i < maxIterations; i++) {
+		// Storing the inliers of the current plane
+		std::unordered_set<int> inliersTemp;
+		/** Sampling three points "at random" **/
+		// Randomly sample subset of points to fit plane
+		int numPoints = (int)cloud->size();
+		// Selecting three point indices at "random"
+		// TODO: Check for co-linearity with matrix determinant calculation
+		// CANDO: Use `pcl::determinant3x3Matrix()` with `Matrix` type;
+		// Will need: `#include <pcl/common/eigen.h>`.
+		std::set anchorPoints;
+		while(anchorPoints.size() < 3) {
+			// Making sure the three "anchor" points are not equal,
+			// Since the `std::set` will not allow for duplicates.
+			anchorPoints.insert(
+				rand() % numPoints
+			);
+		}
+		if (anchorPoints.empty()) {
+			std::cerr << "Error; cannot form co-linear vectors, "
+							  <<  "Must have three unique points.";
+			return inliersResult;
+		}
+		elif (anchorPoints.size() < 3) {
+			std::cerr << "Error; not enough unique points found."
+			return inliersResult;
+		}
+		// Fetching the indices of the three anchor points to use later
+		std::set<int>::iterator idx = anchorPoints.begin();
+		int pointIdx1 = *idx; idx++;
+		int pointIdx2 = *idx; idx++;
+		int pointIdx3 = *idx;
+		// Fetching the three randomly-selected anchor points for the plane
+		pcl::PointXYZ p1 = clouds->points[pointIdx1];
+		pcl::PointXYZ p2 = clouds->points[pointIdx2];
+		pcl::PointXYZ p3 = clouds->points[pointIdx3];
+		/** "Fitting" the equation of a plane to the three points **/
+		// First, we form the two vectors originating from `p1`:
+		double v1[3] = {
+			p2.x - p1.x,
+			p2.y - p1.y,
+			p2.z - p1.z
+		};
+		double v2[3] = {
+			p3.x - p1.x,
+			p3.y - p1.y,
+			p3.z - p1.z
+		};
+		// Secondly, with the cross product we form a normal vector to the plane,
+		// Such that $v_{1} \times v_{2} = <i, j, k>$:
+		double v1xv2[3] = {
+			(p2.y - p1.y) * (p3.z - p1.z) - (p2.z - p1.z) * (p3.y - p1.y),
+			(p2.z - p1.z) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.z - p1.z),
+			(p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x)
+		};
+		// Lastly, we extract the values of the coefficients of the plane:
+		double A = v1xv2[0];
+		double B = v1xv2[1];
+		double C = v1xv2[2];
+		double D = -(
+			v1xv2[0] * p1.x + v1xv2[1] * p1.y + v1xv2[2] * p1.z
+		);
+		/** Computing point-plane distance over all points **/
+		// Counting number of current inliers found
+		// "Inlier" here means a point with a distance to the plane
+		// less than the given distance threshold value
+		int numInliersCurrent = 0;
+		for (int j = 0; j < numPoints; j++) {
+			std::cerr << "Iteration " << j << ": "
+								<< "numInliersCurrent = " << numInliersCurrent
+								<< ", p1 = " << p1
+								<< ", p2 = " << p2
+								<< ", p3 = " << p3;
+			// Fetching point "at random"
+			int pointIdxj = rand() % numPoints;
+			// Checking if one of the anchor points,
+			// i.e., the point(s) used to fit the plane
+			if ((pointIdxj == pointIdx1)
+			  || (pointIdxj == pointIdx2)
+				|| (pointIdxj == pointIdx3)  
+			) {
+				// Randomly-selected point is an anchor point,
+				std::cerr << "\nAnchor point encountered.\n";
+				// Add anchor point to set of inliers
+				inliersTemp.insert(j);
+				// Skip distance calculation to avoid divide-by-zero errors
+				// CANDO: Case (1) "Coincident" point - point is on plane.
+				// CANDO: Case (2) Parallel plane - plane is parallel to coordinate axes.
+				// CANDO: Case (3) Numerical instability - very small denominator values.
+				// CANDO: Case (4) Infinity distance - plane parallel to point vector.
+				continue;
+			}
+			pcl::PointXYZ p_j = cloud->points[pointIdxj];
+			std::cerr << ", p_j = " << p_j;
+			// Calculating distance from point $j$ to plane $v_{1} \times v_{2}$
+			double d_jv1xv2 = std::fabs(
+				A * p_j.x + B * p_j.y + C * p_j.z + D
+			) / std::sqrt(
+				std::pow(A, 2) + std::pow(B, 2) + std::pow(C, 2)
+			);
+			// Checking distance against threshold
+			if (d_jv1xv2 <= distanceTol) {
+				// Distance is within threshold,
+				// Point is considered to be an "inlier"
+				numInliersCurrent += 1;
+				inliersTemp.insert(pointIdxj);
+			}
+		} // Repeat for all remaining points in point cloud
+		// Checking if this plane fit the "best" (most) number of points
+		if (numInliersCurrent >= bestNumInliersFound) {
+			// Update the "best" inlier set to be this current one
+			inliersResult = inliersTemp;
+			bestNumInliersFound = numInliersCurrent;
+		}
+		// Otherwise, clear this model's inlier set and repeat with new plane
+		inliersTemp.clear();
+		// Reset number of inliers found for the next model iteration
+		numInliersCurrent = 0;
+	} // Repeat model fitting for maximum number of iterations
+	// Checking if we obtained a "valid" result
+	if (bestNumInliersFound <= 0) {
+		// No inliers found; or, error has occurred
+		std::cerr << "Error has occurred; no inliers found ("
+							<< "bestNumInliersFound: " << bestNumInliersFound
+							<< ").\n";
+	}
+	// Return indices of inliers from "best" fitted plane,
+	// i.e., the plane that "fit" the most number of inliers.
 }
 
 
@@ -170,7 +305,7 @@ std::unordered_set<int> Ransac(
 			std::cerr << ", d_ji = " << d_ji << ".\n";
 			// Checking distance against threshold
 			if (d_ji <= distanceTol) {
-				// If distance is smaller than threshold,
+				// Distance is within threshold,
 				// Point is considered to be an "inlier"
 				numInliersCurrent += 1;
 				// Store point index in the current inliers set
@@ -192,12 +327,11 @@ std::unordered_set<int> Ransac(
 	if (bestNumInliersFound <= 0) {
 		// No inliers found; or, error has occurred.
 		std::cerr << "Error has occurred; no inliers found ("
-							<< "numInliers: "
-							<< bestNumInliersFound
+							<< "bestNumInliersFound: " << bestNumInliersFound
 							<< ").\n";
 	}
-	// Return indicies of inliers from "best" fitted line,
-	// i.e., the line that "fit" the with most number of inliers
+	// Return indices of inliers from "best" fitted line,
+	// i.e., the line that "fit" the most number of inliers.
 	return inliersResult;
 }
 
