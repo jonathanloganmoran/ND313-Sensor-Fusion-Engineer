@@ -115,7 +115,7 @@ std::unordered_set<int> RansacPlane(
 							  <<  "Must have three unique points.";
 			return inliersResult;
 		}
-		elif (anchorPoints.size() < 3) {
+		else if (anchorPoints.size() < 3) {
 			std::cerr << "Error; not enough unique points found."
 			return inliersResult;
 		}
