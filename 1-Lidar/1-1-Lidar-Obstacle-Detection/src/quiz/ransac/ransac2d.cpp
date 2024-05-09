@@ -102,7 +102,7 @@ std::unordered_set<int> RansacPlane(
 		// TODO: Check for co-linearity with matrix determinant calculation
 		// CANDO: Use `pcl::determinant3x3Matrix()` with `Matrix` type;
 		// Will need: `#include <pcl/common/eigen.h>`.
-		std::set anchorPoints;
+		std::set<int> anchorPoints;
 		while(anchorPoints.size() < 3) {
 			// Making sure the three "anchor" points are not equal,
 			// Since the `std::set` will not allow for duplicates.
@@ -336,23 +336,32 @@ std::unordered_set<int> Ransac(
 }
 
 
-int main ()
-{
-
+int main() {
 	// Create viewer
 	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
-	// Create data
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
-	/*** E1.2.6: Modify the RANSAC model parameters. ***/
+	/*** E1.2.6 / E1.2.8: Modify the RANSAC model parameters. ***/
 	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
   int maxIterations = 10;
   double distanceTol = 0.5;
+	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
+	// First, we create the 2D data needed for this experiment using the helper function
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
+	// Then, we run the RANSAC for 2D line fitting function:
 	std::unordered_set<int> inliers = Ransac(
     cloud, 
     maxIterations, 
     distanceTol
   );
-	pcl::PointCloud<pcl::PointXYZ>::Ptr  cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
+	/*** E1.2.7: Perform RANSAC for 3D plane fitting. ***/
+  // First, we create the 3D data needed for this experiment using the helper function
+  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData3D();
+  // Then, we run the RANSAC for 3D plane fitting function:
+	std::unordered_set<int> inliers = RansacPlane(
+    cloud, 
+    maxIterations, 
+    distanceTol
+  );
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOutliers(new pcl::PointCloud<pcl::PointXYZ>());
 
 	for(int index = 0; index < cloud->points.size(); index++)
@@ -363,8 +372,6 @@ int main ()
 		else
 			cloudOutliers->points.push_back(point);
 	}
-
-
 	// Render 2D point cloud with inliers and outliers
 	if(inliers.size())
 	{
@@ -380,5 +387,4 @@ int main ()
   	{
   	  viewer->spinOnce ();
   	}
-  	
 }
