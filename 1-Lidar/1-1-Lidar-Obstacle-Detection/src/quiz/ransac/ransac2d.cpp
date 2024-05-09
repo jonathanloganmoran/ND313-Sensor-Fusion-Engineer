@@ -125,9 +125,9 @@ std::unordered_set<int> RansacPlane(
 		int pointIdx2 = *idx; idx++;
 		int pointIdx3 = *idx;
 		// Fetching the three randomly-selected anchor points for the plane
-		pcl::PointXYZ p1 = clouds->points[pointIdx1];
-		pcl::PointXYZ p2 = clouds->points[pointIdx2];
-		pcl::PointXYZ p3 = clouds->points[pointIdx3];
+		pcl::PointXYZ p1 = cloud->points[pointIdx1];
+		pcl::PointXYZ p2 = cloud->points[pointIdx2];
+		pcl::PointXYZ p3 = cloud->points[pointIdx3];
 		/** "Fitting" the equation of a plane to the three points **/
 		// First, we form the two vectors originating from `p1`:
 		double v1[3] = {
