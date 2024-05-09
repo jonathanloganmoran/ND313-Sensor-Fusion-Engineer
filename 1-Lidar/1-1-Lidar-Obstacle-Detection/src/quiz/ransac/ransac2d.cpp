@@ -342,7 +342,7 @@ int main() {
 	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
 	/*** E1.2.6 / E1.2.8: Modify the RANSAC model parameters. ***/
 	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
-  int maxIterations = 10;
+  int maxIterations = 100;
   double distanceTol = 0.5;
 	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
 	// First, we create the 2D data needed for this experiment using the helper function
