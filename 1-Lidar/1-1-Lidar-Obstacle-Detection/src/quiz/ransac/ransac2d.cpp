@@ -220,6 +220,7 @@ std::unordered_set<int> RansacPlane(
 	}
 	// Return indices of inliers from "best" fitted plane,
 	// i.e., the plane that "fit" the most number of inliers.
+	return inliersResult;
 }
 
 
