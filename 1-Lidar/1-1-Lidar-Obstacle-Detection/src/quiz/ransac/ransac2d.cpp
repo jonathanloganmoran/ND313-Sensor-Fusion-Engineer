@@ -218,6 +218,7 @@ std::unordered_set<int> RansacPlane(
 							<< "bestNumInliersFound: " << bestNumInliersFound
 							<< ").\n";
 	}
+	std::cerr << "\nbestNumInliersFound: " << bestNumInliersFound << ".\n";
 	// Return indices of inliers from "best" fitted plane,
 	// i.e., the plane that "fit" the most number of inliers.
 	return inliersResult;
@@ -331,6 +332,7 @@ std::unordered_set<int> Ransac(
 							<< "bestNumInliersFound: " << bestNumInliersFound
 							<< ").\n";
 	}
+	std::cerr << "\nbestNumInliersFound: " << bestNumInliersFound << ".\n";
 	// Return indices of inliers from "best" fitted line,
 	// i.e., the line that "fit" the most number of inliers.
 	return inliersResult;
