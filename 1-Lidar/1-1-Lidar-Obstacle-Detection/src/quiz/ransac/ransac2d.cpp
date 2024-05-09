@@ -348,7 +348,7 @@ int main() {
   double distanceTol = 0.5;
 	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
 	// First, we create the 2D data needed for this experiment using the helper function
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
+	//pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
 	// Then, we run the RANSAC for 2D line fitting function:
 	std::unordered_set<int> inliers = Ransac(
     cloud, 
@@ -357,13 +357,13 @@ int main() {
   );
 	/*** E1.2.7: Perform RANSAC for 3D plane fitting. ***/
   // First, we create the 3D data needed for this experiment using the helper function
-  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData3D();
+  //pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData3D();
   // Then, we run the RANSAC for 3D plane fitting function:
-	std::unordered_set<int> inliers = RansacPlane(
-    cloud, 
-    maxIterations, 
-    distanceTol
-  );
+	// std::unordered_set<int> inliers = RansacPlane(
+  //   cloud, 
+  //   maxIterations, 
+  //   distanceTol
+  // );
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOutliers(new pcl::PointCloud<pcl::PointXYZ>());
 
