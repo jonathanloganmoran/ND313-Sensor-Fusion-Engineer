@@ -172,7 +172,22 @@ template<typename PointT> std::pair<
 }
 
 
-
+/** Performs Euclidean clustering with the Point Cloud Library (PCL).
+ *
+ * Point clusters are extracted with `pcl::EuclideanClusterExtraction` class;
+ * The clusters are populated with neighbouring points through a distance-based seach
+ * query. Using a nearest neighbours algorithm, the candidate points are searched with
+ * a KD-Tree structure, which restricts the possible points to those in a general vicinty.
+ * This algorithm proposed in Rusu et al. is described in detail for the Euclidean clustering
+ * problem described here:
+ * https://pcl.readthedocs.io/projects/tutorials/en/master/cluster_extraction.html.
+ *
+ * @brief Performs Euclidean clustering with the Point Cloud Library (PCL).
+ * @param cloud                          Point cloud to cluster.
+ * @param clusterTolerance Distance threshold (metres) to group points.
+ * @param minSize                     Minimum points to be found in each cluster.
+ * @param maxSize                     Maximum points to be found in each cluster.
+ */
 template<typename PointT>
 std::vector<typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::Clustering(typename pcl::PointCloud<PointT>::Ptr cloud, float clusterTolerance, int minSize, int maxSize)
 {
