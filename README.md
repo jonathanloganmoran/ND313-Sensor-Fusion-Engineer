@@ -58,6 +58,7 @@ Datasets:
 
 ### Other resources
 Companion code:
+* [`SFND_Lidar_Obstacle_Detection` | Starter code by @Udacity](https://github.com/udacity/SFND_Lidar_Obstacle_Detection);
 * TBD as course progresses.
 
 Repository plugins:
