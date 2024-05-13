@@ -183,14 +183,20 @@ template<typename PointT> std::pair<
  * https://pcl.readthedocs.io/projects/tutorials/en/master/cluster_extraction.html.
  *
  * @brief Performs Euclidean clustering with the Point Cloud Library (PCL).
- * @param cloud                          Point cloud to cluster.
- * @param clusterTolerance Distance threshold (metres) to group points.
- * @param minSize                     Minimum points to be found in each cluster.
- * @param maxSize                     Maximum points to be found in each cluster.
+ * @param   cloud                          Point cloud to cluster.
+ * @param   clusterTolerance Distance threshold (metres) to group points.
+ * @param   minSize                     Minimum points to be found in each cluster.
+ * @param   maxSize                     Maximum points to be found in each cluster.
+ * @returns Point cloud containing the segmented point clusters.
  */
-template<typename PointT>
-std::vector<typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::Clustering(typename pcl::PointCloud<PointT>::Ptr cloud, float clusterTolerance, int minSize, int maxSize)
-{
+template<typename PointT> std::vector<
+    typename pcl::PointCloud<PointT>::Ptr
+> ProcessPointClouds<PointT>::Clustering(
+    typename pcl::PointCloud<PointT>::Ptr cloud,
+    float clusterTolerance,
+    int minSize,
+    int maxSize
+) {
 
     // Time clustering process
     auto startTime = std::chrono::steady_clock::now();
