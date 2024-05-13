@@ -1,0 +1,43 @@
+### Project-specific
+# Workspace files
+workspace/
+# Large datasets
+/data/GTSRB/Final_Training/**
+# Large PCD files
+*.pcd
+
+### Python-specific
+# byte-compiled / optimised / DLL files
+__pycache__/
+*$py.class
+.DS_STORE
+
+# Python distribution / packaging
+.Python
+buld/
+lib/
+lib64/
+var/
+MANIFEST
+
+# Jupyter
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Python environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VSCode IDE
+*.vscode/**
+
+# XCode IDE
+*.xcworkspace
