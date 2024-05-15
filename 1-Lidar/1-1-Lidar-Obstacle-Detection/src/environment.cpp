@@ -164,7 +164,7 @@ void simpleHighway(
     // Performing the clustering
     std::vector<
         pcl::PointCloud<pcl::PointXYZ>::Ptr
-    > cloudClusters = pointProcessor.Clustering(
+    > cloudClusters = pointProcessorXYZ.Clustering(
         segmentCloud.first,
         distanceTol,
         minSize,
@@ -182,7 +182,7 @@ void simpleHighway(
     // Rendering each cluster onto the PCL viewer
     for (pcl::PointCloud<pcl::PointXYZ>::Ptr cluster : cloudClusters) {
         std::cout << "cluster size: ";
-        pointProcessor.numPoints(cluster);
+        pointProcessorXYZ.numPoints(cluster);
         renderPointCloud(
             viewer,
             cluster,
