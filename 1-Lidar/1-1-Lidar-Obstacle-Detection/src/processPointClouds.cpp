@@ -204,7 +204,7 @@ template<typename PointT> std::vector<
     // TODO:: Fill in the function to perform euclidean clustering to group detected obstacles
     // Creating the KD-Tree object for the search method of the extraction
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
-        new pcl::search::KdTree<pcl::PointXYZ
+        new pcl::search::KdTree<pcl::PointXYZ>
     );
     // Creating the Euclidean clustering class instance
     pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
