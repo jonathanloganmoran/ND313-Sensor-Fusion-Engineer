@@ -113,15 +113,15 @@ void simpleHighway(
     renderRays(
         viewer,
         lidar->position,
-        pointCloud,
-        Color(1, 1, 1)
+        pointCloud
     );
     /** E1.1.3: Display the detected points. **/
     // Displaying the PCD measurements
     renderPointCloud(
         viewer,
         pointCloud,
-        "pointCloud"
+        "pointCloud",
+        Color(1, 1, 1)
     );
     /** E1.2.1: Create a point processor. **/
     // Here, we instantiate the `ProcessPointClouds` instances on the stack.
