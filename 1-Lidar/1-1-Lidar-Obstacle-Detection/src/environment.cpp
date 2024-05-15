@@ -156,6 +156,41 @@ void simpleHighway(
         "obstacles",
         Color(1, 0, 0)
     );
+    /** E1.3.1: Euclidean clustering with PCL. **/
+    // Defining the clustering parameters
+    double distanceTol = 1.0;           // Euclidean threshold (m)
+    int minSize = 3;
+    int maxSize = 30;
+    // Performing the clustering
+    std::vector<
+        pcl::PointCloud<pcl::PointXYZ>::Ptr
+    > cloudClusters = pointProcessor.Clustering(
+        segmentCloud.first,
+        distanceTol,
+        minSize,
+        maxSize
+    );
+    /** E1.3.2: Visualising the clusters found. **/
+    // Using a unique identifer for each cluster found
+    int clusterId = 0;
+    // Set of colours to use when rendering the clusters found
+    std::vector<Color> colors = {
+        Color(1, 0, 0),
+        Color(0, 1, 0),
+        Color(0, 0, 1)
+    };
+    // Rendering each cluster onto the PCL viewer
+    for (pcl::PointCloud<pcl::PointXYZ>::Ptr cluster : cloudClusters) {
+        std::cout << "cluster size: ";
+        pointProcessor.numPoints(cluster);
+        renderPointCloud(
+            viewer,
+            cluster,
+            "obstCloud" + std::to_string(clusterId),
+            colors[clusterId]
+        );
+        ++clusterId;
+    }
 }
 
 
