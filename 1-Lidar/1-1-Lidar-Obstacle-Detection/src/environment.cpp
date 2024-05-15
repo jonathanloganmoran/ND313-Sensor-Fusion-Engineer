@@ -90,8 +90,7 @@ void simpleHighway(
     /** E1.1.0: Create 3D highway scene. **/
     // RENDER OPTIONS
     // (1) Set `renderScene` to `false`: removes the highway lanes and vehicle objects.
-    // bool renderScene = true;
-    bool renderScene = false;
+    bool renderScene = true;
     // Displaying the "simple highway" scene objects
     std::vector<Car> cars = initHighway(
         renderScene, 
@@ -111,19 +110,19 @@ void simpleHighway(
     // RENDER OPTIONS
     // (2) Comment out `renderRays`: removes the simulated LiDAR laser beams.
     // Projecting the LiDAR sensor rays onto the scene
-    // renderRays(
-    //     viewer,
-    //     lidar->position,
-    //     pointCloud
-    // );
+    renderRays(
+        viewer,
+        lidar->position,
+        pointCloud
+    );
     /** E1.1.3: Display the detected points. **/
     // Displaying the PCD measurements
-    // renderPointCloud(
-    //     viewer,
-    //     pointCloud,
-    //     "pointCloud",
-    //     Color(1, 1, 1)
-    // );
+    renderPointCloud(
+        viewer,
+        pointCloud,
+        "pointCloud",
+        Color(1, 1, 1)
+    );
     /** E1.2.1: Create a point processor. **/
     // Here, we instantiate the `ProcessPointClouds` instances on the stack.
     // However, we can instantiate instead on the heap (see `initCamera()`).
@@ -145,18 +144,18 @@ void simpleHighway(
         0.2
     );
     /** E1.2.4: Rendering the clouds onto the viewer. **/
-    // renderPointCloud(
-    //     viewer,
-    //     segmentCloud.first,
-    //     "ground",
-    //     Color(0, 1, 0)
-    // );
-    // renderPointCloud(
-    //     viewer,
-    //     segmentCloud.second,
-    //     "obstacles",
-    //     Color(1, 0, 0)
-    // );
+    renderPointCloud(
+        viewer,
+        segmentCloud.first,
+        "ground",
+        Color(0, 1, 0)
+    );
+    renderPointCloud(
+        viewer,
+        segmentCloud.second,
+        "obstacles",
+        Color(1, 0, 0)
+    );
     /** E1.3.1: Euclidean clustering with PCL. **/
     // Defining the clustering parameters
     double distanceTol = 1.0;           // Euclidean threshold (m)
