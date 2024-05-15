@@ -183,7 +183,7 @@ template<typename PointT> std::pair<
  * https://pcl.readthedocs.io/projects/tutorials/en/master/cluster_extraction.html.
  *
  * @brief Performs Euclidean clustering with the Point Cloud Library (PCL).
- * @param   cloud            Point cloud to cluster.
+ * @param   cloud            Point cloud to cluster. Assumed to be filtered.
  * @param   clusterTolerance Distance threshold (metres) to group points.
  * @param   minSize          Minimum points to be found in each cluster.
  * @param   maxSize          Maximum points to be found in each cluster.
@@ -200,7 +200,46 @@ template<typename PointT> std::vector<
     // Time clustering process
     auto startTime = std::chrono::steady_clock::now();
     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
+    /*** E1.3.1: Euclidean clustering with PCL. ***/
     // TODO:: Fill in the function to perform euclidean clustering to group detected obstacles
+    // Creating the KD-Tree object for the search method of the extraction
+    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
+        new pcl::search::KdTree<pcl::PointXYZ
+    );
+    // Creating the Euclidean clustering class instance
+    pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+    // Setting the input cloud for the KD-Tree
+    // NOTE: We assume the ground plane has been "filtered" out
+    tree->setInputCloud(cloud);
+    // Configuring the clustering parameters
+    std::vector<pcl::PointIndices> clusterIndices;
+    ec.setClusterTolerance(clusterTolerance);
+    ec.setMinClusterSize(minSize);
+    ec.setMaxClusterSize(maxSize);
+    ec.setSearchMethod(tree);
+    ec.setInputCloud(cloud);
+    ec.extract(clusterIndices);
+    // Performing the clustering with Euclidean distance
+    for (const auto& cluster : clusterIndices) {
+        // Creating a new point cloud instance for the current cluster
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudCluster(
+            new pcl::PointCloud<pcl::PointXYZ>
+        );
+        for (const auto& idx : cluster.indices) {
+            // Copying over the indices of the current cluster
+            cloudCluster->push_back(
+                (*cloud)[idx]
+            );
+        }
+        // Setting the cluster parameters
+        cloudCluster->width = cloudCluster->size();
+        cloudCluster->height = 1;
+        cloudCluster->is_dense = true;
+        std::cout << "PointCloud representing the Cluster: "
+                  << cloudCluster->size() << " data points.\n";
+        // Adding cluster to return vector
+        clusters.push_back(cloudCluster);
+    }
     auto endTime = std::chrono::steady_clock::now();
     auto elapsedTime = std::chrono::duration_cast<
         std::chrono::milliseconds
