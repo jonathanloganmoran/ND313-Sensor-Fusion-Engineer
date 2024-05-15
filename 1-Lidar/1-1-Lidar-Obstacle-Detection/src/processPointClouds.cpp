@@ -175,18 +175,18 @@ template<typename PointT> std::pair<
 /** Performs Euclidean clustering with the Point Cloud Library (PCL).
  *
  * Point clusters are extracted with `pcl::EuclideanClusterExtraction` class;
- * The clusters are populated with neighbouring points through a distance-based seach
- * query. Using a nearest neighbours algorithm, the candidate points are searched with
- * a KD-Tree structure, which restricts the possible points to those in a general vicinty.
- * This algorithm proposed in Rusu et al. (2010) is described in detail for the Euclidean
- * clustering problem described here:
+ * The clusters are populated with neighbouring points through a distance-based
+ * seach query. Using a nearest neighbours algorithm, the candidate points are
+ * searched with a KD-Tree structure, which restricts the possible points to
+ * those in a general vicinty. This algorithm proposed in Rusu et al. (2010)
+ * is described in detail for the Euclidean clustering problem:
  * https://pcl.readthedocs.io/projects/tutorials/en/master/cluster_extraction.html.
  *
  * @brief Performs Euclidean clustering with the Point Cloud Library (PCL).
- * @param   cloud                          Point cloud to cluster.
+ * @param   cloud            Point cloud to cluster.
  * @param   clusterTolerance Distance threshold (metres) to group points.
- * @param   minSize                     Minimum points to be found in each cluster.
- * @param   maxSize                     Maximum points to be found in each cluster.
+ * @param   minSize          Minimum points to be found in each cluster.
+ * @param   maxSize          Maximum points to be found in each cluster.
  * @returns Point cloud containing the segmented point clusters.
  */
 template<typename PointT> std::vector<
@@ -197,18 +197,17 @@ template<typename PointT> std::vector<
     int minSize,
     int maxSize
 ) {
-
     // Time clustering process
     auto startTime = std::chrono::steady_clock::now();
-
     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
-
     // TODO:: Fill in the function to perform euclidean clustering to group detected obstacles
-
     auto endTime = std::chrono::steady_clock::now();
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
-    std::cout << "clustering took " << elapsedTime.count() << " milliseconds and found " << clusters.size() << " clusters" << std::endl;
-
+    auto elapsedTime = std::chrono::duration_cast<
+        std::chrono::milliseconds
+    >(endTime - startTime);
+    std::cout << "Clustering took " 
+              << elapsedTime.count() << " milliseconds,"
+              << " and found " << clusters.size() << " clusters.\n";
     return clusters;
 }
 
