@@ -46,6 +46,12 @@ struct KdTree {
 	~KdTree() {
 		delete root;
 	}
+	/** Inserts a new `Node` instance with given `value` into the K-D Tree.
+	 * 
+	 * @brief Inserts a new `Node` with given value (`point`) into the tree.
+	 * @param point  Value to assign the new `Node` to insert.
+	 * @param id	 Counter indicating the sequential position of the new node.
+	*/
 	void insert(
 		std::vector<float> point, 
 		int id
