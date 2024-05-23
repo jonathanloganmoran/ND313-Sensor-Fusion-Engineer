@@ -147,7 +147,7 @@ struct KdTree {
 		int id
 	) {
 		// Begin tree traversal at the initial depth
-		int depth = 0
+		int depth = 0;
 		// Recursive function call to traverse the tree and insert a new node
 		insert(
 			this->root,
