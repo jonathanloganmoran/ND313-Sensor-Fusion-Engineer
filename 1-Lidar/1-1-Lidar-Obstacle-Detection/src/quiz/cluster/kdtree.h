@@ -98,7 +98,7 @@ struct KdTree {
 		}
 		// CASE 2: Determine which child node to branch to
 		// Depending on the point value given, choose left or right
-		else if (node->point[axis] > point) {
+		else if (node->point[axis] > point[axis]) {
 			// Value of point to insert is less than current node,
 			// i.e., branch to left child node.
 			insert(
@@ -108,7 +108,7 @@ struct KdTree {
 				id
 			);
 		}
-		else if (node->point[axis] < point) {
+		else if (node->point[axis] < point[axis]) {
 			// Value of point to insert is greater than current node,
 			// i.e., branch to right child node.
 			insert(
