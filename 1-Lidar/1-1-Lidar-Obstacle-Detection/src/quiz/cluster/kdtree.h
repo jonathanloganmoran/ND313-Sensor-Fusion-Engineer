@@ -48,9 +48,14 @@ struct KdTree {
 	}
 	/** Inserts a new `Node` instance with given `value` into the K-D Tree.
 	 * 
+	 * TODO: How is recursion handled in the `insert` function?
+	 * TODO: How is the `getNewNode` translatable to the `KdTree` struct we have here?
+	 * 
 	 * @brief Inserts a new `Node` with given value (`point`) into the tree.
 	 * @param point  Value to assign the new `Node` to insert.
-	 * @param id	 Counter indicating the sequential position of the new node.
+	 * @param id	 Counter indicating the sequential position of the new node,
+	 * 				 TODO: is `id` the depth of the tree? Used to determine the
+	 * 				 axis to split at the current iteration?
 	*/
 	void insert(
 		std::vector<float> point, 
@@ -58,7 +63,31 @@ struct KdTree {
 	) {
 		// TODO: Fill in this function to insert a new point into the tree
 		// the function should create a new node and place correctly with in the root 
-
+		/** E1.3.3: Inserting a new `Node` into the tree. **/
+		/* Traversing the tree until an "empty" node is found */
+		// Using the point value to determine where the node should be inserted
+		// TODO: Switch the usage of `node` to be synonymous with "current node"
+		// I believe that would be the `root` member variable defined above.
+		if (node->point == NULL) {
+			// CASE 1: Found an "empty" node,
+			// TODO: insert new `Node` into this location.
+		}
+		// CASE 2: Determine which child node to branch to
+		// Depending on the point value given, choose left or right to insert
+		else if (node->point > point) {
+			// Value of point to insert is less than current node,
+			// i.e., branch to- and insert at the left child node.
+			// insert(node->left, new Node(value, id+1));
+		}
+		else if (node->point < point) {
+			// Value of point to insert is greater than current node,
+			// i.e., branch to- and insert at the right child node.
+			// insert(node->right, new Node(value, id+1));
+		}
+		else {
+			// ERROR; should not occur.
+			// TODO: Handle error with case(s).
+		}
 	}
 	// return a list of point ids in the tree that are within distance of target
 	std::vector<int> search(
