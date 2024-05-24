@@ -137,8 +137,19 @@ struct KdTree {
 			point,
 			id
 		);
-
 	}
+	/** Searches the K-D Tree and returns neighbouring points to `target`.
+	 * 
+	 * A nearest neighbour search is performed over the K-D Tree, which acts
+	 * to partition the possible search space into smaller, more probable
+	 * regions using the provided distance threshold (`distanceTol`).
+	 * 
+	 * @brief Searches the K-D Tree for neighbouring points to `target`.
+	 * @param target	  2D point vector of node to search for in tree.
+	 * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+	 * @returns Vector of node `id` values that are in proximity to `target`.
+	 * 
+	*/
 	// return a list of point ids in the tree that are within distance of target
 	std::vector<int> search(
 		std::vector<float> target, 
