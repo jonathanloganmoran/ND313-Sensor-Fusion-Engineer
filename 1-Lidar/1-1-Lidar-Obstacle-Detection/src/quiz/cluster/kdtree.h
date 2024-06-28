@@ -288,9 +288,7 @@ struct KdTree {
 	 * @param target	  2D point vector of node to search for in tree.
 	 * @param distanceTol Distance tolerance (in metres) used to bisect search space.
 	 * @returns Vector of node `id` values that are in proximity to `target`.
-	 * 
 	*/
-	// return a list of point ids in the tree that are within distance of target
 	std::vector<int> search(
 		std::vector<float> target, 
 		float distanceTol
