@@ -184,8 +184,8 @@ struct KdTree {
 	 * $$d(p, q) = \Vert{p-q}\Vert.$$
 	 * 
 	 * @brief Computes the Euclidean distance in $k$-dimensional space.
-	 * @param target    The point to compute distance to.
-	 * @param candidate The point candidate to compute distance to `target`.
+	 * @param target    The point vector to compute distance to `candidate`.
+	 * @param candidate The point vector to compute distance to `target`.
 	 * @returns The Euclidean distance in $k$-dimensional space.
 	 * 
 	*/
@@ -209,10 +209,27 @@ struct KdTree {
 		}
 		return std::sqrt(sum);
 	}
-	/** Recursive function to search the K-D tree and return neighbours.
+	/** Recursive function to search the K-D tree and find neighbours.
 	 * 
+	 * This is the helper function which recursively traverses the K-D Tree
+	 * by determining which of the coordinate axes, $x$- or $y$-, to split on
+	 * at each iteration. In this helper function the distances to each point
+	 * candidate are computed. The number of points needed to consider are
+	 * minimised by the use of a "sanity check", which helps to eliminate
+	 * computing the Euclidean distance to any points that are "outside"
+	 * the "bounding box" formed by the `target` at a distance given by
+	 * `distanceTol`. If a candidate point is considered to be within this
+	 * bounding box, then the Euclidean distance to the point is calculated.
+	 * If the distance is less than `distanceTol`, then the `id` of the point
+	 * candidate is added to the `ids` vector and determined to be a 
+	 * "neighbour" of the `target` point.
 	 * 
-	 *
+	 * @brief Recursive function to search the K-D tree and find neighbours.
+	 * @param node        Current node in the K-D Tree to examine.
+	 * @param depth       Counter used to determine which axis to branch on.
+	 * @param ids		  Vector of node `id` values that are in proximity to `target`.
+	 * @param target 	  2D point vector of node to search for in tree.
+	 * @param distanceTol Distance tolerance (in metres) used to bisect search space.
 	*/
 	void search(
 		Node *&node,
