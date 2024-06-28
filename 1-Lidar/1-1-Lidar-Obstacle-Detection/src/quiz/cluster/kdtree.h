@@ -158,24 +158,18 @@ struct KdTree {
 		if (node == NULL) {
 			// Error; reached end of tree
 		}
-		else if (
-			node->left == NULL || 
-			node->right == NULL
-		) {
-			// Reached leaf node
-			// Computing distance from point to `target` as $x$- or $y$ comparison
-			float dist = std::abs(
-				target[axis] - node->point[axis]
-			);
+		// Performing sanity check
+		if (withinBoundingBox(target, node, distanceTol)) {
+			// Point is "near" `target`,
+			// Checking if distance is within threshold
+			float dist = euclideanDistance(target, node);
 			if (dist <= distanceTol) {
 				// Found neighbouring point,
 				// Inserting node `id` into neighbours list
 				ids.insert(node->id);
 			}
-		}
-		else if (
-			target[axis] <= node->point[axis]
-		) {
+		} // Otherwise, skipping distance calculation and branching
+		else if (target[axis] <= node->point[axis]) {
 			// Branching to the left
 			search(
 				node->left,
@@ -184,9 +178,7 @@ struct KdTree {
 				distanceTol
 			);
 		}
-		else if (
-			target[axis] > node->point[axis]
-		) {
+		else if (target[axis] > node->point[axis]) {
 			// Branching to the right
 			search(
 				node->right,
@@ -195,8 +187,8 @@ struct KdTree {
 				distanceTol
 			);
 		}
-		// End of recursive search.
 	}
+		// End of recursive search.
 	/** Returns the Euclidean distance computed between the two points.
 	 * 
 	 * In two-dimensional space, the Euclidean distance is considered to be
