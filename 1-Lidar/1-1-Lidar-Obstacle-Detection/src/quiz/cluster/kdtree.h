@@ -203,7 +203,7 @@ struct KdTree {
 		// Computing the Euclidean distance between the two points
 		for (int i = 0; i < target.size(); i++) {
 			sum += std::pow(
-				target->point[i] - candidate->point[i],
+				target[i] - candidate[i],
 				2
 			);
 		}
@@ -233,7 +233,7 @@ struct KdTree {
 		if (withinBoundingBox(target, node, distanceTol)) {
 			// Point is "near" `target`,
 			// Checking if distance is within threshold
-			float dist = euclideanDistance(target, node);
+			float dist = euclideanDistance(target, node->point);
 			if (dist <= distanceTol) {
 				// Found neighbouring point,
 				// Inserting node `id` into neighbours list
@@ -245,6 +245,7 @@ struct KdTree {
 			search(
 				node->left,
 				depth + 1,
+				ids,
 				target,
 				distanceTol
 			);
@@ -254,6 +255,7 @@ struct KdTree {
 			search(
 				node->right,
 				depth + 1,
+				ids,
 				target,
 				distanceTol
 			);
@@ -282,6 +284,7 @@ struct KdTree {
 		ids = search(
 			this->root,
 			depth,
+			ids,
 			target,
 			distanceTol
 		);
