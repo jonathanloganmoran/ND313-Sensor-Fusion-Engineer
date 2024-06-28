@@ -138,6 +138,77 @@ struct KdTree {
 			id
 		);
 	}
+	/** Returns `true` if point is within the "bounding box" of `target`.
+	 *  
+	 * The given node is evaluated along all its axes (e.g., $x$-, $y$-) to
+	 * determine whether it has coordinate values which lie within the region
+	 * near the `target` point at a distance `distanceTol` away.
+	 * 
+	 * If the `node` is determined to be within a threshold distance near the
+	 * `target`, then the function returns `true`, and the subtree in which the
+	 * `node` belongs to will be further explored for other neighbouring point
+	 * candidates.
+	 * 
+	 * @brief Evaluates coordinates of `node` to check if it is "near" `target`.
+	 * @param target 	   The coordinate vector to compare distance to.
+	 * @param node   	   The current node containing coordinates to evaluate.
+	 * @param distanceTol  Proximity threshold (in metres).
+	 * @returns Boolean, `true` if `node` is within bounding box of `target`.
+	 * 
+	*/
+	bool withinBoundingBox(
+		std::vector<float> &target,
+		Node *&node,
+		float distanceTol
+	) {
+		// Determining if point is not within "bounding box" of target point,
+		// "Bounding box" region spans all coordinate axes of the points
+		for (int i = 0; i < node->point.size(); i++) {
+			if (
+				std::abs(node->point[i] - target[i]) > distanceTol
+			) {
+				return false;
+			}
+		}
+		// Otherwise, point is considered "near" the `target`
+		return true;
+	}
+	/** Returns the Euclidean distance computed between the two points.
+	 * 
+	 * In two-dimensional space, the Euclidean distance is considered to be
+	 * the Pythagorean distance, expressed for points $p$ and $q$ as:
+	 * $$d(p, q) = \sqrt{(p_{1} - q_{1})^{2} + (p_{2} - q_{2})^{2}}.$$
+	 * 
+	 * In higher-dimensional space, the Euclidean distance is expressed more
+	 * compactly as the Euclidean norm of the Euclidean vectors $p$ and $q$:
+	 * $$d(p, q) = \Vert{p-q}\Vert.$$
+	 * 
+	 * @brief Computes the Euclidean distance in $k$-dimensional space.
+	 * @param target    The point to compute distance to.
+	 * @param candidate The point candidate to compute distance to `target`.
+	 * @returns The Euclidean distance in $k$-dimensional space.
+	 * 
+	*/
+	float euclideanDistance(
+		std::vector<float> &target,
+		std::vector<float> &candidate
+	) {
+		float sum = 0.0;
+		// Checking if both points are of equal dimensions
+		if (target.size() != candidate.size()) {
+			std::cerr << "Euclidean distance cannot be computed,"
+					  << "`target` and `candidate` points are not of equal dimensions.\n";
+			return sum;
+		}
+		// Computing the Euclidean distance between the two points
+		for (int i = 0; i < target.size(); i++) {
+			sum += std::pow(
+				target->point[i] - candidate->point[i],
+				2
+			);
+		}
+		return std::sqrt(sum);
+	}
 	/** Recursive function to search the K-D tree and return neighbours.
 	 * 
 	 * 
@@ -187,78 +258,6 @@ struct KdTree {
 				distanceTol
 			);
 		}
-	}
-		// End of recursive search.
-	/** Returns the Euclidean distance computed between the two points.
-	 * 
-	 * In two-dimensional space, the Euclidean distance is considered to be
-	 * the Pythagorean distance, expressed for points $p$ and $q$ as:
-	 * $$d(p, q) = \sqrt{(p_{1} - q_{1})^{2} + (p_{2} - q_{2})^{2}}.$$
-	 * 
-	 * In higher-dimensional space, the Euclidean distance is expressed more
-	 * compactly as the Euclidean norm of the Euclidean vectors $p$ and $q$:
-	 * $$d(p, q) = \Vert{p-q}\Vert.$$
-	 * 
-	 * @brief Computes the Euclidean distance in $k$-dimensional space.
-	 * @param target    The point to compute distance to.
-	 * @param candidate The point candidate to compute distance to `target`.
-	 * @returns The Euclidean distance in $k$-dimensional space.
-	 * 
-	*/
-	float euclideanDistance(
-		std::vector<float> &target,
-		std::vector<float> &candidate
-	) {
-		float sum = 0.0;
-		// Checking if both points are of equal dimensions
-		if (target.size() != candidate.size()) {
-			std::cerr << "Euclidean distance cannot be computed,"
-					  << "`target` and `candidate` points are not of equal dimensions.\n";
-			return sum;
-		}
-		// Computing the Euclidean distance between the two points
-		for (int i = 0; i < target.size(); i++) {
-			sum += std::pow(
-				target->point[i] - candidate->point[i],
-				2
-			);
-		}
-		return std::sqrt(sum);
-	}
-	/** Returns `true` if point is within the "bounding box" of `target`.
-	 *  
-	 * The given node is evaluated along all its axes (e.g., $x$-, $y$-) to
-	 * determine whether it has coordinate values which lie within the region
-	 * near the `target` point at a distance `distanceTol` away.
-	 * 
-	 * If the `node` is determined to be within a threshold distance near the
-	 * `target`, then the function returns `true`, and the subtree in which the
-	 * `node` belongs to will be further explored for other neighbouring point
-	 * candidates.
-	 * 
-	 * @brief Evaluates coordinates of `node` to check if it is "near" `target`.
-	 * @param target 	   The coordinate vector to compare distance to.
-	 * @param node   	   The current node containing coordinates to evaluate.
-	 * @param distanceTol  Proximity threshold (in metres).
-	 * @returns Boolean, `true` if `node` is within bounding box of `target`.
-	 * 
-	*/
-	bool withinBoundingBox(
-		std::vector<float> &target,
-		Node *&node,
-		float distanceTol
-	) {
-		// Determining if point is not within "bounding box" of target point,
-		// "Bounding box" region spans all coordinate axes of the points
-		for (int i = 0; i < node->point.size(); i++) {
-			if (
-				std::abs(node->point[i] - target[i]) > distanceTol
-			) {
-				return false;
-			}
-		}
-		// Otherwise, point is considered "near" the `target`
-		return true;
 	}
 
 
