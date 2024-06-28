@@ -163,13 +163,13 @@ struct KdTree {
 			node->right == NULL
 		) {
 			// Reached leaf node
-			// Compute distance from point to `target` as $x$- or $y$ comparison
+			// Computing distance from point to `target` as $x$- or $y$ comparison
 			float dist = std::abs(
 				target[axis] - node->point[axis]
 			);
 			if (dist <= distanceTol) {
 				// Found neighbouring point,
-				// Insert node `id` into neighbours list
+				// Inserting node `id` into neighbours list
 				ids.insert(node->id);
 			}
 		}
@@ -177,8 +177,25 @@ struct KdTree {
 			target[axis] <= node->point[axis]
 		) {
 			// Branching to the left
-
+			search(
+				node->left,
+				depth + 1,
+				target,
+				distanceTol
+			);
 		}
+		else if (
+			target[axis] > node->point[axis]
+		) {
+			// Branching to the right
+			search(
+				node->right,
+				depth + 1,
+				target,
+				distanceTol
+			);
+		}
+		// End of recursive search.
 	}
 	/** Returns the Euclidean distance computed between the two points.
 	 * 
