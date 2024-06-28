@@ -281,7 +281,7 @@ struct KdTree {
 		std::vector<int> ids;
 		int depth = 0;
 		// Recursive function call to traverse the tree and return neighbours
-		ids = search(
+		search(
 			this->root,
 			depth,
 			ids,
