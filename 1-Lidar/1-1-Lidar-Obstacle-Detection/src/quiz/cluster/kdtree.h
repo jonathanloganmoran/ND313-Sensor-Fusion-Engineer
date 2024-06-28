@@ -237,7 +237,7 @@ struct KdTree {
 			if (dist <= distanceTol) {
 				// Found neighbouring point,
 				// Inserting node `id` into neighbours list
-				ids.insert(node->id);
+				ids.push_back(node->id);
 			}
 		} // Otherwise, skipping distance calculation and branching
 		else if (target[axis] <= node->point[axis]) {
