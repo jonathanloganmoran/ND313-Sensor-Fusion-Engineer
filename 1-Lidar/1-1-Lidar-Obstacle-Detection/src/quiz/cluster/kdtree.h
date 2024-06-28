@@ -163,7 +163,7 @@ struct KdTree {
 			node->right == NULL
 		) {
 			// Reached leaf node
-			// Compute squared Euclidean distance from point to `target`
+			// Compute distance from point to `target` as $x$- or $y$ comparison
 			float dist = std::abs(
 				target[axis] - node->point[axis]
 			);
