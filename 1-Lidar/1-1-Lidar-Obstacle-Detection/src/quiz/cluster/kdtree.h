@@ -259,42 +259,6 @@ struct KdTree {
 			);
 		}
 	}
-
-
-	void search(
-		Node *&node,
-		int depth,
-		std::vector<int> &ids,
-		std::vector<float> target,
-		float distanceTol
-	) {
-		/** E1.3.4: Searching the K-D Tree for nearest neighbours. **/
-		// Base case: end of tree or tree is empty
-		if (node == NULL) {
-			break;
-		}
-		// Determining which of the two coordinate axes to "split" on
-		// i.e., we consider either the $x$- or $y$-axis value at this iteration
-		uint axis = depth % 2;
-		// Checking whether current node is within the distance tolerance
-		if (
-			withinBoundingBox(target, node, distanceTol)
-		) {
-			// Point is considered to be "close" in proximity to `target`,
-			// Computing Euclidean distance to determine if "neighbour"
-			if (
-				euclideanDistance(target, node) < distanceTol
-			) {
-				// Point considered to be a neighbour
-				// Add node `id` to neighbours list
-				ids.insert(node->id);
-			} // Otherwise, skip current node
-		}
-		// Checking branches of current node in K-D Tree for candidates 
-		if ()
-		
-
-	}
 	/** Searches the K-D Tree and returns neighbouring points to `target`.
 	 * 
 	 * A nearest neighbour search is performed over the K-D Tree, which acts
