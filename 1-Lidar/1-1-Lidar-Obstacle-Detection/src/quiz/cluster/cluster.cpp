@@ -75,6 +75,13 @@ void render2DTree(Node* node, pcl::visualization::PCLVisualizer::Ptr& viewer, Bo
 
 }
 
+/** Groups `points` into individual cluster indices based on their proximity.
+ * 
+ * @brief Performs Euclidean clustering on the input `points`.
+ * @param points Set of point coordinates to group into clusters.
+ * @param tree K-D Tree instance to "fill out" with neighbouring points.
+ * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ */
 std::vector<std::vector<int>> euclideanCluster(
 	const std::vector<std::vector<float>>& points, 
 	KdTree* tree, 
