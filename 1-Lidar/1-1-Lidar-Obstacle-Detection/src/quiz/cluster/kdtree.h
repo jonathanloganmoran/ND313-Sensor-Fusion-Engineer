@@ -259,7 +259,7 @@ struct KdTree {
 				ids.push_back(node->id);
 			}
 		} // Otherwise, skipping distance calculation and branching
-		else if (target[axis] <= node->point[axis]) {
+		if (target[axis] <= node->point[axis]) {
 			// Branching to the left
 			search(
 				node->left,
@@ -269,7 +269,7 @@ struct KdTree {
 				distanceTol
 			);
 		}
-		else if (target[axis] > node->point[axis]) {
+		if (target[axis] > node->point[axis]) {
 			// Branching to the right
 			search(
 				node->right,
