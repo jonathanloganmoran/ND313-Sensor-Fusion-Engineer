@@ -19,6 +19,7 @@
  * 		e.g., constructor initialiser lists in `struct` definitions. 
 */
 #include "../../render/render.h"
+#include <cmath>
 
 
 // Structure to represent node of kd tree
