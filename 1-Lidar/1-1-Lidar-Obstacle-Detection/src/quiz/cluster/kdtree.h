@@ -246,6 +246,7 @@ struct KdTree {
 		// Grabbing next node in tree
 		if (node == NULL) {
 			// Error; reached end of tree
+			return;
 		}
 		// Performing sanity check
 		if (withinBoundingBox(target, node, distanceTol)) {
