@@ -80,7 +80,7 @@ void render2DTree(Node* node, pcl::visualization::PCLVisualizer::Ptr& viewer, Bo
  * @brief Performs Euclidean clustering for the given point index in `points`.
  * @param idx Index of the current point in `points` to "process".
  * @param points Vector of all points in point cloud to cluster.
- * @param cluster Current cluster to populate with neighbouring points.
+ * @param c Current cluster to populate with neighbouring points.
  * @param visited Tracks whether a given point index has been examined.
  * @param tree K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
@@ -88,7 +88,7 @@ void render2DTree(Node* node, pcl::visualization::PCLVisualizer::Ptr& viewer, Bo
 std::vector<std::vector<int>> cluster(
 	int idx,
 	const std::vector<std::vector<float>> &points,
-	std::vector<int> &cluster,
+	std::vector<int> &c,
 	std::vector<bool> &visited,
 	KdTree *tree,
 	float distanceTol
@@ -103,7 +103,7 @@ std::vector<std::vector<int>> cluster(
 			cluster(
 				i,
 				points,
-				cluster,
+				c,
 				visited,
 				tree,
 				distanceTol
@@ -120,7 +120,7 @@ std::vector<std::vector<int>> cluster(
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
  */
 std::vector<std::vector<int>> euclideanCluster(
-	const std::vector<std::vector<float>>& points, 
+	const std::vector<std::vector<float>> &points, 
 	KdTree* tree, 
 	float distanceTol
 ) {
