@@ -75,6 +75,42 @@ void render2DTree(Node* node, pcl::visualization::PCLVisualizer::Ptr& viewer, Bo
 
 }
 
+/** Euclidean clustering helper function; populates `cluster` with points.
+ * 
+ * @brief Performs Euclidean clustering for the given point index in `points`.
+ * @param idx Index of the current point in `points` to "process".
+ * @param points Vector of all points in point cloud to cluster.
+ * @param cluster Current cluster to populate with neighbouring points.
+ * @param visited Tracks whether a given point index has been examined.
+ * @param tree K-D Tree to search for point neighbours in.
+ * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ */
+std::vector<std::vector<int>> cluster(
+	int idx,
+	const std::vector<std::vector<float>> &points,
+	std::vector<int> &cluster,
+	std::vector<bool> &visited,
+	KdTree *tree,
+	float distanceTol
+) {
+	// Marking current point as "visited"
+	visited[idx] = true;
+	// Performing the K-D Tree search for neighbouring points
+	std::vector<int> idxs = tree->search(points[idx], distanceTol);
+	// Recursively "building out" the K-D Tree for each neighbouring point
+	for (int i = 0; i < idxs.size(); i++) {
+		if (!visited[i]) {
+			cluster(
+				i,
+				points,
+				cluster,
+				tree,
+				distanceTol
+			);
+		}
+	}
+}
+
 /** Groups `points` into individual cluster indices based on their proximity.
  * 
  * @brief Performs Euclidean clustering on the input `points`.
@@ -87,8 +123,23 @@ std::vector<std::vector<int>> euclideanCluster(
 	KdTree* tree, 
 	float distanceTol
 ) {
+	/** E1.3.5: Euclidean Clustering with the K-D Tree **/
 	// TODO: Fill out this function to return list of indices for each cluster
 	std::vector<std::vector<int>> clusters;
+	// Creating list of "processed" indices
+	std::vector<bool> visited{points.size(), false};
+	// Forming "clusters" for each point in the point cloud
+	for (int i = 0; i < points.size(); i++) {
+		// Skipping point if already processed
+		if (visited[i]) {
+			continue;
+		}
+		// Creating a new `cluster` and finding neighbouring points
+		std::vector<int> c;
+		cluster(i, points, c, visited, tree, distanceTol);
+		// Adding resulting cluster to vector
+		clusters.push_back(c);
+	}
 	return clusters;
 }
 
