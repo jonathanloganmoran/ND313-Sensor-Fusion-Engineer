@@ -104,6 +104,7 @@ std::vector<std::vector<int>> cluster(
 				i,
 				points,
 				cluster,
+				visited,
 				tree,
 				distanceTol
 			);
