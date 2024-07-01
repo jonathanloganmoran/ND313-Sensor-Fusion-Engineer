@@ -95,6 +95,8 @@ std::vector<std::vector<int>> cluster(
 ) {
 	// Marking current point as "visited"
 	visited[idx] = true;
+	// Adding the point index to the "cluster" (assignment)
+	c.push_back(idx);
 	// Performing the K-D Tree search for neighbouring points
 	std::vector<int> idxs = tree->search(points[idx], distanceTol);
 	// Recursively "building out" the K-D Tree for each neighbouring point
