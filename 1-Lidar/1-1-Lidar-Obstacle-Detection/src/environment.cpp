@@ -193,7 +193,7 @@ void simpleHighway(
         );
         /** E1.3.6: Rendering 3D bounding box for each cluster. **/
         // Obtaining the 3D bounding box for this cluster
-        Box box = pointProcessorXYZ->BoundingBox(cluster);
+        Box box = pointProcessorXYZ.BoundingBox(cluster);
         // Rendering the 3D bounding box onto the `viewer`
         renderBox(viewer, box, clusterId);
         ++clusterId;
