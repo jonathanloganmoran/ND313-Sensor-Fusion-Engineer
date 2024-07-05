@@ -250,15 +250,22 @@ template<typename PointT> std::vector<
     return clusters;
 }
 
-
-template<typename PointT>
-Box ProcessPointClouds<PointT>::BoundingBox(typename pcl::PointCloud<PointT>::Ptr cluster)
-{
-
-    // Find bounding box for one of the clusters
+/** Computes a 3D bounding box for the given point cloud.
+ * 
+ * Returns the intersection points of a rectangular prism formed by
+ * the 3D point cloud's minimum and maximum points found along each
+ * axis. 
+ * 
+ * @brief Uses the `pcl::getMinMax3D()` function to obtain bounding box.
+ * @param cluster The 3D point cloud instance to form bounding box for.
+ * @returns The 3D `Box` with coordinates of each intersection point.
+ */
+template<typename PointT> Box ProcessPointClouds<PointT>::BoundingBox(
+    typename pcl::PointCloud<PointT>::Ptr cluster
+) {
+    /** E1.3.6: Computing bounding box for the point cluster **/
     PointT minPoint, maxPoint;
     pcl::getMinMax3D(*cluster, minPoint, maxPoint);
-
     Box box;
     box.x_min = minPoint.x;
     box.y_min = minPoint.y;
@@ -266,10 +273,8 @@ Box ProcessPointClouds<PointT>::BoundingBox(typename pcl::PointCloud<PointT>::Pt
     box.x_max = maxPoint.x;
     box.y_max = maxPoint.y;
     box.z_max = maxPoint.z;
-
     return box;
 }
-
 
 template<typename PointT>
 void ProcessPointClouds<PointT>::savePcd(typename pcl::PointCloud<PointT>::Ptr cloud, std::string file)
