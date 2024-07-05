@@ -55,7 +55,10 @@ Other topics covered in course lectures and reading materials:
 * Reviewing the literature and library of algorithms for ground plane segmentation.
 
 #### Lesson 3: Clustering Obstacles
-* TBD as course progresses.
+* Simulating LiDAR sensor using Point Cloud Library (PCL);
+* Obtaining, processing and modifying simulated LiDAR sensor measurements;
+* Segmenting point cloud into 'road' surface and 'obstacles' components;
+* Extracting "obstacles" in scene (e.g., cars) with Euclidean clustering.
 
 #### Lesson 4: Working With Real Point Cloud Data (PCD)
 * TBD as course progresses.
