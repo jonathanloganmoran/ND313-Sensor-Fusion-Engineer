@@ -180,7 +180,9 @@ void simpleHighway(
         Color(0, 0, 1)
     };
     // Rendering each cluster onto the PCL viewer
-    for (pcl::PointCloud<pcl::PointXYZ>::Ptr cluster : cloudClusters) {
+    for (
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cluster : cloudClusters
+    ) {
         std::cout << "cluster size: ";
         pointProcessorXYZ.numPoints(cluster);
         renderPointCloud(
@@ -189,6 +191,11 @@ void simpleHighway(
             "obstCloud" + std::to_string(clusterId),
             colors[clusterId]
         );
+        /** E1.3.6: Rendering 3D bounding box for each cluster. **/
+        // Obtaining the 3D bounding box for this cluster
+        Box box = pointProcessorXYZ->BoundingBox(cluster);
+        // Rendering the 3D bounding box onto the `viewer`
+        renderBox(viewer, box, clusterId);
         ++clusterId;
     }
 }
