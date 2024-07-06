@@ -3,7 +3,7 @@
 This is the repository for the ND313 - Sensor Fusion Nanodegree programme given at Udacity during the 2024 session.
 
 ### Status
-* As of **2024-06-28**, this repository is _under development_. Please check back later for full course materials.
+* As of **2024-07-06**, this repository is _under development_. Please check back later for full course materials.
 
 ### Courses
 * ⬜️ [Course 1: Lidar](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar) — in progress! 🎉
