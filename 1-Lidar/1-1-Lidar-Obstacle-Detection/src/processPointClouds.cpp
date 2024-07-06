@@ -139,7 +139,6 @@ template<typename PointT> std::pair<
     // Time segmentation process
     auto startTime = std::chrono::steady_clock::now();
     /** E1.2.2: Perform plane segmentation with PCL. **/
-    // TODO:: Fill in this function to find inliers for the cloud.
     // Creating a new PCL segmentation class instance
     pcl::SACSegmentation<PointT> seg;
     // Creating intermediary objects consumed by the PCL algorithm
@@ -201,7 +200,6 @@ template<typename PointT> std::vector<
     auto startTime = std::chrono::steady_clock::now();
     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
     /*** E1.3.1: Euclidean clustering with PCL. ***/
-    // TODO:: Fill in the function to perform euclidean clustering to group detected obstacles
     // Creating the KD-Tree object for the search method of the extraction
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
         new pcl::search::KdTree<pcl::PointXYZ>

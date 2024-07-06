@@ -126,7 +126,6 @@ void simpleHighway(
     /** E1.2.1: Create a point processor. **/
     // Here, we instantiate the `ProcessPointClouds` instances on the stack.
     // However, we can instantiate instead on the heap (see `initCamera()`).
-    // TODO:: Create point processor
     ProcessPointClouds<pcl::PointXYZ> pointProcessorXYZ;
     // ProcessPointClouds<pcl::PointXYZI> pointProcessorXYZI;
     /** E1.2.3: Separating the ground plane. **/

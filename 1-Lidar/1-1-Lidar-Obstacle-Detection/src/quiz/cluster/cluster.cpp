@@ -129,7 +129,6 @@ std::vector<std::vector<int>> euclideanCluster(
 	float distanceTol
 ) {
 	/** E1.3.5: Euclidean Clustering with the K-D Tree **/
-	// TODO: Fill out this function to return list of indices for each cluster
 	std::vector<std::vector<int>> clusters;
 	// Creating list of "processed" indices
 	std::vector<bool> visited{points.size(), false};

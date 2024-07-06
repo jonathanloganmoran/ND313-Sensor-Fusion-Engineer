@@ -253,7 +253,6 @@ std::unordered_set<int> Ransac(
   // Initialising the random number generator
 	srand(time(NULL));
   /*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
-	// TODO: Fill in this function
 	// Storing greatest number of inliers found
 	int bestNumInliersFound = std::numeric_limits<int>::min();
 	/** Performing model fitting for max iterations **/
@@ -343,7 +342,7 @@ int main() {
 	// Create viewer
 	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
 	/*** E1.2.6 / E1.2.8: Modify the RANSAC model parameters. ***/
-	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
+	// CANDO: Change the max iteration and distance tolerance arguments for Ransac function
   int maxIterations = 100;
   double distanceTol = 0.5;
 	/*** E1.2.5: Perform RANSAC for 2D line fitting. ***/
