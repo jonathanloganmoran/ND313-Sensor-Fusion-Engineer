@@ -84,7 +84,7 @@ std::vector<Car> initHighway(
 void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer
 ) {
-    /** E1.4.1: Render the `CityBlock` Scene. **/
+    /** E1.4.0: Render the `CityBlock` Scene. **/
     // Creating a new point processor (stores Intensity values)
     ProcessPointClouds<
         pcl::PointXYZI
@@ -313,7 +313,7 @@ int main(
     initCamera(setAngle, viewer);
     /** E1.1.0: Create 3D highway scene. **/
     // simpleHighway(viewer);
-    /** E1.4.1: Render the `CityBlock` Scene. **/
+    /** E1.4.0: Render the `CityBlock` Scene. **/
     cityBlock(viewer);
     while (!viewer->wasStopped()) {
         viewer->spinOnce();
