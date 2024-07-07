@@ -70,6 +70,12 @@ std::vector<Car> initHighway(
     return cars;
 }
 
+void cityBlock(
+    pcl::visualization::PCLVisualizer::Ptr &viewer
+) {
+    /** E1.4.1: Render the `CityBlock` Scene. **/
+    // ..
+}
 
 /* Performs the 3D highway environment simulation.
  *
