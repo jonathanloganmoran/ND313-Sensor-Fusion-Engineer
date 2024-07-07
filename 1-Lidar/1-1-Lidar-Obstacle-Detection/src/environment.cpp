@@ -20,7 +20,7 @@
 #include "processPointClouds.cpp"
 
 
-/* Initialises the 3D "highway" environment. 
+/** Initialises the 3D "highway" environment. 
  * 
  * @brief   Creates the vector of objects for the 3D highway environment.
  * @param   renderScene     If `true`, the objects created will be displayed.
@@ -70,6 +70,17 @@ std::vector<Car> initHighway(
     return cars;
 }
 
+/** Performs the 3D city block environment simulation.
+ * 
+ * Here, the 3D city block scene is rendered. A LiDAR point processor object
+ * is initialised and configured to load `pcl::PointXYZI` data, i.e., 3D point
+ * values captured with an additional LiDAR point "Intensity" value. 
+ * 
+ * In this function the LiDAR capture is loaded and processed.
+ * 
+ * @brief Loads and processes the city block captured by the LiDAR sensor.
+ * @param viewer The PCL Viewer canvas to render the LiDAR data onto.
+ */
 void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer
 ) {
@@ -77,7 +88,7 @@ void cityBlock(
     // ..
 }
 
-/* Performs the 3D highway environment simulation.
+/** Performs the 3D highway environment simulation.
  *
  * Here, the 3D highway scene is created. A LiDAR sensor object is initialised
  * and configured. The LiDAR sensor performs a "scan" of the environment, then
@@ -206,7 +217,7 @@ void simpleHighway(
 }
 
 
-/* Initialises the camera view within the 3D environment.
+/** Initialises the camera view within the 3D environment.
  *
  * @brief   Sets the view-point at which the scene is viewed. 
  * @param   setAngle    Pre-defined viewing angle; can choose one `CameraAngle` 
@@ -271,7 +282,7 @@ void initCamera(
 }
 
 
-/* Entry-point for the simple highway simulation programme.
+/** Entry-point for the simple highway simulation programme.
  *
  * @brief Initialises the 3D viewer and runs the simple highway simulation. 
  */
