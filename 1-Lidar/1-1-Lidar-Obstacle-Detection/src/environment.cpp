@@ -85,7 +85,22 @@ void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer
 ) {
     /** E1.4.1: Render the `CityBlock` Scene. **/
-    // ..
+    // Creating a new point processor (stores Intensity values)
+    ProcessPointClouds<
+        pcl::PointXYZI
+    > *pointProcessorI = new ProcessPointClouds<pcl::PointXYZI>();
+    // Loading the `CityBlock` point cloud data
+    pcl::PointCloud<
+        pcl::PointXYZI
+    >::Ptr inputCloud = pointProcessorI->loadPcd(
+        "../src/sensors/data/pcd/data_1/0000000000.pcd"
+    );
+    // Rendering point cloud data onto PCL Viewer canvas
+    renderPointCloud(
+        viewer,
+        inputCloud,
+        "inputCloud — City Block Scan"
+    );
 }
 
 /** Performs the 3D highway environment simulation.
