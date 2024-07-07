@@ -297,9 +297,9 @@ void initCamera(
 }
 
 
-/** Entry-point for the simple highway simulation programme.
+/** Entry-point for the simple highway and city block simulation.
  *
- * @brief Initialises the 3D viewer and runs the simple highway simulation. 
+ * @brief Initialises the 3D viewer and renders the environment. 
  */
 int main(
     int argc, 
@@ -311,7 +311,10 @@ int main(
     );
     CameraAngle setAngle = XY;
     initCamera(setAngle, viewer);
-    simpleHighway(viewer);
+    /** E1.1.0: Create 3D highway scene. **/
+    // simpleHighway(viewer);
+    /** E1.4.1: Render the `CityBlock` Scene. **/
+    cityBlock(viewer);
     while (!viewer->wasStopped()) {
         viewer->spinOnce();
     }
