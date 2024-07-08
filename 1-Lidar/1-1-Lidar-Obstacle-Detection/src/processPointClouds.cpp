@@ -55,6 +55,15 @@ template<typename PointT> typename pcl::PointCloud<
     auto startTime = std::chrono::steady_clock::now();
     /** E1.4.1: Filtering the point cloud. **/
     // TODO:: Fill in the function to do voxel grid point reduction and region based filtering
+    typename pcl::PointCloud<PointT>::Ptr cloudFiltered(
+        new pcl::PointCloud<PointT>
+    );
+    // Creating the voxel-based filtering object
+    typename pcl::VoxelGrid<PointT>::Ptr vg;
+    vg.setInputCloud(cloud);
+    // Specifying the leaf size / "cell" dimensions
+    vg.setLeafSize(filterRes, filterRes, filterRes);
+    vg.filter(*cloudFiltered);
     auto endTime = std::chrono::steady_clock::now();
     auto elapsedTime = std::chrono::duration_cast<
         std::chrono::milliseconds
