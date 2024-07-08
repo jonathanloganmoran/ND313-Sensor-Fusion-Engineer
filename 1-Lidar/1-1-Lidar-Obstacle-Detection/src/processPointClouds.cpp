@@ -39,8 +39,8 @@ void ProcessPointClouds<PointT>::numPoints(typename pcl::PointCloud<PointT>::Ptr
  * 
  * @brief Reduces the total number of data points in the input `cloud`.
  * @param filterRes The "cell" size to use for the voxel-based method.
- * @param minPoint Minimum number of points required for each voxel cell.
- * @param maxPoint Maximum number of points required for each voxel cell.
+ * @param minPoint Minimum coordinate of region to reduce.
+ * @param maxPoint Maximum coordinate of region to reduce.
  * @returns The downsampled point cloud.
 */
 template<typename PointT> typename pcl::PointCloud<
