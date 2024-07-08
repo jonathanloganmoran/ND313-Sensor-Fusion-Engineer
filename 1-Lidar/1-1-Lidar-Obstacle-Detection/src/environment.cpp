@@ -95,6 +95,13 @@ void cityBlock(
     >::Ptr inputCloud = pointProcessorI->loadPcd(
         "../src/sensors/data/pcd/data_1/0000000000.pcd"
     );
+    /** E1.4.1: Filtering with `pcl::VoxelGrid` **/
+    filterCloud = pointProcessorI->FilterCloud(
+        inputCloud,
+        // filterRes,
+        // minPoint,
+        // maxPoint
+    );
     // Rendering point cloud data onto PCL Viewer canvas
     renderPointCloud(
         viewer,
