@@ -28,24 +28,41 @@ void ProcessPointClouds<PointT>::numPoints(typename pcl::PointCloud<PointT>::Ptr
     std::cout << cloud->points.size() << std::endl;
 }
 
-
-template<typename PointT>
-typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::FilterCloud(typename pcl::PointCloud<PointT>::Ptr cloud, float filterRes, Eigen::Vector4f minPoint, Eigen::Vector4f maxPoint)
-{
-
+/** Filters the point `cloud` to reduce the total number of data points.
+ * 
+ * Two 'downsampling' techniques are used in this function: voxel grid
+ * point reduction, and region-based filtering. Each technique reduces
+ * the total number of data points by either 'combining' the neighbouring
+ * points within each "cell" into a single point, or by "grouping" the
+ * space into sub-regions which can be further processed to reduce their
+ * point counts.
+ * 
+ * @brief Reduces the total number of data points in the input `cloud`.
+ * @param filterRes The "cell" size to use for the voxel-based method.
+ * @param minPoint Minimum number of points required for each voxel cell.
+ * @param maxPoint Maximum number of points required for each voxel cell.
+ * @returns The downsampled point cloud.
+*/
+template<typename PointT> typename pcl::PointCloud<
+    PointT
+>::Ptr ProcessPointClouds<PointT>::FilterCloud(
+    typename pcl::PointCloud<PointT>::Ptr cloud, 
+    float filterRes, 
+    Eigen::Vector4f minPoint, 
+    Eigen::Vector4f maxPoint
+) {
     // Time segmentation process
     auto startTime = std::chrono::steady_clock::now();
-
+    /** E1.4.1: Filtering the point cloud. **/
     // TODO:: Fill in the function to do voxel grid point reduction and region based filtering
-
     auto endTime = std::chrono::steady_clock::now();
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
-    std::cout << "filtering took " << elapsedTime.count() << " milliseconds" << std::endl;
-
+    auto elapsedTime = std::chrono::duration_cast<
+        std::chrono::milliseconds
+    >(endTime - startTime);
+    std::cout << "filtering took "
+              << elapsedTime.count() << " milliseconds\n";
     return cloud;
-
 }
-
 
 /** Extracts the plane and obstacles using the Point Cloud Library (PCL).
  * 
