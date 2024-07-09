@@ -59,7 +59,7 @@ template<typename PointT> typename pcl::PointCloud<
 ) {
     // Time segmentation process
     auto startTime = std::chrono::steady_clock::now();
-    /** E1.4.1: Filtering the point cloud. **/
+    /** E1.4.1: Filtering the point cloud with `pcl::VoxelGrid`. **/
     // TODO:: Fill in the function to do voxel grid point reduction and region based filtering
     typename pcl::PointCloud<PointT>::Ptr cloudFiltered(
         new pcl::PointCloud<PointT>
