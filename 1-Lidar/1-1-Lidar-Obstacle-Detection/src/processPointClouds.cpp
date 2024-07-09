@@ -37,6 +37,12 @@ void ProcessPointClouds<PointT>::numPoints(typename pcl::PointCloud<PointT>::Ptr
  * space into sub-regions which can be further processed to reduce their
  * point counts.
  * 
+ * NOTE: the `minPoint` and `maxPoint` arguments specify a region defined
+ * by `Eigen::Vector4f` tuples (e.g., `Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)`)
+ * in which the given point `cloud` will be considered for filtering.
+ * The points outside the region specified by these coordinate values will
+ * be discarded during the filtering process.  
+ * 
  * @brief Reduces the total number of data points in the input `cloud`.
  * @param filterRes The "cell" size to use for the voxel-based method.
  * @param minPoint Minimum coordinate of region to reduce.
