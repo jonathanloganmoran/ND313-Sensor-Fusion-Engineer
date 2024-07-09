@@ -104,6 +104,8 @@ void cityBlock(
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
     );
+    std::cerr << "Loaded " << filterCloud->points.size() 
+            << " data points from filtered cloud\n";
     // Rendering point cloud data onto PCL Viewer canvas
     renderPointCloud(
         viewer,
