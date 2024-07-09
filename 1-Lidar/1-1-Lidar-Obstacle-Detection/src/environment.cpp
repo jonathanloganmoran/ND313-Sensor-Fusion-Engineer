@@ -96,17 +96,19 @@ void cityBlock(
         "../src/sensors/data/pcd/data_1/0000000000.pcd"
     );
     /** E1.4.1: Filtering with `pcl::VoxelGrid` **/
-    filterCloud = pointProcessorI->FilterCloud(
+    pcl::PointCloud<
+        pcl::PointXYZI
+    >::Ptr filterCloud = pointProcessorI->FilterCloud(
         inputCloud,
-        // filterRes,
-        // minPoint,
-        // maxPoint
+        0.2f,
+        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
+        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
     );
     // Rendering point cloud data onto PCL Viewer canvas
     renderPointCloud(
         viewer,
-        inputCloud,
-        "inputCloud — City Block Scan"
+        filterCloud, // inputCloud; replace to view filtered cloud instead
+        "inputCloud — City Block Scan (filtered)"
     );
 }
 
