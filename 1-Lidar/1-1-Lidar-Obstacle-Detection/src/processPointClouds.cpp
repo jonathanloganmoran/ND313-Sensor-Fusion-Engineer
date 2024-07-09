@@ -65,7 +65,7 @@ template<typename PointT> typename pcl::PointCloud<
         new pcl::PointCloud<PointT>
     );
     // Creating the voxel-based filtering object
-    pcl::VoxelGrid<PointT>::Ptr vg;
+    pcl::VoxelGrid<PointT> vg;
     vg.setInputCloud(cloud);
     // Specifying the leaf size / "cell" dimensions
     vg.setLeafSize(filterRes, filterRes, filterRes);
