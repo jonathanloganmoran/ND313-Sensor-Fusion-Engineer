@@ -70,6 +70,15 @@ template<typename PointT> typename pcl::PointCloud<
     // Specifying the leaf size / "cell" dimensions
     vg.setLeafSize(filterRes, filterRes, filterRes);
     vg.filter(*cloudFiltered);
+    /** E1.4.2(a): Filtering the point cloud with `pcl::CropBox`. **/
+    typename pcl::PointCloud<PointT>::Ptr cloudRegion(new pcl::PointCloud<PointT>);
+    // Defining the first region: the area of points to preserve
+    pcl::CropBox<PointT> regionPreserved(true);
+    regionPreserved.setMin(minPoint);
+    regionPreserved.setMax(maxPoint);
+    regionPreserved.setInputCloud(cloudFiltered);
+    // Cropping the point cloud to the desired region (the "scene")
+    regionPreserved.filter(*cloudRegion);
     auto endTime = std::chrono::steady_clock::now();
     auto elapsedTime = std::chrono::duration_cast<
         std::chrono::milliseconds
