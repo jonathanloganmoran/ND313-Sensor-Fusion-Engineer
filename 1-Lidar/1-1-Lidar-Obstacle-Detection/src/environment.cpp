@@ -112,7 +112,7 @@ void cityBlock(
     >::Ptr regionCloud = pointProcessorI->FilterCloud(
         inputCloud,
         0.2f,
-        Eigen::Vector4f(-1.5, -1.7, -1. 1),
+        Eigen::Vector4f(-1.5, -1.7, -1.0, 1),
         Eigen::Vector4f(2.6, 1.7, -0.4, 1)
     );
     std::cerr << "Loaded " << filterCloud->points.size() 
