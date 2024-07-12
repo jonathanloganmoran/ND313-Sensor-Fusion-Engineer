@@ -104,6 +104,17 @@ void cityBlock(
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
     );
+    /** E1.4.2(a): Filtering the point cloud with `pcl::CropBox`. **/
+    // NOTE: choosing non-zero valued vectors for `minPoint`, `maxPoint`;
+    // These define the area of the region we wish to preserve. 
+    pcl::PointCloud<
+        pcl::PointXYZI
+    >::Ptr regionCloud = pointProcessorI->FilterCloud(
+        inputCloud,
+        0.2f,
+        Eigen::Vector4f(),
+        Eigen::Vector4f()
+    );
     std::cerr << "Loaded " << filterCloud->points.size() 
             << " data points from filtered cloud\n";
     // Rendering point cloud data onto PCL Viewer canvas

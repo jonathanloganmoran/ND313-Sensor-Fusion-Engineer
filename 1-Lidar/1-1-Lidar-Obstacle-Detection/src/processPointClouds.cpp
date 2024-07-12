@@ -85,7 +85,7 @@ template<typename PointT> typename pcl::PointCloud<
     >(endTime - startTime);
     std::cout << "filtering took "
               << elapsedTime.count() << " milliseconds\n";
-    return cloudFiltered;
+    return cloudRegion;
 }
 
 /** Extracts the plane and obstacles using the Point Cloud Library (PCL).
