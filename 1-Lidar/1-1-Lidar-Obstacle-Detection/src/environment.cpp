@@ -120,8 +120,8 @@ void cityBlock(
     // Rendering point cloud data onto PCL Viewer canvas
     renderPointCloud(
         viewer,
-        filterCloud, // inputCloud; replace to view filtered cloud instead
-        "inputCloud — City Block Scan (filtered)"
+        regionCloud, // Alternatives: `inputCloud` or `filterCloud`
+        "regionCloud — City Block Scan (filtered with region-based method)"
     );
 }
 
