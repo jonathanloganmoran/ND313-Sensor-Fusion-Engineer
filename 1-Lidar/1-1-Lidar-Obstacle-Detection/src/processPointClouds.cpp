@@ -70,7 +70,7 @@ template<typename PointT> typename pcl::PointCloud<
     // Specifying the leaf size / "cell" dimensions
     vg.setLeafSize(filterRes, filterRes, filterRes);
     vg.filter(*cloudFiltered);
-    /** E1.4.2(a): Filtering the point cloud with `pcl::CropBox`. **/
+    /** E1.4.2(a): Filtering the "scene" with `pcl::CropBox`. **/
     typename pcl::PointCloud<PointT>::Ptr cloudRegion(new pcl::PointCloud<PointT>);
     // Defining the first region: the area of points to preserve
     pcl::CropBox<PointT> regionPreserved(true);
@@ -79,6 +79,26 @@ template<typename PointT> typename pcl::PointCloud<
     regionPreserved.setInputCloud(cloudFiltered);
     // Cropping the point cloud to the desired region (the "scene")
     regionPreserved.filter(*cloudRegion);
+    /** E1.4.2(b): Filtering the "scene" with `pcl::CropBox`. **/
+    // Creating a vector to store the indices determined to belong to the "roof"
+    std::vector<int> indicesRoof;
+    pcl::CropBox<PointT> roof(true);
+    // Defining the points which form the area of the roof to filter out
+    roof.setMin();
+    roof.setMax();
+    roof.setInputCloud(cloudRegion);
+    roof.filter(indicesRoof);
+    // Populating the data structure with indices of the roof 
+    pcl::PointIndices::Ptr inliers{new pcl::PointIndices};
+    for (int i = 0; i < indicesRoof.size(); i++) {
+        inliers->indices.push_back(indicesRoof[i]);
+    };
+    // Extracting the roof indices (i.e., deleting them from point cloud)
+    pcl::ExtractIndices<PointT> extract;
+    extract.setInputCloud(cloudRegion);
+    extract.setIndices(inliers);
+    extract.setNegative(true);
+    extract.filter(*cloudRegion);
     auto endTime = std::chrono::steady_clock::now();
     auto elapsedTime = std::chrono::duration_cast<
         std::chrono::milliseconds
