@@ -104,7 +104,7 @@ void cityBlock(
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
     );
-    /** E1.4.2(a): Filtering the point cloud with `pcl::CropBox`. **/
+    /** E1.4.2(a)-E1.4.2(b): Filtering the point cloud with `pcl::CropBox`. **/
     // NOTE: choosing non-zero valued vectors for `minPoint`, `maxPoint`;
     // These define the area of the region we wish to preserve. 
     pcl::PointCloud<
