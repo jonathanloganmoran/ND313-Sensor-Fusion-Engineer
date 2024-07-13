@@ -115,13 +115,13 @@ void cityBlock(
         Eigen::Vector4f(-15.0, -6.0, -3.0, 1),
         Eigen::Vector4f(30.0, 6.0, 10.0, 1)
     );
-    std::cerr << "Loaded " << filterCloud->points.size() 
+    std::cerr << "Loaded " << regionCloud->points.size() 
             << " data points from filtered cloud\n";
     // Rendering point cloud data onto PCL Viewer canvas
     renderPointCloud(
         viewer,
         regionCloud, // Alternatives: `inputCloud` or `filterCloud`
-        "regionCloud — City Block Scan (filtered with region-based method)"
+        "regionCloud — City Block Scan (filtered with voxel- and region-based methods)"
     );
 }
 
