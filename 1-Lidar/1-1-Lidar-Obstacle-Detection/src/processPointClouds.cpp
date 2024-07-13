@@ -84,8 +84,11 @@ template<typename PointT> typename pcl::PointCloud<
     std::vector<int> indicesRoof;
     pcl::CropBox<PointT> roof(true);
     // Defining the points which form the area of the roof to filter out
-    roof.setMin();
-    roof.setMax();
+    // NOTE: choosing non-zero valued vectors for `minPoint`, `maxPoint`;
+    // These define the area of the region we wish to eliminate. 
+    // CANDO: Modify these values to select a different area to eliminate points within.
+    roof.setMin(-1.5, -1.7, -1.0, 1);
+    roof.setMax(2.6, 1.7, -0.4, 1);
     roof.setInputCloud(cloudRegion);
     roof.filter(indicesRoof);
     // Populating the data structure with indices of the roof 
