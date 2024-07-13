@@ -87,8 +87,12 @@ template<typename PointT> typename pcl::PointCloud<
     // NOTE: choosing non-zero valued vectors for `minPoint`, `maxPoint`;
     // These define the area of the region we wish to eliminate. 
     // CANDO: Modify these values to select a different area to eliminate points within.
-    roof.setMin(-1.5, -1.7, -1.0, 1);
-    roof.setMax(2.6, 1.7, -0.4, 1);
+    roof.setMin(
+        Eigen::Vector4f(-1.5, -1.7, -1.0, 1)
+    );
+    roof.setMax(
+        Eigen::Vector4f(2.6, 1.7, -0.4, 1)
+    );
     roof.setInputCloud(cloudRegion);
     roof.filter(indicesRoof);
     // Populating the data structure with indices of the roof 
