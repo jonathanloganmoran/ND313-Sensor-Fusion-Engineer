@@ -93,13 +93,16 @@ void cityBlock(
     /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
     // CANDO: Modify folder pointing to `.pcd` file(s) in `environment::main()`
     // Filtering the current point cloud file with `pcl::VoxelGrid`
+    // NOTE: choosing non-zero valued vectors for `minPoint`, `maxPoint`;
+    // These define the area of the region we wish to preserve. 
+    // CANDO: Modify these values to select a different area to preserve points within.
     pcl::PointCloud<
         pcl::PointXYZI
     >::Ptr filterCloud = pointProcessorI->FilterCloud(
         inputCloudI,
         0.2f,
-        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
-        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
+        Eigen::Vector4f(-10.0, -5.0, -2.0, 1.0),
+        Eigen::Vector4f(30.0, 8.0, 1.0, 1.0)
     );
     // Segmenting the filtered cloud into obstacles and ground plane instances
     std::pair<
@@ -148,10 +151,11 @@ void cityBlock(
         clusterId++;
     }
     // Rendering the points inside the point cloud
+    // CANDO: Render the "unfiltered" cloud (`inputCloudI`)
     renderPointCloud(
         viewer,
-        inputCloudI,
-        "inputCloudI — The current point cloud in the pipeline."
+        filterCloud,
+        "filterCloud — The current (filtered) point cloud in the pipeline."
     );
 }
 
