@@ -83,16 +83,61 @@ std::vector<Car> initHighway(
  * @brief Loads and processes the city block captured by the LiDAR sensor.
  * @param viewer The PCL Viewer canvas to render the LiDAR data onto.
  * @param pointProcessorI The point processor storing `pcl::XYZI` point instances.
- * @param inputCloud The current point cloud "frame" we are considering.
+ * @param inputCloudI The current point cloud "frame" we are considering.
  */
 void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer, 
     ProcessPointClouds<pcl::PointXYZI> *pointProcessorI, 
-    const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloud
+    const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloudI
 ) {
     /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
     // CANDO: Modify folder pointing to `.pcd` file(s) in `environment::main()`
-    // ..
+    // Filtering the current point cloud file with `pcl::VoxelGrid`
+    pcl::PointCloud<
+        pcl::PointXYZI
+    > filterCloud = pointProcessorI->FilterCloud(
+        inputCloudI,
+        0.2f,
+        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
+        Eigen::Vector4f(0.0, 0.0, 0.0, 1.0)
+    );
+    // Segmenting the filtered cloud into obstacles and ground plane instances
+    std::pair<
+        pcl::PointCloud<pcl::PointXYZI>::Ptr,
+        pcl::PointCloud<pcl::PointXYZI>::Ptr
+    > segmentCloud = pointProcessorI.SegmentPlane(
+        inputCloudI,
+        25,
+        0.3
+    );
+    // Clustering the obstacles
+    std::vector<
+        pcl::PointCloud<pcl::PointXYZI>::Ptr
+    > cloudClusters = pointProcessorI.Clustering(
+        segmentCloud.first,
+        0.53,
+        10,
+        500
+    );
+    // Rendering each cluster onto the PCL Viewer
+    int clusterId = 0;
+    std::vector<Color> colors = {
+        Color(1, 0, 0),
+        Color(0, 1, 0),
+        Color(0, 0, 1)
+    };
+    for (int i = 0; i < cloudClusters.size(); i++) {
+        pcl::PointCloud<pcl::PointXYZI>::Ptr cluster = cloudCluster[i];
+        std::cout << "cluster size ";
+        pointProcessorI.numPoints(cluster);
+        renderPointCloud(
+            viewer,
+            cluster,
+            "obstcloud" + std::to_string(clusterId),
+            colors[clusterId % colors.size()]
+        );
+        clusterId++;
+    }
 }
 
 /** Performs the 3D city block environment simulation from a single file.
@@ -110,12 +155,12 @@ void cityBlock(
 void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer
 ) {
-    /** E1.4.0: Render the `CityBlock` Scene. **/
+    /** E1.4.0: Render the "City Block" Scene. **/
     // Creating a new point processor (stores Intensity values)
     ProcessPointClouds<
         pcl::PointXYZI
     > *pointProcessorI = new ProcessPointClouds<pcl::PointXYZI>();
-    // Loading the `CityBlock` point cloud data
+    // Loading the "City Block" point cloud data
     pcl::PointCloud<
         pcl::PointXYZI
     >::Ptr inputCloud = pointProcessorI->loadPcd(
