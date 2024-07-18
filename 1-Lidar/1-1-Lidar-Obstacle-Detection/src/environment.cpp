@@ -95,7 +95,7 @@ void cityBlock(
     // Filtering the current point cloud file with `pcl::VoxelGrid`
     pcl::PointCloud<
         pcl::PointXYZI
-    > filterCloud = pointProcessorI->FilterCloud(
+    >::Ptr filterCloud = pointProcessorI->FilterCloud(
         inputCloudI,
         0.2f,
         Eigen::Vector4f(0.0, 0.0, 0.0, 1.0),
@@ -105,7 +105,7 @@ void cityBlock(
     std::pair<
         pcl::PointCloud<pcl::PointXYZI>::Ptr,
         pcl::PointCloud<pcl::PointXYZI>::Ptr
-    > segmentCloud = pointProcessorI.SegmentPlane(
+    > segmentCloud = pointProcessorI->SegmentPlane(
         inputCloudI,
         25,
         0.3
@@ -113,7 +113,7 @@ void cityBlock(
     // Clustering the obstacles
     std::vector<
         pcl::PointCloud<pcl::PointXYZI>::Ptr
-    > cloudClusters = pointProcessorI.Clustering(
+    > cloudClusters = pointProcessorI->Clustering(
         segmentCloud.first,
         0.53,
         10,
@@ -129,7 +129,7 @@ void cityBlock(
     for (int i = 0; i < cloudClusters.size(); i++) {
         pcl::PointCloud<pcl::PointXYZI>::Ptr cluster = cloudCluster[i];
         std::cout << "cluster size ";
-        pointProcessorI.numPoints(cluster);
+        pointProcessorI->numPoints(cluster);
         renderPointCloud(
             viewer,
             cluster,
