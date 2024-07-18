@@ -111,10 +111,12 @@ void cityBlock(
         0.3
     );
     // Clustering the obstacles
+    // NOTE: `Clustering` returns a `pair` of point clouds;
+    // "first" is `ground` plane, "second" is `obstacles`.
     std::vector<
         pcl::PointCloud<pcl::PointXYZI>::Ptr
     > cloudClusters = pointProcessorI->Clustering(
-        segmentCloud.first,
+        segmentCloud.second,
         0.53,
         10,
         500
