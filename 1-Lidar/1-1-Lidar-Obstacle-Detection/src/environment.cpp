@@ -90,7 +90,8 @@ void cityBlock(
     ProcessPointClouds<pcl::PointXYZI> *pointProcessorI, 
     const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloud
 ) {
-    /** E1.4.3: Streaming with `cityBlock`. **/
+    /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
+    // CANDO: Modify folder pointing to `.pcd` file(s) in `environment::main()`
     // ..
 }
 
@@ -350,7 +351,7 @@ void initCamera(
  */
 int main(
     int argc, 
-    char** argv
+    char **argv
 ) {
     std::cout << "starting enviroment" << std::endl;
     pcl::visualization::PCLVisualizer::Ptr viewer(
@@ -358,11 +359,51 @@ int main(
     );
     CameraAngle setAngle = XY;
     initCamera(setAngle, viewer);
-    /** E1.1.0: Create 3D highway scene. **/
-    // simpleHighway(viewer);
     /** E1.4.0: Render the `CityBlock` Scene. **/
-    cityBlock(viewer);
+    // NOTE: The previous `cityBlock` call is "commented out"
+    //cityBlock(viewer);
+    /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
+    // Now defining the point processor outside `environment::cityBlock`
+    ProcessPointClouds<
+        pcl::PointXYZI
+    > *pointProcessorI = new ProcessPointClouds<
+        pcl::PointXYZI
+    >();
+    // Creating list of all `.pcd` files to "stream"
+    // CANDO: Modify folder pointing to `.pcd` file(s)
+    std::vector<
+        boost:filesystem::path
+    > stream = pointProcessorI->streamPcd(
+        "../src/sensors/data/pcd/data_1"
+    );
+    // Creating file path "iterator"
+    auto streamIterator = stream.begin();
+    pcl:PointCloud<pcl::PointXYZI>::Ptr inputCloudI;
     while (!viewer->wasStopped()) {
-        viewer->spinOnce();
+        /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
+        // Clearing the PCL Viewer canvas of any previous elements
+        viewer->removeAllPointClouds();
+        viewer->removeAllShapes();
+        // Loading current `.pcd` file
+        inputCloudI = pointProcessorI->loadPcd(
+            (*streamIterator).string()
+        );
+        // Performing obstacle detection process on current `.pcd` file
+        // Calling the overloaded `cityBlock` "streaming" function
+        cityBlock(
+            viewer,
+            pointProcessorI,
+            inputCloudI
+        );
+        // Advancing the file iterator to the next `.pcd` file
+        streamIterator++;
+        if (streamIterator == stream.end()) {
+            // Looping to first file in folder
+            streamIterator = stream.begin();
+        }
+        // Refresh PCL Viewer canvas (with default time-step of 1ms)
+        viewer->spinOnce(
+            1
+        );
     }
 }
