@@ -269,11 +269,11 @@ template<typename PointT> std::vector<
     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
     /*** E1.3.1: Euclidean clustering with PCL. ***/
     // Creating the KD-Tree object for the search method of the extraction
-    pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(
-        new pcl::search::KdTree<pcl::PointXYZ>
+    typename pcl::search::KdTree<PointT>::Ptr tree(
+        new pcl::search::KdTree<PointT>
     );
     // Creating the Euclidean clustering class instance
-    pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+    pcl::EuclideanClusterExtraction<PointT> ec;
     // Setting the input cloud for the KD-Tree
     // NOTE: We assume the ground plane has been "filtered" out
     tree->setInputCloud(cloud);
@@ -288,8 +288,8 @@ template<typename PointT> std::vector<
     // Performing the clustering with Euclidean distance
     for (const auto& cluster : clusterIndices) {
         // Creating a new point cloud instance for the current cluster
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloudCluster(
-            new pcl::PointCloud<pcl::PointXYZ>
+        typename pcl::PointCloud<PointT>::Ptr cloudCluster(
+            new pcl::PointCloud<PointT>
         );
         for (const auto& idx : cluster.indices) {
             // Copying over the indices of the current cluster
