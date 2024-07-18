@@ -70,13 +70,38 @@ std::vector<Car> initHighway(
     return cars;
 }
 
-/** Performs the 3D city block environment simulation.
+/** Performs the 3D city block environment simulation on multiple files.
  * 
  * Here, the 3D city block scene is rendered. A LiDAR point processor object
  * is initialised and configured to load `pcl::PointXYZI` data, i.e., 3D point
  * values captured with an additional LiDAR point "Intensity" value. 
  * 
- * In this function the LiDAR capture is loaded and processed.
+ * In this function the LiDAR capture is loaded and processed from "multiple"
+ * files, i.e., frame-by-frame, where more than one point cloud data file 
+ * is expected to be processed in a "streaming" format.
+ * 
+ * @brief Loads and processes the city block captured by the LiDAR sensor.
+ * @param viewer The PCL Viewer canvas to render the LiDAR data onto.
+ * @param pointProcessorI The point processor storing `pcl::XYZI` point instances.
+ * @param inputCloud The current point cloud "frame" we are considering.
+ */
+void cityBlock(
+    pcl::visualization::PCLVisualizer::Ptr &viewer, 
+    ProcessPointClouds<pcl::PointXYZI> *pointProcessorI, 
+    const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloud
+) {
+    /** E1.4.3: Streaming with `cityBlock`. **/
+    // ..
+}
+
+/** Performs the 3D city block environment simulation from a single file.
+ * 
+ * Here, the 3D city block scene is rendered. A LiDAR point processor object
+ * is initialised and configured to load `pcl::PointXYZI` data, i.e., 3D point
+ * values captured with an additional LiDAR point "Intensity" value. 
+ * 
+ * In this function the LiDAR capture is loaded and processed from a "single"
+ * file, i.e., one frame only.
  * 
  * @brief Loads and processes the city block captured by the LiDAR sensor.
  * @param viewer The PCL Viewer canvas to render the LiDAR data onto.
