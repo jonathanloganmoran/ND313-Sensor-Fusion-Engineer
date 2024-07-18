@@ -417,13 +417,13 @@ int main(
     // Creating list of all `.pcd` files to "stream"
     // CANDO: Modify folder pointing to `.pcd` file(s)
     std::vector<
-        boost:filesystem::path
+        boost::filesystem::path
     > stream = pointProcessorI->streamPcd(
         "../src/sensors/data/pcd/data_1"
     );
     // Creating file path "iterator"
     auto streamIterator = stream.begin();
-    pcl:PointCloud<pcl::PointXYZI>::Ptr inputCloudI;
+    pcl::PointCloud<pcl::PointXYZI>::Ptr inputCloudI;
     while (!viewer->wasStopped()) {
         /** E1.4.3: File streaming with overloaded `cityBlock()`. **/
         // Clearing the PCL Viewer canvas of any previous elements
