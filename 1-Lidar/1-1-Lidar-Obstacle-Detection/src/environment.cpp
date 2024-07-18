@@ -127,7 +127,7 @@ void cityBlock(
         Color(0, 0, 1)
     };
     for (int i = 0; i < cloudClusters.size(); i++) {
-        pcl::PointCloud<pcl::PointXYZI>::Ptr cluster = cloudCluster[i];
+        pcl::PointCloud<pcl::PointXYZI>::Ptr cluster = cloudClusters[i];
         std::cout << "cluster size ";
         pointProcessorI->numPoints(cluster);
         renderPointCloud(
