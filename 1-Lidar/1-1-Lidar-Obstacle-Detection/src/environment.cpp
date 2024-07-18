@@ -136,8 +136,21 @@ void cityBlock(
             "obstcloud" + std::to_string(clusterId),
             colors[clusterId % colors.size()]
         );
+        // Obtaining the bounding box of each clustered object
+        Box box = pointProcessorI->BoundingBox(cluster);
+        renderBox(
+            viewer,
+            box,
+            clusterId
+        );
         clusterId++;
     }
+    // Rendering the points inside the point cloud
+    renderPointCloud(
+        viewer,
+        inputCloudI,
+        "inputCloudI — The current point cloud in the pipeline."
+    );
 }
 
 /** Performs the 3D city block environment simulation from a single file.
