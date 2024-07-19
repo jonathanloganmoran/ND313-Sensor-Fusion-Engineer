@@ -16,7 +16,8 @@ This is Course 1: Lidar in the Sensor Fusion Nanodegree programme taught by Aaro
 ### Demo Notebooks
 * ✅ [`2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb);
 * ✅ [`2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb);
-* ✅ [`2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb).
+* ✅ [`2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb);
+* ✅ [`2024-07-06-Course-1-Lidar-Exercises-Part-3.ipynb`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb);
 
 
 ### Projects
@@ -61,8 +62,10 @@ Other topics covered in course lectures and reading materials:
 * Extracting "obstacles" in scene (e.g., cars) with Euclidean clustering.
 
 #### Lesson 4: Working With Real Point Cloud Data (PCD)
-* TBD as course progresses.
-
+* "Downsampling" the point cloud data with Voxel-based filtering methods;
+* Removing unwanted scene elements with Region-based filtering methods;
+* Creating a file "processing" pipeline (segmenting, clustering, filtering, obstacle detection);
+* Fine-tuning the pipeline for e.g., performance improvements and efficacy.
 
 ### Materials
 Syllabus:
