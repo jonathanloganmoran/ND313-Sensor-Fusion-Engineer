@@ -105,6 +105,8 @@ void cityBlock(
         Eigen::Vector4f(30.0, 6.0, 10.0, 1.0)
     );
     // Segmenting the filtered cloud into obstacles and ground plane instances
+    // NOTE: `SegmentPlane` returns a pair of segmented cloud instances;
+    // The "first" is the `ground` plane, the "second" is `obstacles`.
     std::pair<
         pcl::PointCloud<pcl::PointXYZI>::Ptr,
         pcl::PointCloud<pcl::PointXYZI>::Ptr
@@ -114,8 +116,6 @@ void cityBlock(
         0.3
     );
     // Clustering the obstacles
-    // NOTE: `Clustering` returns a `pair` of point clouds;
-    // "first" is `ground` plane, "second" is `obstacles`.
     std::vector<
         pcl::PointCloud<pcl::PointXYZI>::Ptr
     > cloudClusters = pointProcessorI->Clustering(
