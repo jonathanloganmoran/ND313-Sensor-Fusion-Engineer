@@ -3,10 +3,10 @@
 This is the repository for the ND313 - Sensor Fusion Nanodegree programme given at Udacity during the 2024 session.
 
 ### Status
-* As of **2024-07-06**, this repository is _under development_. Please check back later for full course materials.
+* As of **2024-07-19**, this repository is _under development_. Please check back later for full course materials.
 
 ### Courses
-* ⬜️ [Course 1: Lidar](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar) — in progress! 🎉
+* ✅ [Course 1: Lidar](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar)
 * ⬜️ [Course 2: Camera]()
 * ⬜️ [Course 3: Radar]()
 * ⬜️ [Course 4: Kalman Filters]()
@@ -27,7 +27,8 @@ The following topics are covered in course projects:
 * **Lidar Sensor & Point Clouds** — How Lidar data is represented, how Point Cloud Data (PCD) is generated using simulation software, and how Lidar data can be visualised;
 * **Point Cloud Segmentation** — Using Point Cloud Library (PCL) to segment point clouds, and performing planar model fitting using the RANSAC algorithm;
 * **Clustering Obstacles** — Using PCL to cluster obstacles, storing point cloud data with a KD-Tree, implementing Euclidean Clustering to identify point clusters, and applying bounding boxes around point clusters;
-* **Point Cloud Data (PCD) Workflows** — Working with real-world PCD-file datasets, filtering and processing PCD data, and performing obstacle detection.
+* **Point Cloud Data (PCD) Workflows** — Working with real-world PCD-file datasets, filtering and processing PCD data, and performing obstacle detection;
+* And so much more ... (see [1-Lidar](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar) for full list of course topics).
 
 #### Course 2: Camera
 * **Sensor Fusion & Autonomous Driving** — Understanding the SAE levels of autonomy, comparing typical OEM sensor configurations, and performing sensor modality tradeoff analysis against industry-grade criteria;
