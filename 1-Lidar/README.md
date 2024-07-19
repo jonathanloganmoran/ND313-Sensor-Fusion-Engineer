@@ -29,7 +29,7 @@ The following topics are covered in course exercises:
 * LiDAR sensor simulation with Point Cloud Library (PCL);
 * Point Cloud Data (PCD) files;
 * Working with point clouds (e.g., filtering, clustering, segmentation, separation);
-* And so much more ... (see [`"../Exercises/"`]() notebooks for more content). 
+* And so much more ... (see [`"../Exercises/"`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/tree/main/1-Lidar/Exercises) notebooks for more content). 
 
 Other topics covered in course lectures and reading materials:
 * LiDAR sensor types (mechanical, solid-state, MEMS, flash LiDAR);
