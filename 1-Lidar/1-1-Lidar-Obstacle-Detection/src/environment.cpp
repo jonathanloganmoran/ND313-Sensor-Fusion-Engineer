@@ -101,8 +101,8 @@ void cityBlock(
     >::Ptr filterCloud = pointProcessorI->FilterCloud(
         inputCloudI,
         0.2f,
-        Eigen::Vector4f(-10.0, -5.0, -2.0, 1.0),
-        Eigen::Vector4f(30.0, 8.0, 1.0, 1.0)
+        Eigen::Vector4f(-15.0, -6.0, -3.0, 1.0),
+        Eigen::Vector4f(30.0, 6.0, 10.0, 1.0)
     );
     // Segmenting the filtered cloud into obstacles and ground plane instances
     std::pair<
