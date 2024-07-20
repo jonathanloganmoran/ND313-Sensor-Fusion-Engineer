@@ -8,33 +8,35 @@
 * Render the scene (i.e., point cloud data) and detections using the Point Cloud Library (PCL).
 
 ## Tasks
-### Segmentation (`2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb`)
-* ⬜️ Use PCL to segment the 3D LiDAR point cloud into `ground` plane and `obstacles` (`ProcessPointClouds<PointT>::SegmentPlane()` function);
-* ⬜️ Use PCL to split the 3D LiDAR point cloud into the `ground` and `obstacles` instances (`ProcessPointClouds<PointT>::SeparateClouds()` function);
-* ⬜️ (Optional) Write a 2D segmentation algorithm with [RANSAC](https://en.wikipedia.org/wiki/Random_sample_consensus) to find the `ground` plane instance (`ransac2d::RansacPlane()` function);
-* ⬜️ (Optional) "Fit" the 2D RANSAC segmentation algorithm to the point cloud to estimate the ground plane (`ransac2d::main()`);
+### Segmentation
+* ✅ [`E1.2.2`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to segment the 3D LiDAR point cloud into `ground` plane and `obstacles` (`ProcessPointClouds<PointT>::SegmentPlane()` function);
+* ✅ [`E1.2.3`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to split the 3D LiDAR point cloud into the `ground` and `obstacles` instances (`ProcessPointClouds<PointT>::SeparateClouds()` function);
+* ✅ (Optional) [`E1.2.5` and `E1.2.7`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Write a 2D segmentation algorithm with [RANSAC](https://en.wikipedia.org/wiki/Random_sample_consensus) to find the `ground` plane instance (`ransac2d::Ransac()` and `ransac2d::RansacPlane()` functions);
+* ✅ (Optional) [`E1.2.6` and `E1.2.8`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): "Fit" the 2D RANSAC segmentation algorithm to the point cloud to estimate the ground plane (`ransac2d::main()`);
 
-### Clustering (`2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb`)
-* ⬜️ Use PCL to cluster the 3D LiDAR points with the built-in Euclidean Clustering algorithm and K-D Tree implementation (`ProcessPointClouds<PointT>::Clustering()`);
-* ⬜️ Set the desired clustering hyperparameters for use with the `ProcessPointClouds<PointT>::Clustering()` function (`clusterTolerance`, `minSize` and `maxSize`);
-* ⬜️ (Optional) Create a K-D Tree implementation in C++ using only standard library functions (`kdtree::KdTree`);
-* ⬜️ (Optional) Write the core functions of the custom K-D Tree using only C++ standard library (`KdTree::insert()`, `KdTree::search()`);
-* ⬜️ (Optional) Implement a custom Euclidean Clustering algorithm in C++ using the custom K-D Tree (`cluster::euclideanCluster()` and helper function `cluster::cluster()`);
+### Clustering
+* ✅ [`E1.3.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Use PCL to cluster the 3D LiDAR points with the built-in Euclidean Clustering algorithm and K-D Tree implementation (`ProcessPointClouds<PointT>::Clustering()`);
+* ✅ [`E1.3.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Set the desired clustering hyperparameters for use with the `ProcessPointClouds<PointT>::Clustering()` function (`clusterTolerance`, `minSize` and `maxSize`);
+* ✅ (Optional) [`E1.3.3`-`E1.3.5`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Create a K-D Tree implementation in C++ using only standard library functions (`kdtree::KdTree`);
+* ✅ (Optional) [`E1.3.3`-`E1.3.4`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Write the core functions of the custom K-D Tree using only C++ standard library (`KdTree::insert()`, `KdTree::search()`);
+* ✅ (Optional) [`E1.3.5`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Implement a custom Euclidean Clustering algorithm in C++ using the custom K-D Tree (`cluster::euclideanCluster()` and helper function `cluster::cluster()`);
 
-### Downsampling (`2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb`)
-* ⬜️ Implement the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::VoxelGrid()` to perform Voxel-based filtering to "downsample" the input point cloud (i.e., to reduce the total number of points);
-* ⬜️ (Optional) Extend the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::CropBox()` to perform Region-based filtering to "crop" the input point cloud to a desired dimension (to eliminate unwanted scene points);
-* ⬜️ (Optional) Extend the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::CropBox()` to perform Region-based filtering to "remove" the area encompassing the roof of the ego-vehicle (to eliminate unwanted scene points);
+### Downsampling
+* ✅ [`E1.4.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Implement the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::VoxelGrid()` to perform Voxel-based filtering to "downsample" the input point cloud (i.e., to reduce the total number of points);
+* ✅ (Optional) [`E1.4.2(a)`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Extend the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::CropBox()` to perform Region-based filtering to "crop" the input point cloud to a desired dimension (to eliminate unwanted scene points);
+* ✅ (Optional) [`E1.4.2(b)`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Extend the `ProcessPointClouds<PointT>::FilterCloud()` function with `pcl::CropBox()` to perform Region-based filtering to "remove" the area encompassing the roof of the ego-vehicle (to eliminate unwanted scene points);
 
 ### "Real-time" Detection
-* ⬜️ Implement the argument-overloaded `environment::cityBlock()` function to perform the "complete" LiDAR scan processing pipeline (segmentation, clustering, downsampling, detection) across _multiple_ `.pcd` files in a "streaming" manner (i.e., process and visualise the point cloud scans sequentially from a specified folder);
-* ⬜️ (Optional) Adjust the voxel-based downsampling hyperparameters (`filterRes`) to achieve "real-time" performance (i.e., increase `filterRes` value to "reduce" the voxel-grid resolution, effectively eliminating a larger number of points and theoretically reducing compute time);
+* ✅ [`E1.4.3`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Implement the argument-overloaded `environment::cityBlock()` function to perform the "complete" LiDAR scan processing pipeline (segmentation, clustering, downsampling, detection) across _multiple_ `.pcd` files in a "streaming" manner (i.e., process and visualise the point cloud scans sequentially from a specified folder);
+* ✅ (Optional) [`E1.4.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Adjust the voxel-based downsampling hyperparameters (`filterRes`) to achieve "real-time" performance (i.e., increase `filterRes` value to "reduce" the voxel-grid resolution, effectively eliminating a larger number of points and theoretically reducing compute time);
 
 ### Visualisation
-* ⬜️ Use PCL to render the LiDAR point cloud file(s);
-* ⬜️ Use PCL to visualise the detected "clusters";
-* ⬜️ Use PCL to estimate cluster bounding boxes (`ProcessPointClouds<PointT>::BoundingBox()`) and visualise them;
-* ⬜️ (Optional) Adjust the region-based filtering hyperparameters (`minPoint`, `maxPoint`) to reduce point cloud "size" (i.e., "crop" the point cloud to a 'smaller' region by changing `minPoint`, `maxPoint` values).
+* ✅ [`E1.1.3`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-14-Course-1-Lidar-Exercises-Part-1.ipynb): Use PCL to render the LiDAR point cloud file(s) with the `environment::renderPointCloud()` function;
+* [`E1.2.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to "process" the LiDAR point data;
+* ✅ [`E1.3.2`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Use PCL to visualise the detected "clusters";
+* ✅ [`E1.3.6`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Use PCL to estimate cluster bounding boxes (`ProcessPointClouds<PointT>::BoundingBox()`) and visualise them;
+* ✅ (Optional) [`E1.2.4`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to render the segmented `ground` plane and `obstacles` cloud with unique colours; 
+* ✅ (Optional) [`E1.4.2(a)`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-07-06-Course-1-Lidar-Exercises-Part-4.ipynb): Adjust the region-based filtering hyperparameters (`minPoint`, `maxPoint`) to reduce point cloud "size" (i.e., "crop" the point cloud to a 'smaller' region by changing `minPoint`, `maxPoint` values).
 
 
 
