@@ -2,7 +2,10 @@
 #### By Jonathan L. Moran (jonathan.moran107@gmail.com)
 
 ## Objectives
-
+* Process raw LiDAR data with filtering, segmentation, and clustering techniques;
+* Perform obstacle detection to identify objects in the driving scene;
+* Implement the core functions of the detection pipeline in C++;
+* Render the scene (i.e., point cloud data) and detections using the Point Cloud Library (PCL).
 
 ## Tasks
 
