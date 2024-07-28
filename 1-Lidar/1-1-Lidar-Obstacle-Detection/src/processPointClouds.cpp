@@ -10,6 +10,7 @@
   */
 
 #include "processPointClouds.h"
+#include <set>      // `SegmentPlaneCustom()` function
 
 
 //constructor:
@@ -173,6 +174,34 @@ template<typename PointT> std::pair<
     return segResult;
 }
 
+/** Segments the input cloud into two instances using standard library only.
+ * 
+ * The `SegmentPlaneCustom()` function "segments" the input cloud into two
+ * instances: a `ground` plane cloud and an `obstacles`  cloud. The `ground`
+ * plane, i.e., the "road surface", is estimated by iteratively fitting a
+ * planar surface using the Random Sample Consensus (RANSAC) algorithm.
+ * 
+ * The parameters for this algorithm are provided in the input arguments,
+ * `maxIterations` and `distanceThreshold`.
+ * 
+ * @param cloud Point cloud to extract the two instances from.
+ * @param maxIterations Number of iterations to run the optimisation loop for.
+ * @param distanceThreshold Max distance of current "model" to potential inlier.
+ * @returns Pair of point cloud instances returned from `SeparateClouds()`,
+ *      i.e., the segmented `ground` plane and the `obstacles` point clouds,
+ *      accessible with the `.first` and `.second` dot-accessor, respectively. 
+ */
+template<typename PointT> std::pair<
+    typename pcl::PointCloud<PointT>::Ptr,
+    typename pcl::PointCloud<PointT>::Ptr
+> ProcessPointClouds<PointT>::SegmentPlaneCustom(
+    typename pcl::PointCloud<PointT>::Ptr cloud,
+    int maxIterations,
+    float distanceThreshold
+) {
+    /** E1.5.1: Segmenting the point cloud into two instances. **/
+    // ..
+}
 
 /** Segments the input cloud into two using the Point Cloud Library (PCL).
  * 
