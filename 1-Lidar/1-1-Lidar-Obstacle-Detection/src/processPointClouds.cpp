@@ -224,11 +224,17 @@ template<typename PointT> std::pair<
         /* Catching any errors with selecting unique anchor points */
         if (anchorPoints.empty()) {
             std::cerr << "Error; cannot form co-linear vectors, "
-                      << "Must have three unique points.\n";
+                      << "Must have three unique points."
+                      << "NOTE: Return will be INVALID.\n";
+            // TODO: Handle appropriate error case
+            // With desired return type (a pair of point cloud instances).
             return inliersResult;
         }
         else if (anchorPoints.size()) {
-            std::cerr << "Error; not enough unique points in dataset.\n";
+            std::cerr << "Error; not enough unique points in dataset.\n"
+                      << "NOTE: Return will be INVALID.\n";
+            // TODO: Handle appropriate error case
+            // With desired return type (a pair of point cloud instances).
             return inliersResult;
         }
         // Fetching the indices of the three unique anchor points found
@@ -349,7 +355,7 @@ template<typename PointT> std::pair<
     // i.e., the ground plane that "fit" the most number of inliers.
     /* "Separating" the input `cloud` into two instances */
     // Copying the found "inliers" (the set of integer-value indices) into a PCL object
-    pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
+    pcl::PointIndices::Ptr inliers{new pcl::PointIndices};
     inliers->indices = inliersResult;
     // With the set of inliers, "split" the input `cloud` into two instances
     std::pair<
