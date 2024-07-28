@@ -222,6 +222,8 @@ template<typename PointT> std::pair<
         std::set<int> anchorPoints;
         int anchorPointSteps = 0;
         while (anchorPoints.size() < 3) {
+            // TODO: compare actual point values, rather than just their indices
+            // to ensure each point is truly unique (not just the index value). 
             anchorPoints.insert(
                 rand() % numPoints
             );
