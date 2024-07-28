@@ -48,31 +48,69 @@ void clearRays(pcl::visualization::PCLVisualizer::Ptr& viewer)
 	}
 }
 
-void renderPointCloud(pcl::visualization::PCLVisualizer::Ptr& viewer, const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, std::string name, Color color)
-{
-
+void renderPointCloud(
+	pcl::visualization::PCLVisualizer::Ptr& viewer, 
+	const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, 
+	std::string name, 
+	Color color
+) {
   	viewer->addPointCloud<pcl::PointXYZ> (cloud, name);
   	viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 4, name);
   	viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
 }
 
-void renderPointCloud(pcl::visualization::PCLVisualizer::Ptr& viewer, const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud, std::string name, Color color)
-{
-
-	if(color.r==-1)
-	{
-		// Select color based off of cloud intensity
-		pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud,"intensity");
-  		viewer->addPointCloud<pcl::PointXYZI>(cloud, intensity_distribution, name);
+/** Renders the PCL point `cloud` instance onto the `PCLVisualizer` canvas.
+ * 
+ * If a given `Color` is provided, the respective RGB values will be used to
+ * update the point cloud rendering properties with the function call to:
+ * 	`viewer->setPointCloudRenderingProperties()`.
+ * 
+ * @param viewer The PCL Viewer canvas to render the LiDAR data onto. 
+ * @param cloud The PCL point cloud data to render onto the canvas.
+ * @param name The `string` with text to use as the 'title' of the canvas.
+ * @param color (Optional) The `Color` instance to assign with `setPointCloudRenderingProperties`. 
+*/
+void renderPointCloud(
+	pcl::visualization::PCLVisualizer::Ptr& viewer, 
+	const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud, 
+	std::string name, 
+	Color color
+) {
+	if (color.r == -1) {
+		// No colour input provided; 
+		// Selecting color based off of cloud intensity.
+		pcl::visualization::PointCloudColorHandlerGenericField<
+			pcl::PointXYZI
+		> intensity_distribution(
+			cloud,
+			"intensity"
+		);
+  		viewer->addPointCloud<pcl::PointXYZI>(
+			cloud, 
+			intensity_distribution, 
+			name
+		);
 	}
-	else
-	{
-		// Select color based off input value
-		viewer->addPointCloud<pcl::PointXYZI> (cloud, name);
-		viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+	else {
+		// Colour input provided;
+		// Selecting color based off input value.
+		viewer->addPointCloud<pcl::PointXYZI>(
+			cloud, 
+			name
+		);
+		viewer->setPointCloudRenderingProperties(
+			pcl::visualization::PCL_VISUALIZER_COLOR, 
+			color.r, 
+			color.g, 
+			color.b, 
+			name
+		);
 	}
-
-	viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+	viewer->setPointCloudRenderingProperties(
+		pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 
+		2, 
+		name
+	);
 }
 
 // Draw wire frame box with filled transparent color 
