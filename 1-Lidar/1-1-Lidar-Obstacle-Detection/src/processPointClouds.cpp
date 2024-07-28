@@ -348,21 +348,9 @@ template<typename PointT> std::pair<
     // Obtained the indices of the inliers found from the "best" fit model,
     // i.e., the ground plane that "fit" the most number of inliers.
     /* "Separating" the input `cloud` into two instances */
-    // Creating a new set of <PointT> instances to store the inliers
-    // i.e., their coordinate values.
-    typename pcl::PointCloud<PointT>::Ptr inliers(new pcl::PointCloud<PointT>());
-    // CANDO: Create an "outliers" set of <PointT> instances for future use.
-    for (int idx = 0; idx < cloud->point.size(); idx++) {
-        // Fetching the 3D point in the cloud stored at the current index
-        // i.e., the point coordinate values
-        const PointT p(cloud->points.at(idx));
-        // If the current point index is one of the "inliers" found earlier,
-        if (inliersResult.count(idx)) {
-            // Then add the current <PointT> point to the <PointT> inliers set
-            inliers->points.push_back(p);
-        } // Otherwise, skip
-        // CANDO: Add current <PointT> point to <PointT> "outliers" set
-    }
+    // Copying the found "inliers" (the set of integer-value indices) into a PCL object
+    pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
+    inliers->indices = inliersResult;
     // With the set of inliers, "split" the input `cloud` into two instances
     std::pair<
         typename pcl::PointCloud<PointT>::Ptr, 
