@@ -92,6 +92,21 @@ void projectPipeline(
         inputCloudI,
         "inputCloudI — The current (unmodified) point cloud in the Project 1.1 pipeline."
     );
+    /** E1.5.1: Segmenting the point cloud into two instances. **/
+    // CANDO: Set hyperparameter values for plane-fitting performance.
+    int maxIterations = 25;
+    float distanceThreshold = 0.3;
+    std::pair<
+        typename pcl::PointCloud<PointT>::Ptr, 
+        typename pcl::PointCloud<PointT>::Ptr
+    > segResult = pointProcessorI->SegmentPlaneCustom(
+        inputCloudI,
+        maxIterations,
+        distanceThreshold
+    );
+    // Printing out number of points found in each segmented instance
+    std::cout << "Points found (`ground` plane): " << segResult.first.size() << "\n";
+    std::cout << "Points found (`obstacles)" << segResult.second.size() << "\n";
 }
 
 
