@@ -70,6 +70,26 @@ std::vector<Car> initHighway(
     return cars;
 }
 
+/** Performs the 3D point cloud processing pipeline task.
+ * 
+ * All tasks related to "Project 1.1: LiDAR Obstacle Detection" are executed
+ * from this 'P1.1 programme loop'.
+ * 
+ * @brief Processes each input point cloud in the P1.1 pipeline.
+ * @param viewer The PCL Viewer canvas to render the LiDAR data onto. 
+ * @param pointProcessorI The PCL point processor storing `pcl::XYZI` point instances.
+ * @param inputCloudI The current LiDAR scan "frame" we are processing.
+ */
+void projectPipeline(
+    pcl::visualization::PCLVisualizer::Ptr &viewer,
+    ProcessPointClouds<pcl::PointXYZI> *pointProcessorI,
+    const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloudI
+) {
+    /** BEGIN PROJECT 1.1: LIDAR OBSTACLE DETECTION **/
+
+}
+
+
 /** Performs the 3D city block environment simulation on multiple files.
  * 
  * Here, the 3D city block scene is rendered. A LiDAR point processor object
@@ -82,8 +102,8 @@ std::vector<Car> initHighway(
  * 
  * @brief Loads and processes the city block captured by the LiDAR sensor.
  * @param viewer The PCL Viewer canvas to render the LiDAR data onto.
- * @param pointProcessorI The point processor storing `pcl::XYZI` point instances.
- * @param inputCloudI The current point cloud "frame" we are considering.
+ * @param pointProcessorI The PCL point processor storing `pcl::XYZI` point instances.
+ * @param inputCloudI The current LiDAR scan "frame" we are processing.
  */
 void cityBlock(
     pcl::visualization::PCLVisualizer::Ptr &viewer, 
