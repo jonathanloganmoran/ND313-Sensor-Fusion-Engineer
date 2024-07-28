@@ -48,21 +48,47 @@ void clearRays(pcl::visualization::PCLVisualizer::Ptr& viewer)
 	}
 }
 
+/** Renders the PCL point `cloud` instance onto the `PCLVisualizer` canvas.
+ * 
+ * For the given `Color` provided (not optional), the respective RGB values
+ * will be used to update the point cloud rendering properties with the function
+ * call to:
+ * 	`viewer->setPointCloudRenderingProperties()`.
+ * 
+ * @param viewer The PCL Viewer canvas to render the LiDAR data onto. 
+ * @param cloud The PCL point cloud data to render onto the canvas.
+ * @param name The `string` with text to use as the 'title' of the canvas.
+ * @param color The `Color` instance to assign with `setPointCloudRenderingProperties`. 
+*/
 void renderPointCloud(
 	pcl::visualization::PCLVisualizer::Ptr& viewer, 
 	const pcl::PointCloud<pcl::PointXYZ>::Ptr& cloud, 
 	std::string name, 
 	Color color
 ) {
-  	viewer->addPointCloud<pcl::PointXYZ> (cloud, name);
-  	viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 4, name);
-  	viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+  	viewer->addPointCloud<pcl::PointXYZ>(
+		cloud, 
+		name
+	);
+  	viewer->setPointCloudRenderingProperties(
+		pcl::visualization::PCL_VISUALIZER_POINT_SIZE,
+		4,
+		name
+	);
+  	viewer->setPointCloudRenderingProperties(
+		pcl::visualization::PCL_VISUALIZER_COLOR, 
+		color.r, 
+		color.g, 
+		color.b, 
+		name
+	);
 }
 
 /** Renders the PCL point `cloud` instance onto the `PCLVisualizer` canvas.
  * 
- * If a given `Color` is provided, the respective RGB values will be used to
- * update the point cloud rendering properties with the function call to:
+ * If a given `Color` is provided (optional), the respective RGB values
+ * will be used to update the point cloud rendering properties with the function
+ * call to:
  * 	`viewer->setPointCloudRenderingProperties()`.
  * 
  * @param viewer The PCL Viewer canvas to render the LiDAR data onto. 
