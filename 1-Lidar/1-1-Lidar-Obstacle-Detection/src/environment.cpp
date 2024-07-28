@@ -86,7 +86,12 @@ void projectPipeline(
     const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloudI
 ) {
     /** BEGIN PROJECT 1.1: LIDAR OBSTACLE DETECTION **/
-
+    /** E1.5.0: `renderPointCloud()` function call. **/
+    renderPointCloud(
+        viewer,
+        inputCloudI,
+        "inputCloudI — The current (unmodified) point cloud in the Project 1.1 pipeline."
+    );
 }
 
 
@@ -455,10 +460,12 @@ int main(
     >();
     // Creating list of all `.pcd` files to "stream"
     // CANDO: Modify folder pointing to `.pcd` file(s)
+    // NOTE: For P1.1, use "../src/sensors/data/pcd/data_2".
     std::vector<
         boost::filesystem::path
     > stream = pointProcessorI->streamPcd(
-        "../src/sensors/data/pcd/data_1"
+        // "../src/sensors/data/pcd/data_1"
+        "../src/sensors/data/pcd/data_2"
     );
     // Creating file path "iterator"
     auto streamIterator = stream.begin();
@@ -474,7 +481,14 @@ int main(
         );
         // Performing obstacle detection process on current `.pcd` file
         // Calling the overloaded `cityBlock` "streaming" function
-        cityBlock(
+        // cityBlock(
+        //     viewer,
+        //     pointProcessorI,
+        //     inputCloudI
+        // );
+        /** BEGIN PROJECT 1.1: LIDAR OBSTACLE DETECTION **/
+        /** E1.5.0: `renderPointCloud()` function call. **/
+        projectPipeline(
             viewer,
             pointProcessorI,
             inputCloudI
