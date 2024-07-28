@@ -17,15 +17,11 @@
 #include <vector>
 #include <string>
 
-
-struct Color
-{
-
+// Defines the RGB value pair to use when rendering point cloud data
+struct Color {
 	float r, g, b;
-
 	Color(float setR, float setG, float setB)
-		: r(setR), g(setG), b(setB)
-	{}
+		: r(setR), g(setG), b(setB) {}
 };
 
 struct Vect3

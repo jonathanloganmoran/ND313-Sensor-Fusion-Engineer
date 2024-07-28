@@ -91,6 +91,10 @@ void renderPointCloud(
  * call to:
  * 	`viewer->setPointCloudRenderingProperties()`.
  * 
+ * If no `Color` instance is provided, then this function assumes a `cloud`
+ * input is given such that each point has an "intensity" value which will 
+ * be used instead to define the colour given to each point.
+ * 
  * @param viewer The PCL Viewer canvas to render the LiDAR data onto. 
  * @param cloud The PCL point cloud data to render onto the canvas.
  * @param name The `string` with text to use as the 'title' of the canvas.
