@@ -13,6 +13,7 @@
 #include <set>          // `SegmentPlaneCustom()` function
 #include <stdlib.h>     // `srand`, `rand`
 #include <time.h>       // `time`
+#include <stdexcept>    // `std::runtime_error`
 
 
 //constructor:
@@ -208,6 +209,9 @@ template<typename PointT> std::pair<
     std::srand(time(NULL));
     /** Performing RASNAC model fitting for max iterations **/
     int bestNumInliersFound = std::numeric_limits<int>::min();
+    // Maxmimum attempts allowed to find unique anchor points
+    // CANDO: Modify to reduce search time (in case many non-unique points exist)
+    const int maxAnchorPointSteps = 100;  
     for (int i = 0; i < maxIterations; i++) {
         std::cout << "Plane fitting, iteration: " << i << "\n";
         // Storing inliers of the current plane ("model")
@@ -216,26 +220,20 @@ template<typename PointT> std::pair<
         int numPoints = (int)cloud->size();
         // Using `set` to prevent "duplicate" anchor points
         std::set<int> anchorPoints;
+        int anchorPointSteps = 0;
         while (anchorPoints.size() < 3) {
             anchorPoints.insert(
                 rand() % numPoints
             );
-        }
-        /* Catching any errors with selecting unique anchor points */
-        if (anchorPoints.empty()) {
-            std::cerr << "Error; cannot form co-linear vectors, "
-                      << "Must have three unique points."
-                      << "NOTE: Return will be INVALID.\n";
-            // TODO: Handle appropriate error case
-            // With desired return type (a pair of point cloud instances).
-            return inliersResult;
-        }
-        else if (anchorPoints.size()) {
-            std::cerr << "Error; not enough unique points in dataset.\n"
-                      << "NOTE: Return will be INVALID.\n";
-            // TODO: Handle appropriate error case
-            // With desired return type (a pair of point cloud instances).
-            return inliersResult;
+            anchorPointSteps += 1;
+            // Preventing loop from running "infinitely"
+            // In the case that `anchorPoints` is not able to be populated
+            // with more than three unique points.
+            if (anchorPointSteps > maxAnchorPointSteps) {
+                throw std::runtime_error(
+                    "Error; maximum anchor point steps reached."
+                );
+            }
         }
         // Fetching the indices of the three unique anchor points found
         std::set<int>::iterator idx = anchorPoints.begin();
