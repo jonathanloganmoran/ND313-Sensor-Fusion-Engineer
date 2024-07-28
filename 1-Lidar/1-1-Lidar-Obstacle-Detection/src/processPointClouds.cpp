@@ -339,15 +339,42 @@ template<typename PointT> std::pair<
     } // Repeat model fitting for maximum number of iterations
     /* End of model fitting */
     // Checking if we obtained any inliers from the "best" run (sanity check)
-    if (bestNumInliersFound <= 0) {
+    if (bestNumInliersFound <= 0 || inliersResult.empty()) {
         // No inliers found; or, error has occurred.
         std::cerr << "Error has occurred; no inliers found ("
                   << "`bestNumInliersFound` = " << bestNumInliersFound
                   << ").\n";
     } // Otherwise, a valid "inlier" set should have been obtained.
-    // Return the indices of the inliers found from the "best" fit model,
+    // Obtained the indices of the inliers found from the "best" fit model,
     // i.e., the ground plane that "fit" the most number of inliers.
-    return inliersResult; 
+    /* "Separating" the input `cloud` into two instances */
+    // Creating a new set of <PointT> instances to store the inliers
+    // i.e., their coordinate values.
+    typename pcl::PointCloud<PointT>::Ptr inliers(new pcl::PointCloud<PointT>());
+    // CANDO: Create an "outliers" set of <PointT> instances for future use.
+    for (int idx = 0; idx < cloud->point.size(); idx++) {
+        // Fetching the 3D point in the cloud stored at the current index
+        // i.e., the point coordinate values
+        const PointT p(cloud->points.at(idx));
+        // If the current point index is one of the "inliers" found earlier,
+        if (inliersResult.count(idx)) {
+            // Then add the current <PointT> point to the <PointT> inliers set
+            inliers->points.push_back(p);
+        } // Otherwise, skip
+        // CANDO: Add current <PointT> point to <PointT> "outliers" set
+    }
+    // With the set of inliers, "split" the input `cloud` into two instances
+    std::pair<
+        typename pcl::PointCloud<PointT>::Ptr, 
+        typename pcl::PointCloud<PointT>::Ptr
+    > segResult = SeparateClouds(
+        inliers, 
+        cloud
+    );
+    // Returning the two point cloud instances in a pair,
+    // the first (`inliersResult.first`) is the `ground`,
+    // the second (`inliersResult.second`) are the `obstacles`.
+    return segResult;
 }
 
 /** Segments the input cloud into two using the Point Cloud Library (PCL).
