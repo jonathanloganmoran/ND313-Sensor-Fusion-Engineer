@@ -97,16 +97,16 @@ void projectPipeline(
     int maxIterations = 25;
     float distanceThreshold = 0.3;
     std::pair<
-        typename pcl::PointCloud<PointT>::Ptr, 
-        typename pcl::PointCloud<PointT>::Ptr
-    > segResult = pointProcessorI->SegmentPlaneCustom(
+        pcl::PointCloud<pcl::PointXYZI>::Ptr,
+        pcl::PointCloud<pcl::PointXYZI>::Ptr
+    > segmentCloud = pointProcessorI->SegmentPlaneCustom(
         inputCloudI,
         maxIterations,
         distanceThreshold
     );
     // Printing out number of points found in each segmented instance
-    std::cout << "Points found (`ground` plane): " << segResult.first.size() << "\n";
-    std::cout << "Points found (`obstacles)" << segResult.second.size() << "\n";
+    std::cout << "Points found (`ground` plane): " << segmentCloud.first->points.size() << "\n";
+    std::cout << "Points found (`obstacles)" << segmentCloud.second->points.size() << "\n";
 }
 
 
