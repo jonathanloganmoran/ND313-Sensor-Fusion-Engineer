@@ -205,9 +205,10 @@ template<typename PointT> std::pair<
 
 /** Segments the input cloud into two using the Point Cloud Library (PCL).
  * 
- * The input `cloud` is filtered and segmented into two such that a
- * ground plane (the road surface) is estimated by iteratively fitting
- * a planar surface using the RANSAC algorithm.
+ * The `SegmentPlane()` function "segments" the input cloud into two instances:
+ * a `ground` plane cloud and an `obstacles` cloud. The `ground` plane, i.e.,
+ * the "road surface", is estimated by iteratively fitting a planar surface
+ * with the RANSAC algorithm provided by the Point Cloud Library (PCL).
  * 
  * The parameters for this algorithm are provided in the input arguments,
  * `maxIterations` and `distanceThreshold`. 
@@ -216,14 +217,13 @@ template<typename PointT> std::pair<
  * https://pointclouds.org/documentation/tutorials/planar_segmentation.html.
  * 
  * @brief   Performs ground plane segmentation using Point Cloud Library (PCL).
- * @param   cloud               Point cloud to extract the ground plane from.
- * @param   maxIterations       Number of iterations to run the optimisation.
- * @param   distanceThreshold   Max distance from model to potential inlier.
- *                              As a rule of thumb, this should be slightly larger
- *                              than the resolution.
- * @returns Pair of point clouds returned from the `SeparateClouds` function,
- *          i.e., the segmented `ground` and the `obstacles` point clouds,
- *          contained in the `first` and `second` pair indices, respectively.
+ * @param cloud Point cloud to extract the two instances from.
+ * @param maxIterations Number of iterations to run the optimisation loop for.
+ * @param distanceThreshold Max distance of current "model" to potential inlier,
+*       As a rule of thumb, this should be slightly larger than the resolution.
+ * @returns Pair of point cloud instances returned from `SeparateClouds()`,
+ *      i.e., the segmented `ground` plane and the `obstacles` point clouds,
+ *      accessible with the `.first` and `.second` dot-accessor, respectively. 
 */
 template<typename PointT> std::pair<
     typename pcl::PointCloud<PointT>::Ptr, 
