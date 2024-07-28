@@ -10,7 +10,9 @@
   */
 
 #include "processPointClouds.h"
-#include <set>      // `SegmentPlaneCustom()` function
+#include <set>          // `SegmentPlaneCustom()` function
+#include <stdlib.h>     // `srand`, `rand`
+#include <time.h>       // `time`
 
 
 //constructor:
@@ -200,7 +202,152 @@ template<typename PointT> std::pair<
     float distanceThreshold
 ) {
     /** E1.5.1: Segmenting the point cloud into two instances. **/
-    // ..
+    // Storing inliers of the "best fit" model (i.e., `ground` point indices)
+    std::unordered_set<int> inliersResult;
+    // Initialising the random number generator
+    std::srand(time(NULL));
+    /** Performing RASNAC model fitting for max iterations **/
+    int bestNumInliersFound = std::numeric_limits<int>::min();
+    for (int i = 0; i < maxIterations; i++) {
+        std::cout << "Plane fitting, iteration: " << i << "\n";
+        // Storing inliers of the current plane ("model")
+        std::unordered_set<int> inliersTemp;
+        // Sampling three points at random
+        int numPoints = (int)cloud->size();
+        // Using `set` to prevent "duplicate" anchor points
+        std::set<int> anchorPoints;
+        while (anchorPoints.size() < 3) {
+            anchorPoints.insert(
+                rand() % numPoints
+            );
+        }
+        /* Catching any errors with selecting unique anchor points */
+        if (anchorPoints.empty()) {
+            std::cerr << "Error; cannot form co-linear vectors, "
+                      << "Must have three unique points.\n";
+            return inliersResult;
+        }
+        else if (anchorPoints.size()) {
+            std::cerr << "Error; not enough unique points in dataset.\n";
+            return inliersResult;
+        }
+        // Fetching the indices of the three unique anchor points found
+        std::set<int>::iterator idx = anchorPoints.begin();
+        int pointIdx1 = *idx; idx++;
+        int pointIdx2 = *idx; idx++;
+        int pointIdx3 = *idx;
+        // Fetching the anchor points (i.e., their 3D point values)
+        pcl::PointXYZI p1 cloud->points[pointIdx1];
+        pcl::PointXYZI p2 cloud->points[pointIdx2];
+        pcl::PointXYZI p3 cloud->points[pointIdx3];
+        /* "Fitting" the equation of the plane to the three points. */
+        // First, forming two vectors originating from `p1`
+        double v1[3] = {
+            p2.x - p1.x,
+            p2.y - p1.y,
+            p2.z - p1.z
+        };
+        double v2[3] = {
+            p3.x - p1.x,
+            p3.y - p1.y,
+            p3.z - p1.z
+        };
+        // Second, taking cross-product to form "normal vector" `v1xv2`
+        double v1xv2[3] = {
+            (p2.y - p1.y) * (p3.z - p1.z) - (p2.z - p1.z) * (p3.y - p1.y),
+            (p2.z - p1.z) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.z - p1.z),
+            (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x)
+        };
+        // Finally, extracting values of the coefficients of the plane
+        double A = v1xv2[0];
+        double B = v1xv2[1];
+        double C = v1xv2[2];
+        // And determining the final coefficient `D` with arbitrary point
+        double D = -(
+            A * p1.x + B * p1.y + C * p1.z
+        );
+        /* Computing point-plane distance over all points */
+        // First, creating counter to get number of current inliers
+        // "Inliers" here refers to point(s) with a to-plane distance
+        // less than the given threshold value.
+        int numInliersCurrent = 0;
+        std::cout << "Point-plane distance computation\n";
+        for (int j = 0; j < numPoints; j++) {
+            // CANDO: Comment out console logging for less "clutter"
+            std::cout << "Iteration " << j << ": "
+                      << "`numInliersCurrent` = " << numInliersCurrent
+                      << ", `p1` = " << p1
+                      << ", `p2` = " << p2
+                      << ", `p3` = " << p3;
+            // Fetching point candidate "at random"
+            int pointIdxj = rand() % numPoints;
+            // Checking if point candidate is already an anchor point
+            // i.e., one of the point(s) used to fit the plane
+            if ((pointIdxj == pointIdx1)
+                || (pointIdxj == pointIdx2)
+                || (pointIdxj == pointIdx3) 
+            ) {
+                // Fetching point value to print in console log
+                pcl::PointXYZI p_err cloud->points[pointIdxj];
+                // Throw error; randomly-selected point is an anchor point
+                // CANDO: Comment out console logging for less "clutter"
+                std::cerr << "Model iteration: " << i
+                          << ", point iteration: " << j
+                          << ", anchor point encountered at index: "
+                          << pointIdxj << " with values: {x, y, z, I} = "
+                          << "{" << p_err.x
+                          << ", " << p_err.y 
+                          << ", " << p_err.z 
+                          << ", " << p_err.z
+                          << ", " << p_err.I << "}.\n";
+                // CANDO: Skip adding anchor to set
+                // To avoid divide-by-zero errrors
+                continue;
+                // Additionally, handle "other" possible edge cases, such as:
+                // CANDO: Case (1) "Coincident point" — Point is on plane.
+                // CANDO: Case (2) "Parallel plane" — Plane is parallel to coordinate axes.
+                // CANDO: Case (3) "Numerical instability" — Very small denominator values.
+                // CANDO: Case (4) "Infinity distance" — plane parallel to point vector. 
+            }
+            pcl::PointXYZI p_j = cloud->points[pointIdxj];
+            // CANDO: Comment out console logging for less "clutter"
+            std::cout << ", `p_j` = " << p_j;
+            // Calculating the distance from point to plane
+            double d_j_dot_v1xv2 = std::fabs(
+                A * p_j.x + B * p_j.y + C * p_j.z + D
+            ) / std::sqrt(
+                std::pow(A, 2) + std::pow(B, 2) + std::pow(C, 2)
+            );
+            // Checking computed distance against threshold
+            if (d_j_dot_v1xv2 <= distanceTol) {
+                // Distance is within tolerated limit
+                // i.e., Point is considered an "inlier"
+                numInliersCurrent += 1;
+                inliersTemp.insert(pointIdxj);
+            }
+        } // Repeat for all remaining points in point cloud
+        /* Checking if current model was "best" found */
+        if (numInliersCurrent >= bestNumInliersFound) {
+            // Update the "best" inlier set to be this current one
+            inliersResult = inliersTemp;
+            bestNumInliersFound = numInliersCurrent;
+        }
+        // Otherwise, clear this model's inlier set and repeat with new plane
+        inliersTemp.clear();
+        // Reset number of inliers found for the next model iteration
+        numInliersCurrent = 0;
+    } // Repeat model fitting for maximum number of iterations
+    /* End of model fitting */
+    // Checking if we obtained any inliers from the "best" run (sanity check)
+    if (bestNumInliersFound <= 0) {
+        // No inliers found; or, error has occurred.
+        std::cerr << "Error has occurred; no inliers found ("
+                  << "`bestNumInliersFound` = " << bestNumInliersFound
+                  << ").\n";
+    } // Otherwise, a valid "inlier" set should have been obtained.
+    // Return the indices of the inliers found from the "best" fit model,
+    // i.e., the ground plane that "fit" the most number of inliers.
+    return inliersResult; 
 }
 
 /** Segments the input cloud into two using the Point Cloud Library (PCL).
