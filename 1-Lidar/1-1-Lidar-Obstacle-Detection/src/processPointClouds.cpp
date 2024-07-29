@@ -209,7 +209,7 @@ template<typename PointT> std::pair<
     std::unordered_set<int> inliersResult;
     // Initialising the random number generator
     std::srand(time(NULL));
-    /** Performing RASNAC model fitting for max iterations **/
+    /** Performing RANSAC model fitting for max iterations **/
     int bestNumInliersFound = std::numeric_limits<int>::min();
     // Maxmimum attempts allowed to find unique anchor points
     // CANDO: Modify to reduce search time (in case many non-unique points exist)
@@ -305,7 +305,6 @@ template<typename PointT> std::pair<
                           << pointIdxj << " with values: {x, y, z, I} = "
                           << "{" << p_err.x
                           << ", " << p_err.y 
-                          << ", " << p_err.z 
                           << ", " << p_err.z
                           << ", " << p_err.I << "}.\n";
                 // CANDO: Skip adding anchor to set
