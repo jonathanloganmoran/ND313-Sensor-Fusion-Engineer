@@ -215,7 +215,8 @@ template<typename PointT> std::pair<
     // CANDO: Modify to reduce search time (in case many non-unique points exist)
     const int maxAnchorPointSteps = 100;  
     for (int i = 0; i < maxIterations; i++) {
-        std::cout << "\nPlane fitting, iteration: " << i << "\n";
+        // CANDO: Comment out console logging for less "clutter"
+        // std::cout << "\nPlane fitting, iteration: " << i << "\n";
         // Storing inliers of the current plane ("model")
         std::unordered_set<int> inliersTemp;
         // Sampling three points at random
@@ -279,14 +280,15 @@ template<typename PointT> std::pair<
         // "Inliers" here refers to point(s) with a to-plane distance
         // less than the given threshold value.
         int numInliersCurrent = 0;
-        std::cout << "\nPoint-plane distance computation\n";
+        // CANDO: Comment out console logging for less "clutter"
+        // std::cout << "\nPoint-plane distance computation\n";
         for (int j = 0; j < numPoints; j++) {
             // CANDO: Comment out console logging for less "clutter"
-            std::cout << "\nIteration " << j << ": "
-                      << "`numInliersCurrent` = " << numInliersCurrent
-                      << ", `p1` = " << p1
-                      << ", `p2` = " << p2
-                      << ", `p3` = " << p3;
+            // std::cout << "\nIteration " << j << ": "
+            //           << "`numInliersCurrent` = " << numInliersCurrent
+            //           << ", `p1` = " << p1
+            //           << ", `p2` = " << p2
+            //           << ", `p3` = " << p3;
             // Fetching point candidate "at random"
             int pointIdxj = rand() % numPoints;
             // Checking if point candidate is already an anchor point
@@ -318,7 +320,7 @@ template<typename PointT> std::pair<
             }
             pcl::PointXYZI p_j = cloud->points[pointIdxj];
             // CANDO: Comment out console logging for less "clutter"
-            std::cout << ", `p_j` = " << p_j;
+            // std::cout << ", `p_j` = " << p_j;
             // Calculating the distance from point to plane
             double d_j_dot_v1xv2 = std::fabs(
                 A * p_j.x + B * p_j.y + C * p_j.z + D
