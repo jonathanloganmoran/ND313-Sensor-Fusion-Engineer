@@ -95,8 +95,8 @@ void projectPipeline(
     // );
     /** E1.5.1: Segmenting the point cloud into two instances. **/
     // CANDO: Set hyperparameter values for plane-fitting performance.
-    int maxIterations = 25;
-    float distanceThreshold = 0.3;
+    int maxIterations = 100;
+    float distanceThreshold = 0.5;
     std::pair<
         pcl::PointCloud<pcl::PointXYZI>::Ptr,
         pcl::PointCloud<pcl::PointXYZI>::Ptr
