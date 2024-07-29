@@ -16,19 +16,25 @@
 #include <stdexcept>    // `std::runtime_error`
 
 
-//constructor:
+// Constructor
 template<typename PointT>
 ProcessPointClouds<PointT>::ProcessPointClouds() {}
-
-
-//de-constructor:
+// De-constructor
 template<typename PointT>
 ProcessPointClouds<PointT>::~ProcessPointClouds() {}
 
 
+/** Prints the total number of points in the input `cloud`.
+ * 
+ * NOTE: Console output is printed without any formatting, i.e.,
+ * only the number returned with `cloud->points.size()` is printed.
+ * 
+ * @param cloud The PCL point cloud to print number of points found in. 
+ */
 template<typename PointT>
-void ProcessPointClouds<PointT>::numPoints(typename pcl::PointCloud<PointT>::Ptr cloud)
-{
+void ProcessPointClouds<PointT>::numPoints(
+    typename pcl::PointCloud<PointT>::Ptr cloud
+) {
     std::cout << cloud->points.size() << std::endl;
 }
 
@@ -435,7 +441,6 @@ template<typename PointT> std::pair<
     return segResult;
 }
 
-
 /** Performs Euclidean clustering with the Point Cloud Library (PCL).
  *
  * Point clusters are extracted with `pcl::EuclideanClusterExtraction` class;
@@ -513,7 +518,7 @@ template<typename PointT> std::vector<
     return clusters;
 }
 
-/** Computes a 3D bounding box for the given point cloud.
+/** Computes a 3D bounding box for the given point cloud `cluster`.
  * 
  * Returns the intersection points of a rectangular prism formed by
  * the 3D point cloud's minimum and maximum points found along each
@@ -539,39 +544,57 @@ template<typename PointT> Box ProcessPointClouds<PointT>::BoundingBox(
     return box;
 }
 
+/** Saves the given `cloud` as an ASCII file with `file` name.
+ * 
+ * @param cloud PCD object to save as ASCII-formatted file.
+ * @param file Name (with `.pcd` extension) to write to disk.
+ */
 template<typename PointT>
-void ProcessPointClouds<PointT>::savePcd(typename pcl::PointCloud<PointT>::Ptr cloud, std::string file)
-{
-    pcl::io::savePCDFileASCII (file, *cloud);
-    std::cerr << "Saved " << cloud->points.size () << " data points to "+file << std::endl;
+void ProcessPointClouds<PointT>::savePcd(
+    typename pcl::PointCloud<PointT>::Ptr cloud, 
+    std::string file
+) {
+    pcl::io::savePCDFileASCII(
+        file, 
+        *cloud
+    );
+    std::cerr << "Saved " << cloud->points.size() 
+              << " data points to " + file << std::endl;
 }
 
-
+/** Loads the given `file` from disk. 
+ * 
+ * @param file Name (with `.pcd` extension) of file to load from disk.
+ */
 template<typename PointT>
-typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::loadPcd(std::string file)
-{
-
-    typename pcl::PointCloud<PointT>::Ptr cloud (new pcl::PointCloud<PointT>);
-
-    if (pcl::io::loadPCDFile<PointT> (file, *cloud) == -1) //* load the file
-    {
+typename pcl::PointCloud<PointT>::Ptr ProcessPointClouds<PointT>::loadPcd(
+    std::string file
+) {
+    typename pcl::PointCloud<PointT>::Ptr cloud(
+        new pcl::PointCloud<PointT>
+    );
+    if (pcl::io::loadPCDFile<PointT>(file, *cloud) == -1) {
         PCL_ERROR ("Couldn't read file \n");
     }
-    std::cerr << "Loaded " << cloud->points.size () << " data points from "+file << std::endl;
-
+    std::cerr << "Loaded " << cloud->points.size () 
+              << " data points from " + file << std::endl;
     return cloud;
 }
 
-
+/** Returns a vector of file paths stored in the given `dataPath` folder.
+ * 
+ * @param dataPath Folder path to parse for file path(s).
+ * @returns Chronologically-ordered vector of file path(s).
+ */
 template<typename PointT>
-std::vector<boost::filesystem::path> ProcessPointClouds<PointT>::streamPcd(std::string dataPath)
-{
-
-    std::vector<boost::filesystem::path> paths(boost::filesystem::directory_iterator{dataPath}, boost::filesystem::directory_iterator{});
-
-    // sort files in accending order so playback is chronological
+std::vector<boost::filesystem::path> ProcessPointClouds<PointT>::streamPcd(
+    std::string dataPath
+) {
+    std::vector<boost::filesystem::path> paths(
+        boost::filesystem::directory_iterator{dataPath}, 
+        boost::filesystem::directory_iterator{}
+    );
+    // Sort files in accending order so playback is chronological
     sort(paths.begin(), paths.end());
-
     return paths;
-
 }

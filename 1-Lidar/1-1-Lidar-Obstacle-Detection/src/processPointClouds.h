@@ -78,12 +78,12 @@ public:
     Box BoundingBox(
         typename pcl::PointCloud<PointT>::Ptr cluster
     );
-    // Saves the given `cloud` as an ASCII file to given `file` name.
+    // Saves the given `cloud` as an ASCII file with `file` name.
     void savePcd(
         typename pcl::PointCloud<PointT>::Ptr cloud, 
         std::string file
     );
-    // Loads the `.pcd` file from the given `file` name.
+    // Loads the given `file` from disk.
     typename pcl::PointCloud<PointT>::Ptr loadPcd(
         std::string file
     );
