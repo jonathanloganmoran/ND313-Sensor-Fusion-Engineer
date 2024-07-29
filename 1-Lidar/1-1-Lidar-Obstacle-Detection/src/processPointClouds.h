@@ -12,6 +12,7 @@
 #ifndef PROCESSPOINTCLOUDS_H_
 #define PROCESSPOINTCLOUDS_H_
 
+#include "render/box.h"
 #include <pcl/io/pcd_io.h>
 #include <pcl/common/common.h>
 #include <pcl/filters/extract_indices.h>
@@ -24,9 +25,11 @@
 #include <iostream> 
 #include <string>  
 #include <vector>
-#include <ctime>
+#include <ctime>                                // `time`
 #include <chrono>
-#include "render/box.h"
+#include <set>                                  // In `SegmentPlaneCustom()`
+#include <stdlib.h>                             // `srand`, `rand`
+#include <stdexcept>                            // `std::runtime_error`
 
 
 template<typename PointT>

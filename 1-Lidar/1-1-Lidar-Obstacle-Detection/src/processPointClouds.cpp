@@ -10,10 +10,6 @@
   */
 
 #include "processPointClouds.h"
-#include <set>          // `SegmentPlaneCustom()` function
-#include <stdlib.h>     // `srand`, `rand`
-#include <time.h>       // `time`
-#include <stdexcept>    // `std::runtime_error`
 
 
 // Constructor
