@@ -85,13 +85,14 @@ void projectPipeline(
     ProcessPointClouds<pcl::PointXYZI> *pointProcessorI,
     const pcl::PointCloud<pcl::PointXYZI>::Ptr &inputCloudI
 ) {
-    /** BEGIN PROJECT 1.1: LIDAR OBSTACLE DETECTION **/
+    /*** BEGIN PROJECT 1.1: LIDAR OBSTACLE DETECTION ***/
     /** E1.5.0: `renderPointCloud()` function call. **/
-    renderPointCloud(
-        viewer,
-        inputCloudI,
-        "inputCloudI — The current (unmodified) point cloud in the Project 1.1 pipeline."
-    );
+    // CANDO: "Comment out" unless running only E1.5.0 code
+    // renderPointCloud(
+    //     viewer,
+    //     inputCloudI,
+    //     "inputCloudI — The current (unmodified) point cloud in the Project 1.1 pipeline."
+    // );
     /** E1.5.1: Segmenting the point cloud into two instances. **/
     // CANDO: Set hyperparameter values for plane-fitting performance.
     int maxIterations = 25;
@@ -103,6 +104,17 @@ void projectPipeline(
         inputCloudI,
         maxIterations,
         distanceThreshold
+    );
+    /* Rendering the "segmented" point cloud onto the PCL Viewer. */
+    // NOTE: "Comment out" any other calls to `renderPointCloud()`
+    // to 'clear' the PCL Viewer canvas (makes visualising easier).
+    // CANDO: Select either `.first` or `.second` cloud to render,
+    // `.first` should be the 'ground' plane, while `.second` is obstacles.
+    renderPointCloud(
+        viewer,
+        segmentCloud.first,
+        "`segmentCloud.first` — The current (segmented) 'ground' plane"
+        + "point cloud in the Project 1.1 pipeline."
     );
 }
 
