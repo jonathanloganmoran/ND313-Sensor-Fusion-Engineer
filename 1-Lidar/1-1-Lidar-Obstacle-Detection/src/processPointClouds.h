@@ -32,31 +32,66 @@
 template<typename PointT>
 class ProcessPointClouds {
 public:
-
-    //constructor
+    // Constructor
     ProcessPointClouds();
-    //deconstructor
+    // Deconstructor
     ~ProcessPointClouds();
 
-    void numPoints(typename pcl::PointCloud<PointT>::Ptr cloud);
-
-    typename pcl::PointCloud<PointT>::Ptr FilterCloud(typename pcl::PointCloud<PointT>::Ptr cloud, float filterRes, Eigen::Vector4f minPoint, Eigen::Vector4f maxPoint);
-
+    // Prints the total number of points in the input `cloud`.
+    void numPoints(
+        typename pcl::PointCloud<PointT>::Ptr cloud
+    );
+    // Filters the point `cloud` to reduce the total number of data points. 
+    typename pcl::PointCloud<PointT>::Ptr FilterCloud(
+        typename pcl::PointCloud<PointT>::Ptr cloud, 
+        float filterRes, 
+        Eigen::Vector4f minPoint, 
+        Eigen::Vector4f maxPoint
+    );
     // Extracts the plane and obstacles using the Point Cloud Library (PCL).
-    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> SeparateClouds(pcl::PointIndices::Ptr inliers, typename pcl::PointCloud<PointT>::Ptr cloud);
-
+    std::pair<
+        typename pcl::PointCloud<PointT>::Ptr, 
+        typename pcl::PointCloud<PointT>::Ptr
+    > SeparateClouds(
+        pcl::PointIndices::Ptr inliers, 
+        typename pcl::PointCloud<PointT>::Ptr cloud
+    );
     // Segments the input cloud into two using the Point Cloud Library (PCL).
-    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> SegmentPlane(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceThreshold);
-
-    std::vector<typename pcl::PointCloud<PointT>::Ptr> Clustering(typename pcl::PointCloud<PointT>::Ptr cloud, float clusterTolerance, int minSize, int maxSize);
-
-    Box BoundingBox(typename pcl::PointCloud<PointT>::Ptr cluster);
-
-    void savePcd(typename pcl::PointCloud<PointT>::Ptr cloud, std::string file);
-
-    typename pcl::PointCloud<PointT>::Ptr loadPcd(std::string file);
-
-    std::vector<boost::filesystem::path> streamPcd(std::string dataPath);
-  
+    std::pair<
+        typename pcl::PointCloud<PointT>::Ptr, 
+        typename pcl::PointCloud<PointT>::Ptr
+    > SegmentPlane(
+        typename pcl::PointCloud<PointT>::Ptr cloud, 
+        int maxIterations, 
+        float distanceThreshold
+    );
+    // Performs Euclidean clustering with the Point Cloud Library (PCL).
+    std::vector<
+        typename pcl::PointCloud<PointT>::Ptr
+    > Clustering(
+        typename pcl::PointCloud<PointT>::Ptr cloud, 
+        float clusterTolerance, 
+        int minSize, 
+        int maxSize
+    );
+    // Computes a 3D bounding box for the given point cloud.
+    Box BoundingBox(
+        typename pcl::PointCloud<PointT>::Ptr cluster
+    );
+    // Saves the given `cloud` as an ASCII file to given `file` path.
+    void savePcd(
+        typename pcl::PointCloud<PointT>::Ptr cloud, 
+        std::string file
+    );
+    // Loads the `.pcd` file from the given `file` path.
+    typename pcl::PointCloud<PointT>::Ptr loadPcd(
+        std::string file
+    );
+    // Returns a vector of file paths stored in the given `dataPath` folder.
+    std::vector<
+        boost::filesystem::path
+    > streamPcd(
+        std::string dataPath
+    );
 };
 #endif /* PROCESSPOINTCLOUDS_H_ */
