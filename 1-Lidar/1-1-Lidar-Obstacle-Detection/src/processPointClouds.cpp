@@ -357,7 +357,10 @@ template<typename PointT> std::pair<
     /* "Separating" the input `cloud` into two instances */
     // Copying the found "inliers" (the set of integer-value indices) into a PCL object
     pcl::PointIndices::Ptr inliers{new pcl::PointIndices};
-    inliers->indices = inliersResult;
+    // NOTE: Must first convert `unordered_set` of inliers into `vector`
+    // So that we can use the `pcl::PointIndices::Ptr` object
+    std::vector<int> inliersResult2Vec(inliersResult.begin(), inliersResult.end());
+    inliers->indices = inliersResult2Vec;
     // With the set of inliers, "split" the input `cloud` into two instances
     std::pair<
         typename pcl::PointCloud<PointT>::Ptr, 
