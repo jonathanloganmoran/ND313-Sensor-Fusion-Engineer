@@ -28,6 +28,7 @@
 #include <ctime>                                // `time`
 #include <chrono>
 #include <set>                                  // In `SegmentPlaneCustom()`
+#include <unordered_set>                        // In `SegmentPlaneCustom()`
 #include <stdlib.h>                             // `srand`, `rand`
 #include <stdexcept>                            // `std::runtime_error`
 
