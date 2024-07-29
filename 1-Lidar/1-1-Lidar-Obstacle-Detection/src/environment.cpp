@@ -104,9 +104,6 @@ void projectPipeline(
         maxIterations,
         distanceThreshold
     );
-    // Printing out number of points found in each segmented instance
-    std::cout << "Points found (`ground` plane): " << segmentCloud.first->points.size() << "\n";
-    std::cout << "Points found (`obstacles)" << segmentCloud.second->points.size() << "\n";
 }
 
 
