@@ -245,9 +245,9 @@ template<typename PointT> std::pair<
         int pointIdx2 = *idx; idx++;
         int pointIdx3 = *idx;
         // Fetching the anchor points (i.e., their 3D point values)
-        pcl::PointXYZI p1 cloud->points[pointIdx1];
-        pcl::PointXYZI p2 cloud->points[pointIdx2];
-        pcl::PointXYZI p3 cloud->points[pointIdx3];
+        pcl::PointXYZI p1 = cloud->points[pointIdx1];
+        pcl::PointXYZI p2 = cloud->points[pointIdx2];
+        pcl::PointXYZI p3 = cloud->points[pointIdx3];
         /* "Fitting" the equation of the plane to the three points. */
         // First, forming two vectors originating from `p1`
         double v1[3] = {
@@ -296,7 +296,7 @@ template<typename PointT> std::pair<
                 || (pointIdxj == pointIdx3) 
             ) {
                 // Fetching point value to print in console log
-                pcl::PointXYZI p_err cloud->points[pointIdxj];
+                pcl::PointXYZI p_err = cloud->points[pointIdxj];
                 // Throw error; randomly-selected point is an anchor point
                 // CANDO: Comment out console logging for less "clutter"
                 std::cerr << "Model iteration: " << i
@@ -327,7 +327,7 @@ template<typename PointT> std::pair<
                 std::pow(A, 2) + std::pow(B, 2) + std::pow(C, 2)
             );
             // Checking computed distance against threshold
-            if (d_j_dot_v1xv2 <= distanceTol) {
+            if (d_j_dot_v1xv2 <= distanceThreshold) {
                 // Distance is within tolerated limit
                 // i.e., Point is considered an "inlier"
                 numInliersCurrent += 1;
