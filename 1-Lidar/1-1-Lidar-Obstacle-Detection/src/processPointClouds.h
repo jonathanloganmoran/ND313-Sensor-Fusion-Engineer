@@ -59,6 +59,15 @@ public:
         pcl::PointIndices::Ptr inliers, 
         typename pcl::PointCloud<PointT>::Ptr cloud
     );
+    // Segments the input cloud into two instances using standard library only.
+    std::pair<
+        typename pcl::PointCloud<PointT>::Ptr,
+        typename pcl::PointCloud<PointT>::Ptr
+    > SegmentPlaneCustom(
+        typename pcl::PointCloud<PointT>::Ptr cloud,
+        int maxIterations,
+        float distanceThreshold
+    );
     // Segments the input cloud into two using the Point Cloud Library (PCL).
     std::pair<
         typename pcl::PointCloud<PointT>::Ptr, 
