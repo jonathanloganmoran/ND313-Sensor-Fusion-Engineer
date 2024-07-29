@@ -306,7 +306,7 @@ template<typename PointT> std::pair<
                           << "{" << p_err.x
                           << ", " << p_err.y 
                           << ", " << p_err.z
-                          << ", " << p_err.I << "}.\n";
+                          << ", " << p_err.intensity << "}.\n";
                 // CANDO: Skip adding anchor to set
                 // To avoid divide-by-zero errrors
                 continue;
