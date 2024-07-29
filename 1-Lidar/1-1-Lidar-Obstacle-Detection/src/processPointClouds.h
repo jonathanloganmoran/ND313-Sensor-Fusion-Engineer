@@ -74,16 +74,16 @@ public:
         int minSize, 
         int maxSize
     );
-    // Computes a 3D bounding box for the given point cloud.
+    // Computes a 3D bounding box for the given point cloud `cluster`.
     Box BoundingBox(
         typename pcl::PointCloud<PointT>::Ptr cluster
     );
-    // Saves the given `cloud` as an ASCII file to given `file` path.
+    // Saves the given `cloud` as an ASCII file to given `file` name.
     void savePcd(
         typename pcl::PointCloud<PointT>::Ptr cloud, 
         std::string file
     );
-    // Loads the `.pcd` file from the given `file` path.
+    // Loads the `.pcd` file from the given `file` name.
     typename pcl::PointCloud<PointT>::Ptr loadPcd(
         std::string file
     );
