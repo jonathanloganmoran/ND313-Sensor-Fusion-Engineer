@@ -9,7 +9,7 @@
 
 ## Tasks
 ### Segmentation
-* ⬜️ Create a custom 3D `processPointClouds<PointT>::CustomSegmentPlane()` function to segment the 3D LiDAR point cloud of the _"Project 1.1" scene_ into `ground` plane and `obstacles` (see commit [``]() for reference);
+* ✅ Create a custom 3D `processPointClouds<PointT>::CustomSegmentPlane()` function to segment the 3D LiDAR point cloud of the _"Project 1.1" scene_ into `ground` plane and `obstacles` (see commit [`0156340`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/commit/015634019f0e9cc226171349c6969c66e9eb57b7) for reference);
 * ✅ (Optional) [`E1.2.2`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to segment the 3D LiDAR point cloud of the _"Simple Highway" scene_ into `ground` plane and `obstacles` (`ProcessPointClouds<PointT>::SegmentPlane()` function);
 * ✅ (Optional) [`E1.2.3`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Use PCL to split the 3D LiDAR point cloud of the _"Simple Highway" scene_ into the `ground` and `obstacles` instances (`ProcessPointClouds<PointT>::SeparateClouds()` function);
 * ✅ (Optional) [`E1.2.5` and `E1.2.7`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-04-24-Course-1-Lidar-Exercises-Part-2.ipynb): Write a 2D segmentation algorithm with [RANSAC](https://en.wikipedia.org/wiki/Random_sample_consensus) to find the `ground` plane instance (`ransac2d::Ransac()` and `ransac2d::RansacPlane()` functions) of the _"Ransac 2D" mock data_;
