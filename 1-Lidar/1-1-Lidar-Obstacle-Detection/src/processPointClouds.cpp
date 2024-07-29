@@ -215,7 +215,7 @@ template<typename PointT> std::pair<
     // CANDO: Modify to reduce search time (in case many non-unique points exist)
     const int maxAnchorPointSteps = 100;  
     for (int i = 0; i < maxIterations; i++) {
-        std::cout << "Plane fitting, iteration: " << i << "\n";
+        std::cout << "\nPlane fitting, iteration: " << i << "\n";
         // Storing inliers of the current plane ("model")
         std::unordered_set<int> inliersTemp;
         // Sampling three points at random
@@ -279,10 +279,10 @@ template<typename PointT> std::pair<
         // "Inliers" here refers to point(s) with a to-plane distance
         // less than the given threshold value.
         int numInliersCurrent = 0;
-        std::cout << "Point-plane distance computation\n";
+        std::cout << "\nPoint-plane distance computation\n";
         for (int j = 0; j < numPoints; j++) {
             // CANDO: Comment out console logging for less "clutter"
-            std::cout << "Iteration " << j << ": "
+            std::cout << "\nIteration " << j << ": "
                       << "`numInliersCurrent` = " << numInliersCurrent
                       << ", `p1` = " << p1
                       << ", `p2` = " << p2
