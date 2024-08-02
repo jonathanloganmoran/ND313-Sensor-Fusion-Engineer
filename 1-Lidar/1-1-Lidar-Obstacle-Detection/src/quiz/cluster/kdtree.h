@@ -39,30 +39,30 @@ struct Node {
 	}
 };
 
-// 2D `KdTree` implementation
-struct KdTree {
+// 3D `KdTree` implementation
+struct KdTree3D {
 	Node* root;
-	KdTree()
+	KdTree3D()
 		: root(NULL) {}
-	~KdTree() {
+	~KdTree3D() {
 		delete root;
 	}
-	/** Recursive insert function for the K-D Tree.
+	/** Recursive insert function for the 3D K-D Tree.
 	 * 
-	 * Recursively performs a traversal of the K-D Tree structure;
+	 * Recursively performs a traversal of the 3D K-D Tree structure;
 	 * `insert` searches for an "empty" node in which the provided node
-	 * data can be inserted into. This function assumes a 2D input value
+	 * data can be inserted into. This function assumes a 3D input value
 	 * is given for the `point` argument. At each "depth" the coordinate
-	 * axis to "split" alternates; either the $x$-axis or the $y$-axis
+	 * axis to "split" alternates; either the $x$-, $y$-, or $z$-axis
 	 * will be considered for determining the splitting criteria at each
 	 * iteration. In other words, the tree will be traversed by examining
 	 * either the left- or the right sub-branches depending on the current
 	 * "depth" and the value of the respective axis being considered.   
 	 * 
 	 * @brief Inserts a node into the tree using this recursive function.
-	 * @param node   Current node in the K-D Tree to examine.
+	 * @param node   Current node in the 3D K-D Tree to examine.
 	 * @param depth	 Counter used to determine which axis to branch on.
-	 * @param point  Value to assign the new `Node` to insert.
+	 * @param point  3D coordinate values to assign the new `Node` to insert.
 	 * @param id	 Counter indicating the sequential position of the new node,
 	*/
 	void insert(
@@ -71,15 +71,15 @@ struct KdTree {
 		std::vector<float> point, 
 		int id
 	) {
-		/** E1.3.3: Inserting a new `Node` into the tree. **/
+		/** E1.5.2: Inserting a new `Node` into the tree. **/
 		/* Traversing the tree until an "empty" node is found */
-		// Determining which of the two coordinate axes to "split" on
-		// i.e., we consider either the $x$- or $y$-axis value at this iteration
-		uint axis = depth % 2;
+		// Determining which of the three coordinate axes to "split" on
+		// i.e., we consider either the $x$-, $y$-, or $z$-axis value at this iteration
+		uint axis = depth % 3;
 		// Using the point value to determine where the node should be inserted
 		if (node == NULL) {
 			// CASE 1: Found an "empty" node,
-			// Insert new `Node` into this location.~
+			// Insert new `Node` into this location.
 			node = new Node(
 				point,
 				id
@@ -112,17 +112,17 @@ struct KdTree {
 			// CANDO: Handle error with case(s).
 		}
 	}
-	/** Inserts a new `Node` instance with given `value` into the K-D Tree.
+	/** Inserts a new `Node` instance with given `value` into the 3D K-D Tree.
 	 * 
 	 * This function relies on a call to the recursive `insert` function, which
 	 * is overloaded with two additional parameters; the current `node` to
 	 * examine, and a `depth` in the tree at which we are exploring. The `depth`
-	 * is used to determine which of the two axes, either $x$- or $y$-axis, will
+	 * is used to determine which of the three axes, either $x$-, $y$-, or $z$-axis, will
 	 * be "looked at" to consider branching to the left- or to the right child
-	 * node in the K-D Tree.
+	 * node in the 3D K-D Tree.
 	 * 
 	 * @brief Inserts the given `point` into the tree at the correct position.
-	 * @param point  2D coordinate pair to insert into the K-D Tree.
+	 * @param point  3D coordinate pair to insert into the K-D Tree.
 	 * @param id	 Counter indicating the sequential order of the point to insert.
 	*/
 	void insert(
@@ -141,7 +141,7 @@ struct KdTree {
 	}
 	/** Returns `true` if point is within the "bounding box" of `target`.
 	 *  
-	 * The given node is evaluated along all its axes (e.g., $x$-, $y$-) to
+	 * The given node is evaluated along all its axes (e.g., $x$-, $y$-, $z$-) to
 	 * determine whether it has coordinate values which lie within the region
 	 * near the `target` point at a distance `distanceTol` away.
 	 * 
@@ -174,19 +174,21 @@ struct KdTree {
 		// Otherwise, point is considered "near" the `target`
 		return true;
 	}
-	/** Returns the Euclidean distance computed between the two points.
+	/** Returns the Euclidean distance computed between the two points in 3D space.
 	 * 
-	 * In two-dimensional space, the Euclidean distance is considered to be
-	 * the Pythagorean distance, expressed for points $p$ and $q$ as:
-	 * $$d(p, q) = \sqrt{(p_{1} - q_{1})^{2} + (p_{2} - q_{2})^{2}}.$$
+	 * In three-dimensional space, the Euclidean distance is considered to be
+	 * the Pythagorean distance, expressed for points $p$, $q$ as:
+	 * $$d(p, q) = \sqrt{
+	 * 		(p_{1} - q_{1})^{2} + (p_{2} - q_{2})^{2} + (p_{3} - q_{3})^{2}
+	 * }.$$
 	 * 
 	 * In higher-dimensional space, the Euclidean distance is expressed more
 	 * compactly as the Euclidean norm of the Euclidean vectors $p$ and $q$:
 	 * $$d(p, q) = \Vert{p-q}\Vert.$$
 	 * 
 	 * @brief Computes the Euclidean distance in $k$-dimensional space.
-	 * @param target    The point vector to compute distance to `candidate`.
-	 * @param candidate The point vector to compute distance to `target`.
+	 * @param target    The 3D point vector to compute distance to `candidate`.
+	 * @param candidate The 3D point vector to compute distance to `target`.
 	 * @returns The Euclidean distance in $k$-dimensional space.
 	 * 
 	*/
@@ -210,10 +212,10 @@ struct KdTree {
 		}
 		return std::sqrt(sum);
 	}
-	/** Recursive function to search the K-D tree and find neighbours.
+	/** Recursive function to search the 3D K-D tree and find neighbours.
 	 * 
-	 * This is the helper function which recursively traverses the K-D Tree
-	 * by determining which of the coordinate axes, $x$- or $y$-, to split on
+	 * This is the helper function which recursively traverses the 3D K-D Tree
+	 * by determining which of the coordinate axes, $x$-, $y$- or $z$-, to split on
 	 * at each iteration. In this helper function the distances to each point
 	 * candidate are computed. The number of points needed to consider are
 	 * minimised by the use of a "sanity check", which helps to eliminate
@@ -225,11 +227,11 @@ struct KdTree {
 	 * candidate is added to the `ids` vector and determined to be a 
 	 * "neighbour" of the `target` point.
 	 * 
-	 * @brief Recursive function to search the K-D tree and find neighbours.
-	 * @param node        Current node in the K-D Tree to examine.
+	 * @brief Recursive function to search the 3D K-D tree and find neighbours.
+	 * @param node        Current node in the 3D K-D Tree to examine.
 	 * @param depth       Counter used to determine which axis to branch on.
 	 * @param ids		  Vector of node `id` values that are in proximity to `target`.
-	 * @param target 	  2D point vector of node to search for in tree.
+	 * @param target 	  3D point vector of node to search for in tree.
 	 * @param distanceTol Distance tolerance (in metres) used to bisect search space.
 	*/
 	void search(
@@ -239,10 +241,10 @@ struct KdTree {
 		std::vector<float> target,
 		float distanceTol
 	) {
-		/** E1.3.4: Searching the K-D Tree for nearest neighbours. **/
+		/** E1.5.2: Searching the 3D K-D Tree for nearest neighbours. **/
 		// Determining which of the two coordinate axes to "split" on
-		// i.e., we consider either the $x$- or $y$-axis value at this iteration
-		uint axis = depth % 2;
+		// i.e., we consider either the $x$-, $y$- or $z$-axis value at this iteration
+		uint axis = depth % 3;
 		// Grabbing next node in tree
 		if (node == NULL) {
 			// Error; reached end of tree
@@ -285,14 +287,14 @@ struct KdTree {
 			);
 		}
 	}
-	/** Searches the K-D Tree and returns neighbouring points to `target`.
+	/** Searches the 3D K-D Tree and returns neighbouring points to `target`.
 	 * 
-	 * A nearest neighbour search is performed over the K-D Tree, which acts
+	 * A nearest neighbour search is performed over the 3D K-D Tree, which acts
 	 * to partition the possible search space into smaller, more probable
 	 * regions using the provided distance threshold (`distanceTol`).
 	 * 
-	 * @brief Searches the K-D Tree for neighbouring points to `target`.
-	 * @param target	  2D point vector of node to search for in tree.
+	 * @brief Searches the 3D K-D Tree for neighbouring points to `target`.
+	 * @param target	  3D point coordinates of node to search for in tree.
 	 * @param distanceTol Distance tolerance (in metres) used to bisect search space.
 	 * @returns Vector of node `id` values that are in proximity to `target`.
 	*/
@@ -302,7 +304,7 @@ struct KdTree {
 	) {
 		std::vector<int> ids;
 		int depth = 0;
-		// Recursive function call to traverse the tree and return neighbours
+		// Recursive function call to traverse the 3D tree and return neighbours
 		search(
 			this->root,
 			depth,
