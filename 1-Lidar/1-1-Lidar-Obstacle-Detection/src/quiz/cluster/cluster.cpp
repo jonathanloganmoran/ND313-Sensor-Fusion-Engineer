@@ -1,5 +1,14 @@
-/* \author Aaron Brown */
-// Quiz on implementing simple RANSAC line fitting
+/* ----------------------------------------------------------------------------
+  * Project "1.1: LiDAR Obstacle Detection"
+  * Authors     : Aaron Brown et al.
+  *
+  * Modified by : Jonathan Logan Moran (jonathan.moran107@gmail.com).
+  *
+  * Purpose of this file: Implements quiz questions related to the K-D Tree.
+  * 		This corresponds to Exercises 1.3.3-5 and Exercises 1.5.2 of 
+  * 		Course 1: Lidar in the Sensor Fusion Nanodegree offered by Udacity.
+  * ---------------------------------------------------------------------------
+  */
 
 #include "../../render/render.h"
 #include "../../render/box.h"
