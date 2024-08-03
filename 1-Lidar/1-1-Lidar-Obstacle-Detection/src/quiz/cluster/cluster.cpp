@@ -270,7 +270,7 @@ void renderTree2D(
  * @param tree K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
  */
-std::vector<std::vector<int>> cluster3D(
+std::vector<std::vector<int>> cluster(
 	int idx,
 	const std::vector<std::vector<float>> &points,
 	std::vector<int> &c,
