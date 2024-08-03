@@ -21,8 +21,8 @@
 * ⬜️ Extend the custom 3D `kdtree::KdTree3D` implementation for use on the _"Project 1.1" scene_ (see commit [``]() for reference);
 * ✅ [`E1.5.2`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/1-1/1-Lidar/1-1-Lidar-Obstacle-Detection/2024-07-27-Project-1-1-Lidar-Obstacle-Detection.ipynb): Write the core functions of the custom 3D K-D Tree (`kdtree::KdTree3D`) using only C++ standard library (`KdTree3D::insert()`, `KdTree3D::search()`) (see commit [`84c0eb1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/commit/84c0eb1fa65752b474f4c280b450e93391f69b3d) for reference);
 * ✅ [E1.5.2](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/1-1/1-Lidar/1-1-Lidar-Obstacle-Detection/2024-07-27-Project-1-1-Lidar-Obstacle-Detection.ipynb): Create a custom 3D K-D Tree implementation in C++ using only standard library functions (`kdtree::KdTree3D`) (see commit [`199d565`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/commit/199d5658be58d72ac4163293c37d3e881e225ffc) for reference);
-* ✅ (Optional) [`E1.3.5`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Implement a custom 2D Euclidean Clustering algorithm in C++ using the custom 2D K-D Tree (`cluster::euclideanCluster()`) and its helper function (`cluster::cluster()`), then evaluate the results on _"2D KD-Tree" mock data_;
-* ✅ (Optional) [`E1.3.3`-`E1.3.4`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Write the core functions of the custom 2D K-D Tree using only C++ standard library (`KdTree::insert()`, `KdTree::search()`), then evaluate the results on _"2D KD-Tree" mock data_;
+* ✅ (Optional) [`E1.3.5`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Implement a custom 2D Euclidean Clustering algorithm in C++ using the custom 2D K-D Tree (`cluster::euclideanCluster()`) and its helper function (`cluster::cluster()`), then evaluate the results on _"2D K-D Tree" mock data_;
+* ✅ (Optional) [`E1.3.3`-`E1.3.4`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Write the core functions of the custom 2D K-D Tree using only C++ standard library (`KdTree::insert()`, `KdTree::search()`), then evaluate the results on _"2D K-D Tree" mock data_;
 * ✅ (Optional) [`E1.3.3`-`E1.3.5`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Create a custom 2D K-D Tree implementation in C++ using only standard library functions (`kdtree::KdTree`);
 * ✅ (Optional) [`E1.3.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Set the desired clustering hyperparameters of the PCL `ProcessPointClouds<PointT>::Clustering()` function (`clusterTolerance`, `minSize` and `maxSize`) for use on the _"Simple Highway" scene_ ;
 * ✅ (Optional) [`E1.3.1`](https://github.com/jonathanloganmoran/ND313-Sensor-Fusion-Engineer/blob/main/1-Lidar/Exercises/2024-05-13-Course-1-Lidar-Exercises-Part-3.ipynb): Use PCL to cluster the 3D LiDAR points of the _"Simple Highway" scene_ with the PCL Euclidean Clustering algorithm and the PCL K-D Tree implementation (`ProcessPointClouds<PointT>::Clustering()`);
@@ -128,7 +128,8 @@ References
 
 Helpful resources:
 * [`SFND_Lidar_Obstacle_Detection` | Starter code by @Udacity](https://github.com/udacity/SFND_Lidar_Obstacle_Detection);
-* [_"2D KD-Tree" mock data_ | ]() — ;
+** [_"2D K-D Tree" mock data_ | ]() — ;
+* [_"3D K-D Tree" mock data_ | ]() — ;
 * [_"Simple Highway" scene_ | ]();
 * [_"Ransac 2D" mock data_ | ]();
 * [_"City Block" scene_ | ]();
