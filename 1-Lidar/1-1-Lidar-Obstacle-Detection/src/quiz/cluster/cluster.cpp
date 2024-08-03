@@ -260,9 +260,9 @@ void renderTree2D(
 	}
 }
 
-/** Euclidean clustering helper function; populates `cluster` with points.
+/** Euclidean clustering helper function; populates `cluster` with 2D points.
  * 
- * @brief Performs Euclidean clustering for the given point index in `points`.
+ * @brief Performs Euclidean clustering for the given 2D point `idx`.
  * @param idx Index of the current point in `points` to "process".
  * @param points Vector of all points in point cloud to cluster.
  * @param c Current cluster to populate with neighbouring points.
@@ -270,7 +270,7 @@ void renderTree2D(
  * @param tree K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
  */
-std::vector<std::vector<int>> cluster(
+std::vector<std::vector<int>> cluster3D(
 	int idx,
 	const std::vector<std::vector<float>> &points,
 	std::vector<int> &c,
@@ -304,7 +304,7 @@ std::vector<std::vector<int>> cluster(
 	}
 }
 
-/** Groups `points` into individual cluster indices based on their proximity.
+/** Groups 2D `points` into individual cluster indices based on their proximity.
  * 
  * @brief Performs Euclidean clustering on the input `points`.
  * @param points Set of point coordinates to group into clusters.
@@ -329,6 +329,81 @@ std::vector<std::vector<int>> euclideanCluster(
 		// Creating a new `cluster` and finding neighbouring points
 		std::vector<int> c;
 		cluster(i, points, c, visited, tree, distanceTol);
+		// Adding resulting cluster to vector
+		clusters.push_back(c);
+	}
+	return clusters;
+}
+
+/** Euclidean clustering helper function; populates `cluster` with 3D points.
+ * 
+ * @brief Performs Euclidean clustering for the given 3D point `idx`.
+ * @param idx Index of the current 3D points in `points` to "process".
+ * @param points Vector of all 3D points in point cloud to cluster.
+ * @param c Current cluster to populate with neighbouring points.
+ * @param visited Tracks whether a given point index has been examined.
+ * @param tree 3D K-D Tree to search for point neighbours in.
+ * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ */
+std::vector<std::vector<int>> cluster3D(
+	int idx,
+	const std::vector<std::vector<float>> &points,
+	std::vector<int> &c,
+	std::vector<bool> &visited,
+	KdTree3D *tree,
+	float distanceTol
+) {
+	// Marking current point as "visited"
+	visited[idx] = true;
+	// Adding the point index to the "cluster" (assignment)
+	c.push_back(idx);
+	// Performing the K-D Tree search for neighbouring points
+	std::vector<int> idxs = tree->search(
+		points[idx], 
+		distanceTol
+	);
+	// Recursively "building out" the K-D Tree for each neighbouring point
+	for (int i = 0; i < idxs.size(); i++) {
+		// Fetching the next neighbouring point's index
+		int idxPoint = idxs[i];
+		if (!visited[idxPoint]) {
+			cluster3D(
+				idxPoint,
+				points,
+				c,
+				visited,
+				tree,
+				distanceTol
+			);
+		}
+	}
+}
+
+/** Groups 3D `points` into individual cluster indices based on their proximity.
+ * 
+ * @brief Performs Euclidean clustering on the input 3D `points`.
+ * @param points Set of 3D point coordinates to group into clusters.
+ * @param tree 3D K-D Tree instance to "fill out" with neighbouring points.
+ * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ */
+std::vector<std::vector<int>> euclideanCluster3D(
+	const std::vector<std::vector<float>> &points, 
+	KdTree3D *tree, 
+	float distanceTol
+) {
+	/** E1.5.3: Euclidean Clustering with the 3D K-D Tree **/
+	std::vector<std::vector<int>> clusters;
+	// Creating list of "processed" indices
+	std::vector<bool> visited{points.size(), false};
+	// Forming "clusters" for each point in the point cloud
+	for (int i = 0; i < points.size(); i++) {
+		// Skipping point if already processed
+		if (visited[i]) {
+			continue;
+		}
+		// Creating a new `cluster` and finding neighbouring points
+		std::vector<int> c;
+		cluster3D(i, points, c, visited, tree, distanceTol);
 		// Adding resulting cluster to vector
 		clusters.push_back(c);
 	}
