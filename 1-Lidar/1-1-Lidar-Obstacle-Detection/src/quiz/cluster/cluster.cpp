@@ -17,9 +17,16 @@
 #include <string>
 
 
-// Arguments:
-// window is the region to draw box around
-// increase zoom to see more of the area
+/** Refreshes the PCL Viewer canvas for the 2D K-D Tree visualisation task.
+ * 
+ * NOTE: The `zoom` value is passed to the 
+ * 	`pcl::visualization::PCLVisualizer::setCameraPosition()`
+ * function and is used to "zoom" along the z-axis of the viewer.
+ * 
+ * @param window Region in which to draw the "box" around.
+ * @param zoom The $z$-coordinate value of the PCL "camera".
+ * @returns The PCL Viewer instance with a "fresh" canvas configuration.
+ */
 pcl::visualization::PCLVisualizer::Ptr initScene(
 	Box window, 
 	int zoom
@@ -46,13 +53,24 @@ pcl::visualization::PCLVisualizer::Ptr initScene(
   	return viewer;
 }
 
+/** Constructs a PCL PointCloud from the vector 2D coordinate `points`.
+ *
+ * This function expects `points` to be a vector of floating point-valued
+ * vectors, each a set of 2D coordinate values.
+ * 
+ * Each 2D coordinate pair is casted as a `pcl::PointXYZ` instance such that
+ * the $z$-axis value is `0`. 
+ * 
+ * @param points Vector of 2D point coordinate value(s).
+ * @returns PCL Point Cloud instance created from the point coordinates.
+ */
 pcl::PointCloud<pcl::PointXYZ>::Ptr CreateData(
 	std::vector<std::vector<float>> points
 ) {
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(
 		new pcl::PointCloud<pcl::PointXYZ>()
 	);
-  	for(int i = 0; i < points.size(); i++) {
+  	for (int i = 0; i < points.size(); i++) {
   		pcl::PointXYZ point;
   		point.x = points[i][0];
   		point.y = points[i][1];
@@ -64,18 +82,32 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr CreateData(
   	return cloud;
 }
 
+/** Visualises the 2D K-D Tree using Point Cloud Library (PCL).
+ * 
+ * Iterates recurisvely over the 2D K-D Tree starting with the root `node`.
+ * This function visualises the coordinate values as "points" on the plane.
+ * The axes of the tree (i.e., $x$- or $y$-axis) alternate with each iteration
+ * and their "splitting" values are visualised as 'lines' onto the PCL canvas.
+ * Each axis being "split" on is assigned a colour and rendered accordingly.
+ * 
+ * @param node The root node of the K-D Tree to traverse.
+ * @param viewer The PCL canvas to render the elements onto.
+ * @param window The `Box` struct visualising the sub-region being examined.
+ * @param iteration Counter indexing the number of "splits" made so far.
+ * @param depth Which "level" (axis) currently examined in the K-D Tree.
+ */
 void render2DTree(
 	Node *node, 
 	pcl::visualization::PCLVisualizer::Ptr &viewer, 
 	Box window, 
 	int &iteration, 
-	uint depth=0
+	uint depth = 0
 ) {
 	if (node != NULL) {
 		Box upperWindow = window;
 		Box lowerWindow = window;
 		// split on x axis
-		if(depth % 2 == 0) {
+		if (depth % 2 == 0) {
 			viewer->addLine(
 				pcl::PointXYZ(node->point[0], window.y_min, 0),
 				pcl::PointXYZ(node->point[0], window.y_max, 0),
@@ -193,6 +225,18 @@ std::vector<std::vector<int>> euclideanCluster(
 	return clusters;
 }
 
+/** Orchestrates the 2D K-D Tree visualiser programme.
+ * 
+ * Here, a K-D Tree (`struct KdTree`) is instantiated, then populated with
+ * 2D point values which are converted to a compatible PCL Point Cloud instance.
+ * Then, the K-D Tree and its respective 2D coordinate values are rendered onto
+ * the PCL Viewer, which contains the elements needed to visually represent
+ * the `search()` function, i.e., axis "splitting" and sub-region "searching".
+ * The programme also performs `euclideanClustering()` so that the "clusters"
+ * are determined and assigned unique colours so that they (and their
+ * respective point values) are visually distinct from each other.
+ * Each "cluster" of points is rendered using the `renderPointCloud()` function.
+ */
 int main() {
 	// Create viewer
 	Box window;
@@ -234,7 +278,7 @@ int main() {
   	std::cout << "Test Search" << std::endl;
 	/** E1.3.4: Searching the K-D Tree for nearest neighbours **/
   	std::vector<int> nearby = tree->search(
-		{-6,7}, 
+		{-6, 7}, 
 		3.0
 	);
   	for (int index : nearby)
