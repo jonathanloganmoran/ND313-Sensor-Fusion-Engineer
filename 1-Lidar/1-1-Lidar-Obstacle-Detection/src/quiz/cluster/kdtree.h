@@ -12,7 +12,7 @@
 
 /** TODO: 
  * -[ ] Use 2-char vertical whitespacing for all but trailing indentation;
- * -[ ] Add Doxygen-style function / struct definiton comments;
+ * -[x] Add Doxygen-style function / struct definiton comments;
  * -[x] Follow Google C++ Style Guide for syntax / styling;
  * -[x] Add file header comment;
  * -[x] Use 4-char vertical whitespacing for trailing indentation;
