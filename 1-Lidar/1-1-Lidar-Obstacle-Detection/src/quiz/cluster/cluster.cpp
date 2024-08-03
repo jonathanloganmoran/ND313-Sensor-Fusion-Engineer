@@ -593,7 +593,7 @@ int main() {
 		auto elapsedTime = std::chrono::duration_cast<
 			std::chrono::milliseconds
 		>(endTime - startTime);
-		std::cout << "clustering found " << clusters.size()
+		std::cout << "clustering found " << clusters3D.size()
 					<< " and took " << elapsedTime.count() << " milliseconds\n";
 		// Render 3D clusters
 		int clusterId = 0;
