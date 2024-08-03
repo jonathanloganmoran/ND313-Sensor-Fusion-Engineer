@@ -626,7 +626,7 @@ int main() {
 		if (clusters3D.size() == 0) {
 			renderPointCloud(
 				viewer,
-				cloud,
+				cloud3D,
 				"3D cluster data"
 			);
 		}
