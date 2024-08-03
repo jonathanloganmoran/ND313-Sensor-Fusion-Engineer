@@ -203,7 +203,7 @@ std::vector<std::vector<int>> cluster(
  */
 std::vector<std::vector<int>> euclideanCluster(
 	const std::vector<std::vector<float>> &points, 
-	KdTree* tree, 
+	KdTree *tree, 
 	float distanceTol
 ) {
 	/** E1.3.5: Euclidean Clustering with the K-D Tree **/
@@ -275,7 +275,7 @@ int main() {
 		window, 
 		it
 	);
-  	std::cout << "Test Search" << std::endl;
+  	std::cout << "Test Search\n";
 	/** E1.3.4: Searching the K-D Tree for nearest neighbours **/
   	std::vector<int> nearby = tree->search(
 		{-6, 7}, 
@@ -297,7 +297,7 @@ int main() {
 		std::chrono::milliseconds
 	>(endTime - startTime);
   	std::cout << "clustering found " << clusters.size()
-			  << " and took " << elapsedTime.count() << " milliseconds" << std::endl;
+			  << " and took " << elapsedTime.count() << " milliseconds\n";
   	// Render clusters
   	int clusterId = 0;
 	std::vector<Color> colors = {
