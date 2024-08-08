@@ -319,7 +319,7 @@ std::vector<std::vector<int>> euclideanCluster(
 	/** E1.3.5: Euclidean Clustering with the K-D Tree **/
 	std::vector<std::vector<int>> clusters;
 	// Creating list of "processed" indices
-	std::vector<bool> visited{points.size(), false};
+	std::vector<bool> visited(points.size(), false);
 	// Forming "clusters" for each point in the point cloud
 	for (int i = 0; i < points.size(); i++) {
 		// Skipping point if already processed
@@ -394,7 +394,7 @@ std::vector<std::vector<int>> euclideanCluster3D(
 	/** E1.5.3: Euclidean Clustering with the 3D K-D Tree **/
 	std::vector<std::vector<int>> clusters;
 	// Creating list of "processed" indices
-	std::vector<bool> visited{points.size(), false};
+	std::vector<bool> visited(points.size(), false);
 	// Forming "clusters" for each point in the point cloud
 	for (int i = 0; i < points.size(); i++) {
 		// Skipping point if already processed
