@@ -260,7 +260,7 @@ void renderTree2D(
 	}
 }
 
-/** Euclidean clustering helper function; populates `cluster` with 2D points.
+/** Euclidean clustering helper function; populates `c` with 2D points.
  * 
  * @brief Performs Euclidean clustering for the given 2D point `idx`.
  * @param idx Index of the current point in `points` to "process".
@@ -269,6 +269,8 @@ void renderTree2D(
  * @param visited Tracks whether a given point index has been examined.
  * @param tree K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ * @returns Nested vector of point indices, each vector represents the point indices
+ * 	belonging to the respective "cluster" identified.
  */
 std::vector<std::vector<int>> cluster(
 	int idx,
@@ -310,6 +312,8 @@ std::vector<std::vector<int>> cluster(
  * @param points Set of point coordinates to group into clusters.
  * @param tree K-D Tree instance to "fill out" with neighbouring points.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ * @returns Nested vector of indices, each vector represents the point indices
+ * 	of each "cluster" identified.
  */
 std::vector<std::vector<int>> euclideanCluster(
 	const std::vector<std::vector<float>> &points, 
@@ -335,7 +339,7 @@ std::vector<std::vector<int>> euclideanCluster(
 	return clusters;
 }
 
-/** Euclidean clustering helper function; populates `cluster` with 3D points.
+/** Euclidean clustering helper function; populates `c` with 3D points.
  * 
  * @brief Performs Euclidean clustering for the given 3D point `idx`.
  * @param idx Index of the current 3D points in `points` to "process".
@@ -344,6 +348,8 @@ std::vector<std::vector<int>> euclideanCluster(
  * @param visited Tracks whether a given point index has been examined.
  * @param tree 3D K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ * @returns Nested vector of point indices, each vector represents the point indices
+ * 	belonging to the respective "cluster" identified.
  */
 std::vector<std::vector<int>> cluster3D(
 	int idx,
@@ -385,6 +391,8 @@ std::vector<std::vector<int>> cluster3D(
  * @param points Set of 3D point coordinates to group into clusters.
  * @param tree 3D K-D Tree instance to "fill out" with neighbouring points.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
+ * @returns Nested vector of point indices, each vector represents the point indices
+ * 	belonging to the respective "cluster" identified.
  */
 std::vector<std::vector<int>> euclideanCluster3D(
 	const std::vector<std::vector<float>> &points, 
