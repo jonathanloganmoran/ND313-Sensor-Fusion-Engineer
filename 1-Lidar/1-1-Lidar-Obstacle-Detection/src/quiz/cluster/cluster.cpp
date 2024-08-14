@@ -269,10 +269,8 @@ void renderTree2D(
  * @param visited Tracks whether a given point index has been examined.
  * @param tree K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
- * @returns Nested vector of point indices, each vector represents the point indices
- * 	belonging to the respective "cluster" identified.
  */
-std::vector<std::vector<int>> cluster(
+void cluster(
 	int idx,
 	const std::vector<std::vector<float>> &points,
 	std::vector<int> &c,
@@ -348,10 +346,8 @@ std::vector<std::vector<int>> euclideanCluster(
  * @param visited Tracks whether a given point index has been examined.
  * @param tree 3D K-D Tree to search for point neighbours in.
  * @param distanceTol Distance tolerance (in metres) used to bisect search space.
- * @returns Nested vector of point indices, each vector represents the point indices
- * 	belonging to the respective "cluster" identified.
  */
-std::vector<std::vector<int>> cluster3D(
+void cluster3D(
 	int idx,
 	const std::vector<std::vector<float>> &points,
 	std::vector<int> &c,
