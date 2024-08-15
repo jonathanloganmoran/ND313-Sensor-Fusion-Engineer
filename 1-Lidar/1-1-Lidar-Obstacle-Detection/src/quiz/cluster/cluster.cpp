@@ -428,7 +428,7 @@ std::vector<std::vector<int>> euclideanCluster3D(
  */
 int main() {
 	/** Running the 2D or 3D K-D Tree programme. **/
-	// Set `render2D` to `false` for E1.5.2
+	// Set `render2D` to `false` for E1.5.2-3
 	bool render2D = false;
 	if (render2D) {
 		/** E1.3.4-5: K-D Tree in 2D. **/
@@ -586,54 +586,54 @@ int main() {
 		}
 		std::cout << std::endl;
 		// Time segmentation process
-		// auto startTime = std::chrono::steady_clock::now();
-		// /** E1.5.3: Euclidean Clustering with the K-D Tree **/
-		// std::vector<std::vector<int>> clusters3D = euclideanCluster3D(
-		// 	points3D, 
-		// 	tree3D, 
-		// 	3.0
-		// );
-		// auto endTime = std::chrono::steady_clock::now();
-		// auto elapsedTime = std::chrono::duration_cast<
-		// 	std::chrono::milliseconds
-		// >(endTime - startTime);
-		// std::cout << "clustering found " << clusters3D.size()
-		// 			<< " and took " << elapsedTime.count() << " milliseconds\n";
-		// // Render 3D clusters
-		// int clusterId = 0;
-		// std::vector<Color> colors = {
-		// 	Color(1, 0, 0), 
-		// 	Color(0, 1, 0), 
-		// 	Color(0, 0, 1)
-		// };
-		// for (std::vector<int> cluster3D : clusters3D) {
-		// 	pcl::PointCloud<pcl::PointXYZ>::Ptr clusterCloud3D(
-		// 		new pcl::PointCloud<pcl::PointXYZ>()
-		// 	);
-		// 	for (int indice : cluster3D) {
-		// 		clusterCloud3D->points.push_back(
-		// 			pcl::PointXYZ(
-		// 				points3D[indice][0],
-		// 				points3D[indice][1],
-		// 				points3D[indice][2]
-		// 			)
-		// 		);
-		// 	}
-		// 	renderPointCloud(
-		// 		viewer, 
-		// 		clusterCloud3D,
-		// 		"cluster" + std::to_string(clusterId),
-		// 		colors[clusterId % 3]
-		// 	);
-		// 	++clusterId;
-		// }
-		// if (clusters3D.size() == 0) {
-		// 	renderPointCloud(
-		// 		viewer,
-		// 		cloud3D,
-		// 		"3D cluster data"
-		// 	);
-		// }
+		auto startTime = std::chrono::steady_clock::now();
+		/** E1.5.3: Euclidean Clustering with the K-D Tree **/
+		std::vector<std::vector<int>> clusters3D = euclideanCluster3D(
+			points3D, 
+			tree3D, 
+			3.0
+		);
+		auto endTime = std::chrono::steady_clock::now();
+		auto elapsedTime = std::chrono::duration_cast<
+			std::chrono::milliseconds
+		>(endTime - startTime);
+		std::cout << "clustering found " << clusters3D.size()
+					<< " and took " << elapsedTime.count() << " milliseconds\n";
+		// Render 3D clusters
+		int clusterId = 0;
+		std::vector<Color> colors = {
+			Color(1, 0, 0), 
+			Color(0, 1, 0), 
+			Color(0, 0, 1)
+		};
+		for (std::vector<int> cluster3D : clusters3D) {
+			pcl::PointCloud<pcl::PointXYZ>::Ptr clusterCloud3D(
+				new pcl::PointCloud<pcl::PointXYZ>()
+			);
+			for (int indice : cluster3D) {
+				clusterCloud3D->points.push_back(
+					pcl::PointXYZ(
+						points3D[indice][0],
+						points3D[indice][1],
+						points3D[indice][2]
+					)
+				);
+			}
+			renderPointCloud(
+				viewer, 
+				clusterCloud3D,
+				"cluster" + std::to_string(clusterId),
+				colors[clusterId % 3]
+			);
+			++clusterId;
+		}
+		if (clusters3D.size() == 0) {
+			renderPointCloud(
+				viewer,
+				cloud3D,
+				"3D cluster data"
+			);
+		}
 		while (!viewer->wasStopped()) {
 			viewer->spinOnce();
 		}
